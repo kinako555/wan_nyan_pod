@@ -1,0 +1,27 @@
+
+default: &default
+  adapter: mysql2
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>
+  charset: utf8mb4
+  collation: utf8mb4_general_ci
+  encoding: utf8mb4
+  host: localhost
+  timeout: 5000
+
+
+development:
+  <<: *default
+  database: wan_nyan_pod_develop
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: wan_nyan_pod_test
+
+production:
+  <<: *default
+  database: wan_nyan_pod_pro
