@@ -1,4 +1,8 @@
 class StaticPagesController < ApplicationController
-  def help
+  # ヘルプページを作成する際はコメントを外す
+  #def help
+  #end
+
+  def about
   end
 end
