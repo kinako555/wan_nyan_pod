@@ -20,6 +20,8 @@ gem 'bootsnap',     '>= 1.1.0', require: false
 gem 'jquery-rails', '~> 4.3.0'
 # 20190527 add
 gem 'bootstrap',    '~> 4.1.1'
+# 20190601 add
+gem 'bcrypt',       '~> 3.1.12'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
