@@ -1,3 +1,7 @@
+// Your variable overrides
+$light-gray: #777;
+//$state-danger-text: red;
+
 @import "bootstrap";
 
 @mixin box_sizing {
@@ -5,8 +9,6 @@
     -webkit-box-sizing: border-box;
     box-sizing:         border-box;
 }
-
-$light-gray: #777;
 
 /* universal */
 
@@ -110,6 +112,23 @@ input, textarea, select, .uneditable-input {
   
 input {
     height: auto !important;
+}
+
+#error_explanation {
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px 0;
+  }
+}
+
+.field_with_errors {
+  input {
+    @extend .is-invalid;
+  }
+  .form-control {
+    color: var(--danger);
+  }
 }
 
   
