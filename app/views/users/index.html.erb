@@ -1,15 +1,17 @@
+<h1>検索画面</h1>
 <div class="row">
-    <aside class="col-md-4">
-        <section class="user_info">
-            <h1>
-                <%= image_tag 'TentanativeIcon.PNG', :size =>'80x80' %>
-                <%= @user.name %>
-            </h1>
-        </section>
-    </aside>
-    <div class="col-4">
-        aaaaaaaaaaaaaaa
+    <div class="col-md-4">
+    <!-- ログインユーザー-->
     </div>
+    <!-- ユーザー一覧-->
+    <div class="col-4">
+        <ul class="users">
+        <% @users.each do |user| %>
+            <%= render @users %>
+        <% end %>
+        </ul>
+    </div>
+    <!-- サイドメニュー-->
     <div class="col-4">
         <ul class="list-group pt-2">
             <%= link_to "注目", "#", class: "list-group-item"%>

@@ -1,0 +1,8 @@
+<li>
+    <%= image_tag 'TentanativeIcon.PNG', :size =>'50x50' %>
+    <%= link_to user.name, user %>
+    <% if current_user.admin? && !current_user?(user) %>
+    | <%= link_to "delete", user, method: :delete,
+                                  data: { confirm: "以下のユーザーを削除しますか?\n#{user.name}" } %>
+  <% end %>
+</li>
