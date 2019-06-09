@@ -1,0 +1,6 @@
+<%= @user.name %>さん
+
+以下のアドレスをクリックしてアカウントを認証してください。
+(身に覚えがない場合、リンクをクリックせずメールを削除してください。)
+
+<%= edit_account_activation_url(@user.activation_token, email: @user.email) %>

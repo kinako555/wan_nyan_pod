@@ -31,7 +31,15 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # mod 20190609 false -> true
+  # メールが遅れていない場合にエラーを出す
+  config.action_mailer.raise_delivery_errors = true
+  # add 20190609 development環境のメール設定------------------------------------ 
+  # :test: -- メールを配列ActionMailer::Base.deliveriesに保存する
+  config.action_mailer.delivery_method = :test
+  host = 'localhost:3000'
+  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
+  # ---------------------------------------------------------------------------
 
   config.action_mailer.perform_caching = false
 

@@ -1,0 +1,11 @@
+<h1>わんにゃんぽっど 【ユーザー確認】</h1>
+
+<p><%= @user.name %>さん</p>
+
+<p>以下のリンクをクリックしてアカウントを認証してください。
+    <br>
+    （身に覚えがない場合、リンクをクリックせずメールを削除してください。）
+</p>
+
+<%= link_to "ユーザー認証を完了する", edit_account_activation_url(@user.activation_token,
+                                                    email: @user.email) %>

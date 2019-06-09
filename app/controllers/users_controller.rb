@@ -4,13 +4,15 @@ class UsersController < ApplicationController
   before_action :admin_user,     only: :destroy
 
   def index
-    @users = User.all
+    @users = User.where(activated: true)
     # ユーザー検索画面に遷移
   end
 
   def show
     @user = User.find(params[:id])
-    # ユーザーホーム画面に遷移
+    # 検索したユーザーが有効であればユーザーホーム画面に遷移
+    redirect_to about_path and return unless @user.activated?
+    
   end
 
   def new
@@ -22,9 +24,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
-      flash[:success] = "「わんにゃんぽっど」へようこそ"
-      redirect_to @user # ユーザーホーム画面に遷移
+      @user.send_activation_email
+      flash[:info] = "ユーザー登録はまだ終了していません。ユーザー確認メールを送信したので、メールよりユーザー認証を完了してください。"
+      redirect_to login_path # ログイン画面に遷移
     else
       render 'new'
     end
