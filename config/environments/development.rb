@@ -31,17 +31,21 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  # mod 20190609 false -> true
-  # メールが遅れていない場合にエラーを出す
-  config.action_mailer.raise_delivery_errors = true
-  # add 20190609 development環境のメール設定------------------------------------ 
-  # :test: -- メールを配列ActionMailer::Base.deliveriesに保存する
-  config.action_mailer.delivery_method = :test
-  host = 'localhost:3000'
-  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
-  # ---------------------------------------------------------------------------
+  # 20190610 メールActionMailer設定----------------------------
+  host = 'localhost:3000'                     # ローカル環境
+  config.action_mailer.default_url_options = { host: host }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.gmail.com',
+    port:                 587,
+    domain:               'gmail.com',
+    user_name:            ENV['GMAIL_USER'],
+    password:             ENV['GMAIL_PASS'],
+    authentication:       'plain',
+    enable_starttls_auto: true }
 
   config.action_mailer.perform_caching = false
+  # ----------------------------------------------------------
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
