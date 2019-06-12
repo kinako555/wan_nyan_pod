@@ -1,5 +1,5 @@
 <div class="row">
-    <aside class="col-md-4">
+    <aside class="col-md-3">
         <section class="user_info">
             <h1>
                 <%= image_tag 'TentanativeIcon.PNG', :size =>'80x80' %>
@@ -7,10 +7,15 @@
             </h1>
         </section>
     </aside>
-    <div class="col-4">
-        aaaaaaaaaaaaaaa
+    <div class="col-6">
+        <% if @user.microposts.any? %>
+            <h3>Microposts (<%= @user.microposts.count %>)</h3>
+            <ol class="microposts">
+                <%= render @microposts %>
+            </ol>
+        <% end %>
     </div>
-    <div class="col-4">
+    <div class="col-3">
         <ul class="list-group pt-2">
             <%= link_to "注目", "#", class: "list-group-item"%>
             <%= link_to "検索", users_path, class: "list-group-item"%>

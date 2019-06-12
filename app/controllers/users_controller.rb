@@ -10,9 +10,10 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts
     # 検索したユーザーが有効であればユーザーホーム画面に遷移
+    # 無効な場合はabout画面
     redirect_to about_path and return unless @user.activated?
-    
   end
 
   def new
