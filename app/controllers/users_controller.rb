@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @microposts = @user.microposts
+    @micropost = current_user.microposts.build if logged_in?
     # 検索したユーザーが有効であればユーザーホーム画面に遷移
     # 無効な場合はabout画面
     redirect_to about_path and return unless @user.activated?
@@ -18,7 +19,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    # ログイン画面に遷移
+    # ユーザー登録画面に遷移
   end
 
   # ユーザー登録処理
@@ -64,17 +65,6 @@ class UsersController < ApplicationController
     end
 
     # beforeアクション
-
-    # ログイン済か確認
-    # ログイン済みでなければ、ログイン画面へ遷移し、
-    # メッセージを表示
-    def logged_in_user
-      unless logged_in?
-        store_location
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
 
     # 正しいユーザーか確認
     # 正しいユーザーでなければログイン画面に繊維

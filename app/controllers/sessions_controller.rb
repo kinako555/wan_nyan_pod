@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
+
   def new
+    # ログイン画面に遷移
   end
 
   def create
