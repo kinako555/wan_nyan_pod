@@ -8,19 +8,14 @@
         </section>
     </aside>
     <div class="col-6">
-        <% if @user.microposts.any? %>
-            <h3>Microposts (<%= @user.microposts.count %>)</h3>
+        <% if @microposts.any? %>
+            <h3>Microposts (<%= @microposts.count %>)</h3>
             <ol class="microposts">
                 <%= render @microposts %>
             </ol>
         <% end %>
     </div>
     <div class="col-3">
-        <ul class="list-group pt-2">
-            <%= link_to "一覧", "#",        class: "list-group-item"%>
-            <%= link_to "注目", "#",        class: "list-group-item"%>
-            <%= link_to "検索", users_path, class: "list-group-item"%>
-            <%= link_to "通知", "#",        class: "list-group-item"%>
-        </ul>
+        <%= render 'shared/menu_bar' %>
     </div>
 </div>

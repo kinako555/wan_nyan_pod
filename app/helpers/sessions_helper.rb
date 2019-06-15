@@ -19,6 +19,7 @@ module SessionsHelper
   # 現在ログイン中のユーザーを返す (いる場合)
   def current_user
     if (user_id = session[:user_id]) # session[:user_id]の存在を確認
+      # 検索結果が取れなかったときのためfind_byを使用
       @current_user ||= User.find_by(id: user_id)
     elsif (user_id = cookies.signed[:user_id])
       user = User.find_by(id: user_id)

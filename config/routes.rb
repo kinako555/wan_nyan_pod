@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root   'static_pages#home'
+  root   'users#home'
   # ヘルプページを作成する際はコメントを外す
 # get    '/help',   to: 'static_pages#help'
   get    '/about',  to: 'static_pages#about'

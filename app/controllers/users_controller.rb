@@ -3,6 +3,19 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
 
+  def home
+    if logged_in? 
+      @user = current_user
+      # buildでnilデータが作成されているので
+      # nilをはじく必要がある
+      @microposts = @user.microposts.where.not(id: nil)
+      @micropost =  current_user.microposts.build
+      # ホーム画面に遷移
+    else
+      redirect_to login_path
+    end
+  end
+
   def index
     @users = User.where(activated: true)
     # ユーザー検索画面に遷移
@@ -10,8 +23,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    # ユーザー本人ならtimelineを表示
+    redirect_to_timeline if @user == current_user
     @microposts = @user.microposts
     @micropost = current_user.microposts.build if logged_in?
+
     # 検索したユーザーが有効であればユーザーホーム画面に遷移
     # 無効な場合はabout画面
     redirect_to about_path and return unless @user.activated?
@@ -57,6 +73,20 @@ class UsersController < ApplicationController
     redirect_to users_url # 検索画面に遷移
   end
 
+  def redirect_to_timeline
+    if logged_in? 
+      @user = current_user
+      # buildでnilデータが作成されているので
+      # nilをはじく必要がある
+      @timeline = @user.timeline
+      @micropost =  current_user.microposts.build
+      # ホーム画面に遷移
+      render 'timeline'
+    else
+      redirect_to login_path
+    end
+  end
+
   private
 
     def user_params
@@ -79,4 +109,5 @@ class UsersController < ApplicationController
     def admin_user
       redirect_to(about_path) unless current_user.admin?
     end
+
 end

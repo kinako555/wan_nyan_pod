@@ -74,6 +74,12 @@ class User < ApplicationRecord
     def password_reset_expired?
         reset_sent_at < 2.hours.ago
     end
+
+    # ユーザーとユーザーがフォローしているmicropostsを返す
+    def timeline
+        # TODO: 途中
+        Micropost.where("user_id = ?", id)
+    end
     
     private 
 
