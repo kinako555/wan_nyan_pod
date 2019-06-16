@@ -16,6 +16,8 @@ gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
 gem 'bootsnap',     '>= 1.1.0', require: false
 gem 'faker',        '~> 1.9.3'
+gem 'carrierwave',  '~> 1.2.2'
+gem 'mini_magick',  '~> 4.7.0'
 
 # 20190525 add
 gem 'jquery-rails', '~> 4.3.0'

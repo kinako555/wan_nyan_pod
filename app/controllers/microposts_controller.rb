@@ -25,7 +25,7 @@ class MicropostsController < ApplicationController
     private
 
         def micropost_params
-            params.require(:micropost).permit(:content)
+            params.require(:micropost).permit(:content, :picture)
         end
 
         # 画面で選択したMicropostを代入する
