@@ -24,13 +24,12 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     # ユーザー本人ならtimelineを表示
-    redirect_to_timeline if @user == current_user
-    @microposts = @user.microposts
     @micropost = current_user.microposts.build if logged_in?
-
+    # ユーザー本人ならtimelineを代入する
+    @microposts = @user == current_user ? @user.timeline : @user.microposts
     # 検索したユーザーが有効であればユーザーホーム画面に遷移
     # 無効な場合はabout画面
-    redirect_to about_path and return unless @user.activated?
+    redirect_to root_path and return unless @user.activated?
   end
 
   def new
@@ -71,20 +70,6 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = "ユーザーを削除しました"
     redirect_to users_url # 検索画面に遷移
-  end
-
-  def redirect_to_timeline
-    if logged_in? 
-      @user = current_user
-      # buildでnilデータが作成されているので
-      # nilをはじく必要がある
-      @timeline = @user.timeline
-      @micropost =  current_user.microposts.build
-      # ホーム画面に遷移
-      render 'timeline'
-    else
-      redirect_to login_path
-    end
   end
 
   private

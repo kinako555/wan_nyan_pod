@@ -3,19 +3,14 @@
         <section class="user_info">
             <%= render 'shared/user_info' %>
         </section>
-        <% if current_user?(@user)  %>
+        <% if current_user?(@user) %>
             <section class="micropost_form">
                 <%= render 'shared/micropost_form' %>
             </section>
         <% end %>
     </aside>
     <div class="col-6">
-        <% if @user.microposts.any? %>
-            <h3>Microposts (<%= @user.microposts.count %>)</h3>
-            <ol class="microposts">
-                <%= render @microposts %>
-            </ol>
-        <% end %>
+        <%= render 'shared/microposts' %>
     </div>
     <div class="col-3">
         <%= render 'shared/menu_bar' %>
