@@ -1,5 +1,24 @@
 class User < ApplicationRecord
     has_many :microposts, dependent: :destroy
+    # active_relationships----------
+    # follower_id          : followed_id
+    # インスタンスのuser_id : インスタンスがフォローしているuser_id
+    # -----------------------------
+    has_many :active_relationships, class_name:  "Relationship",
+                                    foreign_key: "follower_id",
+                                    dependent:   :destroy
+    # passive_relationships----------
+    # followed_id          : follower_id
+    # インスタンスのuser_id : インスタンスがフォローされているuser_id
+    # -----------------------------
+    has_many :passive_relationships, class_name:  "Relationship",
+                                     foreign_key: "followed_id",
+                                     dependent:   :destroy
+    # active_relationshipsのfollowed_idにユーザーを紐付ける
+    has_many :following, through: :active_relationships, source: :followed
+    # passive_relationshipsのfollower_idにユーザーを紐付ける
+    has_many :followers, through: :passive_relationships, source: :follower
+
     attr_accessor :remember_token, :activation_token, :reset_token
 
     before_save :downcase_email
@@ -79,6 +98,21 @@ class User < ApplicationRecord
     def timeline
         # TODO: 途中
         Micropost.where("user_id = ?", id)
+    end
+
+    # ユーザーをフォローする
+    def follow(other_user)
+        following << other_user
+    end
+
+    # ユーザーをフォロー解除する
+    def unfollow(other_user)
+        active_relationships.find_by(followed_id: other_user.id).destroy
+    end
+
+    # 現在のユーザーがフォローしてたらtrueを返す
+    def following?(other_user)
+        following.include?(other_user)
     end
     
     private 
