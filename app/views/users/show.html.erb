@@ -3,6 +3,9 @@
         <section class="user_info">
             <%= render 'shared/user_info' %>
         </section>
+        <section class="stats">
+            <%= render 'shared/stats' %>
+        </section>
         <% if current_user?(@user) %>
             <section class="micropost_form">
                 <%= render 'shared/micropost_form' %>
@@ -10,6 +13,7 @@
         <% end %>
     </aside>
     <div class="col-6">
+        <%= render 'follow_form' if logged_in? %>
         <%= render 'shared/microposts' %>
     </div>
     <div class="col-3">

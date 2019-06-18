@@ -1,16 +1,16 @@
 class User < ApplicationRecord
     has_many :microposts, dependent: :destroy
-    # active_relationships----------
+    # active_relationships---------------------------------------
     # follower_id          : followed_id
     # インスタンスのuser_id : インスタンスがフォローしているuser_id
-    # -----------------------------
+    # -----------------------------------------------------------
     has_many :active_relationships, class_name:  "Relationship",
                                     foreign_key: "follower_id",
                                     dependent:   :destroy
-    # passive_relationships----------
+    # passive_relationships----------------------------------------
     # followed_id          : follower_id
     # インスタンスのuser_id : インスタンスがフォローされているuser_id
-    # -----------------------------
+    # -------------------------------------------------------------
     has_many :passive_relationships, class_name:  "Relationship",
                                      foreign_key: "followed_id",
                                      dependent:   :destroy

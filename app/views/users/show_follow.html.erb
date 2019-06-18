@@ -1,0 +1,24 @@
+<div class="row">
+  <aside class="col-md-3">
+    <section class="user_info">
+      <%= image_tag 'TentanativeIcon.PNG', :size =>'50x50' %>
+      <h1><%= @user.name %></h1>
+      <span><b>Microposts:</b> <%= @user.microposts.count %></span>
+    </section>
+    <span><%= link_to "プロフィールを見る", @user %></span>
+    <section class="stats">
+      <%= render 'shared/stats' %>
+    </section>
+  </aside>
+  <div class="col-md-6">
+    <h3><%= @title %></h3>
+    <% if @users.any? %>
+      <ul class="users follow">
+        <%= render @users %>
+      </ul>
+    <% end %>
+  </div>
+  <div class="col-3">
+        <%= render 'shared/menu_bar' %>
+    </div>
+</div>

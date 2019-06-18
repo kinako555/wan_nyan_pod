@@ -79,4 +79,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to about_path
   end
 
+  # ログイン済みでないとフォロー一覧にアクセスできない
+  test "should redirect following when not logged in" do
+    get following_user_path(@user)
+    assert_redirected_to login_url
+  end
+
+  # ログイン済みでないとフォロワーー覧にアクセスできない
+  test "should redirect followers when not logged in" do
+    get followers_user_path(@user)
+    assert_redirected_to login_url
+  end
+
 end
