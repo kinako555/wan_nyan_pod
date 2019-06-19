@@ -83,4 +83,23 @@ class UserTest < ActiveSupport::TestCase
     assert_not michael.following?(archer)
     assert_not archer.followers.include?(michael)
   end
+
+  # timelineテスト
+  test "timeline should have the right posts" do
+    michael = users(:michael)
+    archer  = users(:archer)
+    lana    = users(:lana)
+    # フォローしているユーザーの投稿を確認
+    lana.microposts.each do |post_following|
+      assert michael.timeline.include?(post_following)
+    end
+    # 自分自身の投稿を確認
+    michael.microposts.each do |post_self|
+      assert michael.timeline.include?(post_self)
+    end
+    # フォローしていないユーザーの投稿を確認
+    archer.microposts.each do |post_unfollowed|
+      assert_not michael.timeline.include?(post_unfollowed)
+    end
+  end
 end

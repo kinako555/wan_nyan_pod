@@ -8,7 +8,7 @@ class UsersController < ApplicationController
       @user = current_user
       # buildでnilデータが作成されているので
       # nilをはじく必要がある
-      @microposts = @user.microposts.where.not(id: nil)
+      @microposts = @user.timeline
       @micropost =  current_user.microposts.build
       # ホーム画面に遷移
     else
