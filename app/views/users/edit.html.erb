@@ -2,10 +2,9 @@
 
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <%= image_tag 'TentanativeIcon.PNG', :size =>'80x80' %>
-        <%= @user.name %>
-
+    <%= render 'IconUploader' %>
         <%= form_for(@user) do |f| %>
+            
             <%= render 'shared/error_messages', object: f.object %>
 
             <%= f.label :name %>

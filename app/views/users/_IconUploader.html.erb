@@ -1,0 +1,35 @@
+<!-- ajax処理で使う分のパラメータをhidden_fieldで持っておく -->
+<%= hidden_field_tag "action", params[:action] %>
+<%= hidden_field_tag "route", "users" %>
+<%= hidden_field_tag "idParams", @user.id %>
+ 
+<div class="field image">
+　<i class="far fa-check-square"></i><%= label 'ユーザーアイコン' %>
+ 
+　<!-- 隠したinputタグと紐付けしたdiv -->
+　<div id="img_field" onClick="$('#upicon').click()" >
+　　<% if @user.icon.url.present? %>
+　　　<%= image_tag @user.icon.url %>
+　　<% else %>
+　　　<i class="fas fa-image"></i><i class="fas fa-file-upload add"></i>
+　　<% end %>
+　</div>
+ 
+  <!-- inputのfileタグは隠す -->
+　<%= file_field :icon_http, class: "icon", style: "display:none;", id: "upicon"%>
+</div>
+ 
+<!-- jsでajax送信するためのボタンを作成 -->
+<div class="submit_btn">変更</div>
+ 
+<%= link_to '戻る', root_path, class: "back_btn" %>
+<div class="delete">
+<i class="far fa-trash-alt"></i><%= link_to 'アカウントを削除する', user_path(@user.id), method: :delete, data: {confirm: 'アカウントを削除します。よろしいですか？'}, class: "delete_btn" %>
+</div>
+ 
+<!-- 画像選択後のトリミング画面用div -->
+<div class="overlay" style="display:none;" >
+ <div class="crop_modal"></div>
+ <div class="close_btn"></div>
+ <div class="select_icon_btn">決定</div>
+</div>
