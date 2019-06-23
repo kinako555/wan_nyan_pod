@@ -24,7 +24,7 @@ class User < ApplicationRecord
     before_save :downcase_email
     before_create :create_activation_digest
 
-    mount_uploader :picture, PictureUploader
+    mount_uploader :icon, PictureUploader
 
     validates :name,     presence: true, 
                          length: { maximum: 50}
@@ -116,6 +116,8 @@ class User < ApplicationRecord
     def following?(other_user)
         following.include?(other_user)
     end
+
+
     
     private 
 
