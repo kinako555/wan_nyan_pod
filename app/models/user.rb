@@ -34,8 +34,10 @@ class User < ApplicationRecord
                          length: { maximum: 255 }, 
                          format: { with: VALID_EMAIL_REGEX },
                          uniqueness: { case_sensitive: false }
-    validates :password, presence: true, confirmation: true, length: { minimum: 6 }, if: -> { new_record? || changes[:password_digest] }
-    validates :password_confirmation, presence: true
+
+    validates :password,              presence: true, length: { minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
+    validates :password,              confirmation: true, if: -> { new_record? || changes[:crypted_password] }
+    validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
 
     has_secure_password
 
