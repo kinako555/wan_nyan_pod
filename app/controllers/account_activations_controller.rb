@@ -1,4 +1,6 @@
 class AccountActivationsController < ApplicationController
+    
+    skip_before_action :require_login, only: [:edit]
 
     def edit
         user = User.find_by(email: params[:email])

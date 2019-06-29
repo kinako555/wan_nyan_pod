@@ -42,13 +42,6 @@ module SessionsHelper
     cookies.delete(:remember_token)
   end
 
-  # 現在のユーザーをログアウトする
-  def log_out
-    forget(current_user)
-    session.delete(:user_id)
-    @current_user = nil
-  end
-
   # 記憶したURLが存在する場合記憶したURLにリダイレクトする
   # 存在しない場合、受け取ったdefaultにリダイレクトする
   def redirect_back_or(default)

@@ -1,12 +1,14 @@
 class SessionsController < ApplicationController
 
+  skip_before_action :require_login, only: [:new, :create]
+
   def new
     # ログイン画面に遷移
   end
 
   def create
-    @user = User.find_by(email: params[:session][:email].downcase)
-    if @user && @user.authenticate(params[:session][:password])
+    @user = login(params[:session][:email].downcase, params[:session][:password])
+    if @user
       if @user.activated?
         # 正常にログイン
         log_in @user
@@ -26,9 +28,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    # 2番目のウィンドウでログアウトするユーザーを想定して
     # ログイン状態の場合のみログアウトする
-    log_out if logged_in?
+    logout
     redirect_to login_path
   end
 end

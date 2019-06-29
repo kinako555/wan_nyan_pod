@@ -76,7 +76,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference 'User.count' do
       delete user_path(@user)
     end
-    assert_redirected_to about_path
+    assert_redirected_to login_path
   end
 
   # ログイン済みでないとフォロー一覧にアクセスできない

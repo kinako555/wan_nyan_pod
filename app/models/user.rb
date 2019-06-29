@@ -1,5 +1,7 @@
 class User < ApplicationRecord
     authenticates_with_sorcery!
+    has_secure_password
+
     has_many :microposts, dependent: :destroy
     # active_relationships---------------------------------------
     # follower_id          : followed_id
@@ -34,8 +36,7 @@ class User < ApplicationRecord
                          length: { maximum: 255 }, 
                          format: { with: VALID_EMAIL_REGEX },
                          uniqueness: { case_sensitive: false }
-    validates :password, presence: true, confirmation: true, length: { minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
-    validates :password_confirmation, presence: true
+    validates :password, presence: true, length: { minimum: 6 }
 
     # 渡された文字列のハッシュ値を返す
     def self.digest(string)
@@ -116,8 +117,6 @@ class User < ApplicationRecord
         following.include?(other_user)
     end
 
-
-    
     private 
 
         # メールアドレスをすべて小文字にする
