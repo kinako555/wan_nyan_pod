@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_22_173942) do
+ActiveRecord::Schema.define(version: 2019_06_29_120015) do
 
   create_table "microposts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.text "content"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 2019_06_22_173942) do
     t.string "reset_digest"
     t.datetime "reset_sent_at"
     t.string "icon"
+    t.string "crypted_password"
+    t.string "salt"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

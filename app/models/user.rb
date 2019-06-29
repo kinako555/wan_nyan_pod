@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    # authenticates_with_sorcery!
     has_many :microposts, dependent: :destroy
     # active_relationships---------------------------------------
     # follower_id          : followed_id
@@ -33,8 +34,8 @@ class User < ApplicationRecord
                          length: { maximum: 255 }, 
                          format: { with: VALID_EMAIL_REGEX },
                          uniqueness: { case_sensitive: false }
-    validates :password, presence: true, 
-                         length: { minimum: 6 }
+    validates :password, presence: true, confirmation: true, length: { minimum: 6 }, if: -> { new_record? || changes[:password_digest] }
+    validates :password_confirmation, presence: true
 
     has_secure_password
 

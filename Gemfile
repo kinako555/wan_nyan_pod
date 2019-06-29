@@ -24,6 +24,8 @@ gem 'jquery-rails', '~> 4.3.0'
 gem 'bootstrap',    '~> 4.1.1'
 # 20190601 add
 gem 'bcrypt',       '~> 3.1.12'
+# 20190629 add
+gem 'sorcery'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
