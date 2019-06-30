@@ -24,7 +24,8 @@ class MicropostsControllerTest < ActionDispatch::IntegrationTest
 
   # 他ユーザーのMicropostを削除できない
   test "should redirect destroy for wrong micropost" do
-    log_in_as(users(:michael))
+    user = users(:michael)
+    login_user(users(:michael))
     micropost = microposts(:ants)
     assert_no_difference 'Micropost.count' do
       delete micropost_path(micropost)
