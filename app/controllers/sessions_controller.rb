@@ -7,13 +7,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = login(params[:session][:email].downcase, params[:session][:password])
+    @user = login(params[:session][:email].downcase, 
+                  params[:session][:password], 
+                  params[:session][:remember_me])
     if @user
       if @user.activated?
         # 正常にログイン
-        log_in @user
-        params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
-        redirect_back_or root_path # 遷移しようとした画面かログイン画面に遷移
+        redirect_back_or_to root_path # 遷移しようとした画面かログイン画面に遷移
       else
         # ユーザーの有効でない場合
         message  = "有効なアカウントではありません"

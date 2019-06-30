@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
   skip_before_action :require_login, only: [:home, :show, :new, :create]
-  before_action :correct_user,      only: [:edit, :update]
-  before_action :admin_user,        only: :destroy
+  before_action :correct_user,       only: [:edit, :update]
+  before_action :admin_user,         only: :destroy
 
   def home
+    # rootパスとして使用しているため、メッセージは表示しない
     if logged_in? 
       @user = current_user
       # buildでnilデータが作成されているので
