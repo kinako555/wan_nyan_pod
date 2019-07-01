@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-    # authenticates_with_sorcery!
+    authenticates_with_sorcery!
+    has_secure_password
+
     has_many :microposts, dependent: :destroy
     # active_relationships---------------------------------------
     # follower_id          : followed_id
@@ -34,12 +36,16 @@ class User < ApplicationRecord
                          length: { maximum: 255 }, 
                          format: { with: VALID_EMAIL_REGEX },
                          uniqueness: { case_sensitive: false }
+<<<<<<< HEAD
 
     validates :password,              presence: true, length: { minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
     validates :password,              confirmation: true, if: -> { new_record? || changes[:crypted_password] }
     validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
 
     has_secure_password
+=======
+    validates :password, presence: true, length: { minimum: 6 }
+>>>>>>> mod-session
 
     # 渡された文字列のハッシュ値を返す
     def self.digest(string)
@@ -53,12 +59,6 @@ class User < ApplicationRecord
         SecureRandom.urlsafe_base64
     end
 
-    # 永続セッションのためにユーザーをデータベースに記憶する
-    def remember
-        self.remember_token = User.new_token
-        update_attribute(:remember_digest, User.digest(remember_token))
-    end
-
     # 渡されたトークンがダイジェストと一致したらtrueを返す
     def authenticated?(attribute, token)
         digest = self.send("#{attribute}_digest")
@@ -66,11 +66,6 @@ class User < ApplicationRecord
         # ログアウトしている場合はfalseを返す(remember_digest)
         return false if digest.nil?
         BCrypt::Password.new(digest).is_password?(token)
-    end
-
-    # ユーザーのログイン情報を破棄する
-    def forget
-        update_attribute(:remember_digest, nil)
     end
 
     # アカウントを有効にする
@@ -120,8 +115,6 @@ class User < ApplicationRecord
         following.include?(other_user)
     end
 
-
-    
     private 
 
         # メールアドレスをすべて小文字にする

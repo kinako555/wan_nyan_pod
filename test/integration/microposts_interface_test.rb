@@ -6,7 +6,8 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
   end
 
   test "micropost interface" do
-    log_in_as(@user)
+    #login_user(@user)
+    login_user
     get root_path
     assert_select 'input[type=file]'
     # 無効な送信

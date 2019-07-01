@@ -31,7 +31,7 @@ class PasswordResetsController < ApplicationController
       @user.errors.add(:password, :blank)
       render 'edit'
     elsif @user.update_attributes(user_params)
-      log_in @user
+      auto_login @user
       # パスワード再設定後にパスワードを再設定されないように
       @user.update_attribute(:reset_digest, nil)
       flash[:success] = "Password has been reset."

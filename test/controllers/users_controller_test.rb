@@ -28,7 +28,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   # ユーザー情報更新の際、パラメーターにadminが含まれていたら
   # 更新を実行しない
   test "should not allow the admin attribute to be edited via the web" do
-    log_in_as(@other_user)
+    login_user(@other_user)
     assert_not @other_user.admin?
     patch user_path(@other_user), params: {
                                     user: { password:              "foobar",
@@ -39,7 +39,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   # ログインユーザーとは別ユーザーを開く際、
   test "should redirect edit when logged in as wrong user" do
-    log_in_as(@other_user)
+    login_user @other_user
     get edit_user_path(@user)
     assert flash.empty?
     # TODO: 遷移先を指定する
@@ -47,7 +47,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should redirect update when logged in as wrong user" do
-    log_in_as(@other_user)
+    #login_user @other_user
+    p login_url
+    login_user(user = @other_user, route = login_url)
     patch user_path(@user), params: { user: { name: @user.name,
                                               email: @user.email } }
     assert flash.empty?
@@ -72,11 +74,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   # 管理者権限を持たないユーザーはユーザーを削除できない
   test "should redirect destroy when logged in as a non-admin" do
-    log_in_as(@other_user)
+    login_user @other_user
     assert_no_difference 'User.count' do
       delete user_path(@user)
     end
-    assert_redirected_to about_path
+    assert_redirected_to login_path
   end
 
   # ログイン済みでないとフォロー一覧にアクセスできない
