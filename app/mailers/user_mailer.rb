@@ -3,20 +3,23 @@ class UserMailer < ApplicationMailer
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
-  #   en.user_mailer.account_activation.subject
+  #   en.user_mailer.activation_needed_email.subject
   #
-  def account_activation(user)
+  def activation_needed_email(user)
     @user = user
+
     mail to: user.email, subject: "わんにゃんぽっど【ユーザー確認メール】"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
-  #   en.user_mailer.password_reset.subject
+  #   en.user_mailer.activation_success_email.subject
   #
-  def password_reset(user)
+  def activation_success_email(user)
     @user = user
-    mail to: user.email, subject: "わんにゃんぽっど【パスワード再設定】"
+    @url  = "http://localhost:3000/login"
+    mail(:to => user.email,
+         :subject => "Your account is now activated")
   end
 end

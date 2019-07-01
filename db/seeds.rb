@@ -3,10 +3,10 @@ User.create!(name:  "Example User",
     password:              "foobar",
     password_confirmation: "foobar",
     admin: true,
-    activated: true,
-    activated_at: Time.zone.now)
+    activation_state: 'active',
+    activation_token_expires_at: Time.zone.now)
 
-99.times do |n|
+30.times do |n|
     name  = Faker::Name.name
     email = "example-#{n+1}@railstutorial.org"
     password = "password"
@@ -14,8 +14,8 @@ User.create!(name:  "Example User",
                     email: email,
                     password:              password,
                     password_confirmation: password,
-                    activated: true,
-                    activated_at: Time.zone.now)
+                    activation_state: true,
+                    activation_token_expires_at: Time.zone.now)
 end
 
 # User最初の6人を呼ぶ
@@ -27,8 +27,9 @@ end
 
 # リレーションシップ
 users = User.all
-user  = users.first
+first_user  = users.first
 following = users[2..50]
 followers = users[3..40]
-following.each { |followed| user.follow(followed) }
-followers.each { |follower| follower.follow(user) }
+following.each { |followed| first_user.follow(followed) }
+followers.each { |follower| follower.follow(first_user) }
+users.each { |user| user.activate! }

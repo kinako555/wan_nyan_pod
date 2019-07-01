@@ -25,7 +25,7 @@ class User < ApplicationRecord
     attr_accessor :remember_token, :activation_token, :reset_token
 
     before_save :downcase_email
-    before_create :create_activation_digest
+   # before_create :create_activation_digest
 
     mount_uploader :icon, PictureUploader
 
@@ -36,16 +36,7 @@ class User < ApplicationRecord
                          length: { maximum: 255 }, 
                          format: { with: VALID_EMAIL_REGEX },
                          uniqueness: { case_sensitive: false }
-<<<<<<< HEAD
-
-    validates :password,              presence: true, length: { minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
-    validates :password,              confirmation: true, if: -> { new_record? || changes[:crypted_password] }
-    validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
-
-    has_secure_password
-=======
     validates :password, presence: true, length: { minimum: 6 }
->>>>>>> mod-session
 
     # 渡された文字列のハッシュ値を返す
     def self.digest(string)
@@ -66,11 +57,6 @@ class User < ApplicationRecord
         # ログアウトしている場合はfalseを返す(remember_digest)
         return false if digest.nil?
         BCrypt::Password.new(digest).is_password?(token)
-    end
-
-    # アカウントを有効にする
-    def activate
-        update_columns(activated: true, activated_at: Time.zone.now)
     end
 
     # 有効化用のメールを送信する

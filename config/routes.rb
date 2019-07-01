@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :users do
     # 例: users/1/following
     member do
-      get :following, :followers
+      get :activate, :following, :followers
     end
   end
   resources :account_activations, only: [:edit]

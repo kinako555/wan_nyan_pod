@@ -7,13 +7,11 @@ class SessionsController < ApplicationController
   end
 
   def create
-    #@user = login(params[:session][:email].downcase, 
-    #              params[:session][:password], 
-    #              params[:session][:remember_me])
-    @user = User.first
-    auto_login @user
-    if @user
-      if @user.activated?
+    if @user = login(params[:session][:email].downcase, 
+                     params[:session][:password], 
+                     params[:session][:remember_me])
+      #if @user.activated?
+      if true
         # 正常にログイン
         redirect_back_or_to root_path # 遷移しようとした画面かログイン画面に遷移
       else
