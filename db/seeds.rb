@@ -33,3 +33,11 @@ followers = users[3..40]
 following.each { |followed| first_user.follow(followed) }
 followers.each { |follower| follower.follow(first_user) }
 users.each { |user| user.activate! }
+
+User.create!(name:  "NOtActive User",
+    email: "aaa@bbb.org",
+    password:              "foobar",
+    password_confirmation: "foobar",
+    admin: false,
+    activation_state: 'pending',
+    activation_token_expires_at: Time.zone.now)

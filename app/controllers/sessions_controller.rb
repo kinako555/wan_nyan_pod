@@ -7,22 +7,16 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if @user = login(params[:session][:email].downcase, 
-                     params[:session][:password], 
-                     params[:session][:remember_me])
-      #if @user.activated?
-      if true
+    @user = login(params[:session][:email].downcase, 
+                  params[:session][:password], 
+                  params[:session][:remember_me])
+    if @user
         # 正常にログイン
         redirect_back_or_to root_path # 遷移しようとした画面かログイン画面に遷移
-      else
-        # ユーザーの有効でない場合
-        message  = "有効なアカウントではありません"
-        message += "ユーザー確認メールより、ユーザー認証を完了してください"
-        flash.now[:warning] = message
-        render 'new'
-      end
     else
-      flash.now[:danger] = 'パスワードまたはEメールアドレスが正しくありません'
+      # 入力が間違っている
+      # ユーザーがactiveでない
+      flash.now[:danger] = 'ログインに失敗しました。'
       render 'new'
     end
   end

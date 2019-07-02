@@ -18,8 +18,7 @@ class UserMailer < ApplicationMailer
   #
   def activation_success_email(user)
     @user = user
-    @url  = "http://localhost:3000/login"
-    mail(:to => user.email,
-         :subject => "Your account is now activated")
+    @url  = login_url
+    mail to: user.email, subject: "わんにゃんぽっど【ユーザー認証が完了しました】"
   end
 end
