@@ -55,13 +55,12 @@ class UsersController < ApplicationController
   def activate
     p params[:id]
     if (@user = User.load_from_activation_token(params[:id]))
-      p "成功しました。"
       @user.activate!
       flash[:success] = "「わんにゃんぽっど」へようこそ"
       redirect_to login_path
     else
-      p "失敗しました"
-      not_authenticated
+      flash[:danger] = "ユーザー認証に失敗しました。"
+      redirect_to login_path
     end
   end
 
