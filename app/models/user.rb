@@ -36,27 +36,13 @@ class User < ApplicationRecord
                          length: { maximum: 255 }, 
                          format: { with: VALID_EMAIL_REGEX },
                          uniqueness: { case_sensitive: false }
-<<<<<<< HEAD
-
-    validates :password,              presence: true, length: { minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
-    validates :password,              confirmation: true, if: -> { new_record? || changes[:crypted_password] }
-    validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
-
-    has_secure_password
-=======
     validates :password, presence: true, length: { minimum: 6 }
->>>>>>> mod-session
 
     # 渡された文字列のハッシュ値を返す
     def self.digest(string)
         cost = ActiveModel::SecurePassword.min_cost ?BCrypt::Engine::MIN_COST :
                                                     BCrypt::Engine.cost
         BCrypt::Password.create(string, cost: cost)
-    end
-
-    # ランダムなトークンを返す
-    def self.new_token
-        SecureRandom.urlsafe_base64
     end
 
     # 渡されたトークンがダイジェストと一致したらtrueを返す
