@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  skip_before_action :require_login, only: [:home, :show, :new, :create]
-  before_action :correct_user,       only: [:edit, :update]
-  before_action :admin_user,         only: :destroy
+  skip_before_action :require_login, only: [:home, :show, :new, :create, :activate]
+  before_action      :correct_user,  only: [:edit, :update]
+  before_action      :admin_user,    only: :destroy
 
   def home
     # rootパスとして使用しているため、メッセージは表示しない
@@ -42,11 +42,25 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.send_activation_email
+    #  @user.send_activation_email
       flash[:info] = "ユーザー登録はまだ終了していません。ユーザー確認メールを送信したので、メールよりユーザー認証を完了してください。"
       redirect_to login_path # ログイン画面に遷移
     else
+      flash[:danger] = "ユーザー登録に失敗しました。"
       render 'new'
+    end
+  end
+
+  # ユーザー認証メールのリンクをクリック後
+  def activate
+    p params[:id]
+    if (@user = User.load_from_activation_token(params[:id]))
+      @user.activate!
+      flash[:success] = "「わんにゃんぽっど」へようこそ"
+      redirect_to login_path
+    else
+      flash[:danger] = "ユーザー認証に失敗しました。"
+      redirect_to login_path
     end
   end
 
