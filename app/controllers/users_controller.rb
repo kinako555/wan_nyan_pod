@@ -41,8 +41,10 @@ class UsersController < ApplicationController
   # ユーザー登録処理
   def create
     @user = User.new(user_params)
+    # save時に
+    # メール送信
+    # active_token, activation_token_expires_atを作成 
     if @user.save
-    #  @user.send_activation_email
       flash[:info] = "ユーザー登録はまだ終了していません。ユーザー確認メールを送信したので、メールよりユーザー認証を完了してください。"
       redirect_to login_path # ログイン画面に遷移
     else
@@ -55,6 +57,9 @@ class UsersController < ApplicationController
   def activate
     p params[:id]
     if (@user = User.load_from_activation_token(params[:id]))
+      # 認証完了メール送信
+      # activation_tokenをnilに更新
+      # activation_stateを'active'に更新
       @user.activate!
       flash[:success] = "「わんにゃんぽっど」へようこそ"
       redirect_to login_path

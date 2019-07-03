@@ -22,7 +22,7 @@ class User < ApplicationRecord
     # passive_relationshipsのfollower_idにユーザーを紐付ける
     has_many :followers, through: :passive_relationships, source: :follower
 
-    attr_accessor :remember_token, :reset_token
+    attr_accessor :remember_token
 
     before_save :downcase_email
 
@@ -51,22 +51,6 @@ class User < ApplicationRecord
         # ログアウトしている場合はfalseを返す(remember_digest)
         return false if digest.nil?
         BCrypt::Password.new(digest).is_password?(token)
-    end
-
-    # パスワード再設定の属性を設定する
-    def create_reset_digest
-        self.reset_token = User.new_token
-        update_columns(reset_digest: User.digest(reset_token), reset_sent_at: Time.zone.now)
-    end
-
-    # パスワード再設定のメールを送信する
-    def send_password_reset_email
-        UserMailer.password_reset(self).deliver_now
-    end
-
-    # パスワード再設定の期限が切れている場合はtrueを返す
-    def password_reset_expired?
-        reset_sent_at < 2.hours.ago
     end
 
     # 自分とフォローしているMicropostsを返す

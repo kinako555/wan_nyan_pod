@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_01_140317) do
+ActiveRecord::Schema.define(version: 2019_07_03_141410) do
 
   create_table "microposts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.text "content"
@@ -40,17 +40,20 @@ ActiveRecord::Schema.define(version: 2019_07_01_140317) do
     t.string "password_digest"
     t.string "salt"
     t.boolean "admin", default: false
-    t.string "reset_digest"
-    t.datetime "reset_sent_at"
     t.string "icon"
     t.string "remember_me_token"
     t.datetime "remember_me_token_expires_at"
     t.string "activation_state"
     t.string "activation_token"
     t.datetime "activation_token_expires_at"
+    t.string "reset_password_token"
+    t.datetime "reset_password_token_expires_at"
+    t.datetime "reset_password_email_sent_at"
+    t.integer "access_count_to_reset_password_page", default: 0
     t.index ["activation_token"], name: "index_users_on_activation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
   end
 
   add_foreign_key "microposts", "users"
