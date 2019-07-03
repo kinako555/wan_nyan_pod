@@ -7,7 +7,6 @@ class UserMailer < ApplicationMailer
   #
   def activation_needed_email(user)
     @user = user
-
     mail to: user.email, subject: "わんにゃんぽっど【ユーザー確認メール】"
   end
 
@@ -18,7 +17,6 @@ class UserMailer < ApplicationMailer
   #
   def activation_success_email(user)
     @user = user
-    @url  = login_url
     mail to: user.email, subject: "わんにゃんぽっど【ユーザー認証が完了しました】"
   end
 end

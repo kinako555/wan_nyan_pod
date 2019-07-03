@@ -17,8 +17,8 @@ class UserMailerPreview < ActionMailer::Preview
   private
 
     # ランダムなトークンを返す
-  def new_token
-    SecureRandom.urlsafe_base64
-  end
+    def new_token
+      SecureRandom.urlsafe_base64
+    end
 
 end
