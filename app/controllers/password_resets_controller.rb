@@ -23,30 +23,21 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
-    @token = params[:id]
-    @user = User.load_from_reset_password_token(@token)
-    not_authenticated unless @user
+    load_user_from_reset_password_token? params[:id]
     # パスワード入力画面に遷移
   end
 
   # パスワード再設定クリック後
   def update
-    @token = params[:id]
-    @user = User.load_from_reset_password_token(@token)
+    return unless load_user_from_reset_password_token? params[:id]
 
-    if @user.blank?
-      not_authenticated
-      return
-    end
-
-    @user.password_confirmation = params[:user][:password_confirmation]
-    # password_digest更新
-    # remember_me_tokenをnilに更新
-    if @user.change_password!(params[:user][:password])
+    # パスワード入力チェックをするためsorceryを使わずに自装
+    if @user.update_attributes(user_params)
+      @user.update_attribute(:reset_password_token, nil)
       flash[:success] = "パスワードを再設定しました。"
       redirect_to root_path
     else
-      render :action => "edit"
+      render 'edit'
     end
   end
 
@@ -56,4 +47,18 @@ class PasswordResetsController < ApplicationController
       params.require(:user).permit(:password, :password_confirmation)
     end
 
+
+    # パラメーターで受けとたトークンが存在しない、
+    # または期限切れの場合はログイン画面に戻る
+    def load_user_from_reset_password_token?(token)
+      @token = token # viewに持たせるため変数に代入しておく
+      @user = User.load_from_reset_password_token(@token)
+ 
+      if @user.blank?
+        not_authenticated
+        return false
+      else
+        return true
+      end
+    end
 end
