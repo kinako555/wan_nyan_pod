@@ -47,7 +47,6 @@ class PasswordResetsController < ApplicationController
       params.require(:user).permit(:password, :password_confirmation)
     end
 
-
     # パラメーターで受けとたトークンが存在しない、
     # または期限切れの場合はログイン画面に戻る
     def load_user_from_reset_password_token?(token)
