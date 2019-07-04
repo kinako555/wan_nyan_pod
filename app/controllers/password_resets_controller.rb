@@ -31,7 +31,7 @@ class PasswordResetsController < ApplicationController
 
   # パスワード再設定クリック後
   def update
-    @token = params[:user][:token]
+    @token = params[:id]
     @user = User.load_from_reset_password_token(@token)
 
     if @user.blank?
@@ -46,8 +46,14 @@ class PasswordResetsController < ApplicationController
       flash[:success] = "パスワードを再設定しました。"
       redirect_to root_path
     else
-      render 'edit'
+      render :action => "edit"
     end
   end
+
+  private
+
+    def user_params
+      params.require(:user).permit(:password, :password_confirmation)
+    end
 
 end

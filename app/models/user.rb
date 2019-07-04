@@ -37,22 +37,6 @@ class User < ApplicationRecord
                          uniqueness: { case_sensitive: false }
     validates :password, presence: true, length: { minimum: 6 }
 
-    # 渡された文字列のハッシュ値を返す
-    def self.digest(string)
-        cost = ActiveModel::SecurePassword.min_cost ?BCrypt::Engine::MIN_COST :
-                                                    BCrypt::Engine.cost
-        BCrypt::Password.create(string, cost: cost)
-    end
-
-    # 渡されたトークンがダイジェストと一致したらtrueを返す
-    def authenticated?(attribute, token)
-        digest = self.send("#{attribute}_digest")
-        # 2番目のウィンドウでログアウトするユーザーを想定して
-        # ログアウトしている場合はfalseを返す(remember_digest)
-        return false if digest.nil?
-        BCrypt::Password.new(digest).is_password?(token)
-    end
-
     # 自分とフォローしているMicropostsを返す
     def timeline
         following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
