@@ -1,0 +1,11 @@
+<div id="preview" class="circle-avatar"></div>
+<input type="file" onChange="imgPreView(event)">
+
+<div class="overlay" style="display:none;" >
+<div class="crop_modal"></div>
+<div class="close_btn"></div>
+<div class="select_icon_btn">決定</div>
+</div>
+
+<%= stylesheet_link_tag    'cropper.min' %>
+<%= javascript_include_tag 'cropper.min' %>
