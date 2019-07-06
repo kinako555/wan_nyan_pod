@@ -10,7 +10,6 @@ User.create!(name:  "わんにゃんぽっど太郎",
     email: ENV['YAHOO_ADDRESS'],
     password:              "foobar",
     password_confirmation: "foobar",
-    admin: true,
     activation_state: 'active',
     activation_token_expires_at: Time.zone.now)
 
@@ -46,6 +45,5 @@ User.create!(name:  "NOtActive User",
     email: "aaa@bbb.org",
     password:              "foobar",
     password_confirmation: "foobar",
-    admin: false,
     activation_state: 'pending',
     activation_token_expires_at: Time.zone.now)
