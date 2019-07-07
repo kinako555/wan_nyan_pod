@@ -4,7 +4,27 @@
     <div class="col-md-6">
         <%= form_for(@user) do |f| %>
             <%= render 'shared/error_messages', object: f.object %>
-            <%= render 'iconEditter' %>
+            <!-- アイコン開始 -->
+            
+            <%= hidden_field_tag "action", params[:action] %>
+            <%= hidden_field_tag "route", "users" %>
+            <%= hidden_field_tag "idParams", @user.id %>
+
+            <div class="field image">
+                <i class="far fa-check-square"></i>
+                <div id="img_field" onClick="$('#icon').click()" >
+                　　<% if @user.icon.url.present? %>
+                　　　<%= image_tag @user.icon.url %>
+                　　<% else %>
+                　　　<i class="fas fa-image"></i><i class="fas fa-file-upload add"></i>
+                　　<% end %>
+            　  </div>
+                <%= f.file_field :icon, class: "image", style: "display:none;", id: "icon"%>
+            </div>
+
+
+
+            <!--アイコン終わり -->
 
             <%= f.label :name %>
             <%= f.text_field :name, class: 'form-control' %>
@@ -19,6 +39,20 @@
             <%= f.password_field :password_confirmation, class: 'form-control' %>
 
             <%= f.submit "更新", class: "btn btn-primary" %>
+            
         <% end %>
     </div>
 </div>
+
+<!-- modal -->
+<div class="overlay" style="display:none;" >
+    <div class="modal-window">
+        <div class="crop_modal"></div>
+        <div class="close_btn"></div>
+        <div class="select_icon_btn">決定</div>
+    </div>
+</div>
+
+
+<%= stylesheet_link_tag    'cropper.min' %>
+<%= javascript_include_tag 'cropper.min' %>
