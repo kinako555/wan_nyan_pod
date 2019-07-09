@@ -54,67 +54,6 @@ $(function(){
     };
   };
 
-  // formデータをまとめてajaxでコントローラーに渡すための準備
-  function sending(){
-    let formData = new FormData();
-    const route = $('#route').val();
-    const id = $('#idParams').val();
-    const action = $('#action').val();
-
-　　 // CSRF対策（独自のajax処理を行う場合、head内にあるcsrf-tokenを取得して送る必要がある）
-    $.ajaxPrefilter(function(options, originalOptions, jqXHR){
-      let token;
-      if (!options.crossDomain){
-        token = $('meta[name="csrf-token"]').attr('content');
-        if (token) return jqXHR.setRequestHeader('X-CSRF-Token', token);
-      };
-    });
-
-    // 入力されたformデータをformDataに入れる
-    usersVal(formData);
-
-    // newとeditでルーティングを区別
-    if (action == "new"){
-      $.ajax({
-        url: '/' + route,
-        datatype: 'json',
-        type: 'post',
-        data: formData,
-        processData: false,
-        contentType: false,
-      });
-    }else if (action == "edit"){
-      $.ajax({
-        url: '/' + route + '/' + id,
-        datatype: 'json',
-        type: 'patch',
-        data: formData,
-        processData: false,
-        contentType: false,
-      });
-    }
-  };
-
-  // 入力されたformデータ（textやradioなど）を取得する関数作成
-  function usersVal(formData){
-    name = $('#name').val();
-    email = $('#email').val();
-    twitter = $('#twitter').val();
-    facebook = $('#facebook').val();
-    content = $('#content').val();
-    want_to_advertise = $(':radio[name="want_to_advertise"]:checked').val();
-    want_to_be_advertised = $(':radio[name="want_to_be_advertised"]:checked').val();
-    if (blob != null) formData.append('icon', blob);
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('twitter', twitter);
-    formData.append('facebook', facebook);
-    formData.append('content', content);
-    if (want_to_advertise != null) formData.append('want_to_advertise', want_to_advertise);
-    if (want_to_be_advertised != null) formData.append('want_to_be_advertised', want_to_be_advertised);
-    return formData
-  }
-
   // 画像選択時
   $('#icon').on('change', function(e){
     file = e.target.files[0];
@@ -136,6 +75,7 @@ $(function(){
       initIconCrop();
     });
     reader.readAsDataURL(file);
+    $(this).val(''); //同じファイルを検知するためにvalueを削除
   });
 
   // トリミング決定時
@@ -151,10 +91,5 @@ $(function(){
     $('.overlay').fadeOut();
     $('#crop_img').remove();
     $('.cropper-container').remove();
-  });
-
-  // コントローラーへ送信
-  $('.submit_btn').on('click', function(){
-    blobing();
   });
 });

@@ -1,4 +1,5 @@
 // アイコン枠
+
 #img_field {
   font-size: 15px;
   margin-top: 10px;
@@ -48,50 +49,21 @@
 }
 
 
+// トリミング画面
+
 .image-cropper {
-  width: 100px;
-  height: 100px;
+  width: 70%;
+  height: 50%;
   position: relative;
   overflow: hidden;
   border-radius: 50%;
 }
 
-.cropper-view-box,
+.cropper-view-box{
+  border-radius: 50%;
+  outline: none;
+}
+
 .cropper-face {
     border-radius: 50%;
-}
-
-.cropper-container{
-  width: 50%;
-  height: 70px;
-}
-
-.overlay {
-  //モーダルウィンドウの背景を設定
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-  //透過度をつける
-    background: rgba(0, 0, 0, 0.3);
-    display: none;
-    z-index: 1;
-}
-
-.modal-window {
-  // モーダルウィンドウの画面を設定(高さ・幅は調整ください)
-    width: 500px;
-    height: 200px;
-    position: absolute;
-  //トップからの場所を指定（topをいじれば高さが調整できます）
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    z-index: 2;
-  //flexboxで子要素のボタンとメッセージボックスの要素を配置する
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
 }

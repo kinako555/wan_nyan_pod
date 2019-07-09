@@ -1,15 +1,9 @@
 <h1>プロフィール設定</h1>
-
 <div class="row justify-content-center">
     <div class="col-md-6">
         <%= form_for(@user) do |f| %>
             <%= render 'shared/error_messages', object: f.object %>
             <!-- アイコン開始 -->
-            
-            <%= hidden_field_tag "action", params[:action] %>
-            <%= hidden_field_tag "route", "users" %>
-            <%= hidden_field_tag "idParams", @user.id %>
-
             <div class="field image">
                 <i class="far fa-check-square"></i>
                 <div id="img_field" onClick="$('#icon').click()" >
@@ -21,11 +15,7 @@
             　  </div>
                 <%= f.file_field :icon, class: "image", style: "display:none;", id: "icon"%>
             </div>
-
-
-
             <!--アイコン終わり -->
-
             <%= f.label :name %>
             <%= f.text_field :name, class: 'form-control' %>
 
@@ -43,16 +33,6 @@
         <% end %>
     </div>
 </div>
+<%= render 'icon_editter_modal' %>
 
-<!-- modal -->
-<div class="overlay" style="display:none;" >
-    <div class="modal-window">
-        <div class="crop_modal"></div>
-        <div class="close_btn"></div>
-        <div class="select_icon_btn">決定</div>
-    </div>
-</div>
-
-
-<%= stylesheet_link_tag    'cropper.min' %>
 <%= javascript_include_tag 'cropper.min' %>
