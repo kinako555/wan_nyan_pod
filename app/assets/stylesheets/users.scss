@@ -51,12 +51,8 @@
 
 // トリミング画面
 
-.image-cropper {
-  width: 70%;
-  height: 50%;
-  position: relative;
-  overflow: hidden;
-  border-radius: 50%;
+.crop_modal{
+  max-height: 500px;
 }
 
 .cropper-view-box{
