@@ -1,4 +1,4 @@
-class PictureUploader < CarrierWave::Uploader::Base
+class MicropostPictureUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   process resize_to_limit: [400, 400]
   # Include RMagick or MiniMagick support:

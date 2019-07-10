@@ -26,7 +26,7 @@ class User < ApplicationRecord
 
     before_save :downcase_email
 
-    mount_uploader :icon, PictureUploader
+    mount_uploader :icon, UserIconUploader
 
     validates :name,     presence: true, 
                          length: { maximum: 50}
@@ -36,6 +36,13 @@ class User < ApplicationRecord
                          format: { with: VALID_EMAIL_REGEX },
                          uniqueness: { case_sensitive: false }
     validates :password, presence: true, length: { minimum: 6 }
+    validate  :picture_size
+
+    # sorceryから提供されていないか確認
+    # ユーザーが有効か
+    def activated?
+        activation_state == 'active'
+    end
 
     # 自分とフォローしているMicropostsを返す
     def timeline
@@ -63,5 +70,12 @@ class User < ApplicationRecord
         # メールアドレスをすべて小文字にする
         def downcase_email
             self.email = email.downcase
+        end
+
+        # アップロードされた画像のサイズをバリデーションする
+        def picture_size
+            if icon.size > 5.megabytes
+                errors.add(:picture, "should be less than 5MB")
+            end
         end
 end

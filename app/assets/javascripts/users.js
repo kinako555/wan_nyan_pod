@@ -75,7 +75,7 @@ $(function(){
       initIconCrop();
     });
     reader.readAsDataURL(file);
-    $(this).val(''); //同じファイルを検知するためにvalueを削除
+    //$(this).val(''); //同じファイルを検知するためにvalueを削除
   });
 
   // トリミング決定時

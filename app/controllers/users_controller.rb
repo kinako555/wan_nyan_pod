@@ -29,7 +29,6 @@ class UsersController < ApplicationController
     # ユーザー本人ならtimelineを代入する
     @microposts = @user == current_user ? @user.timeline : @user.microposts
     # 検索したユーザーが有効であればユーザーホーム画面に遷移
-    # 無効な場合はabout画面
     redirect_to root_path and return unless @user.activated?
   end
 
@@ -40,7 +39,7 @@ class UsersController < ApplicationController
 
   # ユーザー登録処理
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_create_params)
     # save時に
     # メール送信
     # active_token, activation_token_expires_atを作成 
@@ -77,7 +76,7 @@ class UsersController < ApplicationController
   # # プロフィール設定画面登録処理
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
+    if @user.update_attributes(user_update_params)
       flash[:success] = "プロフィールを更新しました"
       redirect_to @user # ユーザーホーム画面に遷移
     else
@@ -108,8 +107,13 @@ class UsersController < ApplicationController
 
   private
 
-    def user_params
+    def user_create_params
       params.require(:user).permit(:name, :email, :password,
+                                   :password_confirmation)
+    end
+
+    def user_update_params
+      params.require(:user).permit(:icon, :name, :email, :password,
                                    :password_confirmation)
     end
 
