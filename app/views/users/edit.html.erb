@@ -1,8 +1,9 @@
 <%= stylesheet_link_tag    'cropper.min' %>
 
+<%= hidden_field_tag "idParams", @user.id %>
+
 <h1>プロフィール設定</h1>
 <%= form_for(@user) do |f| %>
-    <%= hidden_field_tag "route", "users" %>
     <%= hidden_field_tag "idParams", @user.id %>
     <%= render 'shared/error_messages', object: f.object %>
     <div class="form-group"><div class="row">
@@ -34,7 +35,7 @@
             <%= f.label :password_confirmation, "Confirmation" %>
             <%= f.password_field :password_confirmation, class: 'form-control' %>
 
-            <%= f.submit "更新", class: "btn btn-primary" %>
+            <div class=" btn btn-primary submit_btn">更新</div>
         </div>
     </div></div>
 <% end %>

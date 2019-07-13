@@ -75,10 +75,9 @@ class UsersController < ApplicationController
 
   # # プロフィール設定画面登録処理
   def update
-    @user = User.find(params[:id])
-    if @user.update_attributes(user_update_params)
+    if current_user.update_attributes(user_update_params)
       flash[:success] = "プロフィールを更新しました"
-      redirect_to @user # ユーザーホーム画面に遷移
+      redirect_to current_user
     else
       render 'edit'
     end
@@ -113,7 +112,7 @@ class UsersController < ApplicationController
     end
 
     def user_update_params
-      params.require(:user).permit(:icon, :name, :email, :password,
+      params.permit(:icon, :name, :email, :password,
                                    :password_confirmation)
     end
 

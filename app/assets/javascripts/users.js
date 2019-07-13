@@ -44,17 +44,61 @@ $(function(){
         //  if ~.toBlob -> HTMLCanvasElement.toBlob() が使用できる場合
         croppedCanvas.toBlob(function(b){
           blob = b;
+          sending();
         });
       }else if(croppedCanvas && croppedCanvas.msToBlob){
         // msToblob -> IE10以降やEDGEで使えるメソッド
         blob = croppedCanvas.msToBlob();
+        sending();
       }else{
         blob = null;
+        sending();
       }
-      if (blob != null) {
-        console.log(blob)
-        $('#icon').val(blob)
-      }
+    };
+
+    // 入力されたformデータ（textやradioなど）を取得する関数作成
+    function usersVal(formData){
+      name = $('#user_name').val();
+      email = $('#user_email').val();
+      password = $('#user_password').val();
+      password_confirmation = $('#user_password_confirmation').val();
+  
+      if (blob != null) formData.append('icon', blob);
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('password_confirmation', password_confirmation);
+
+      return formData
+    }
+
+    // formデータをまとめてajaxでコントローラーに渡すための準備
+    function sending(){
+      var formData = new FormData();
+      const id = $('#idParams').val();
+  
+  　　 // CSRF対策（独自のajax処理を行う場合、head内にあるcsrf-tokenを取得して送る必要がある）
+      $.ajaxPrefilter(function(options, originalOptions, jqXHR){
+        var token;
+        if (!options.crossDomain){
+          token = $('meta[name="csrf-token"]').attr('content');
+  
+          if (token){
+            return jqXHR.setRequestHeader('X-CSRF-Token', token);
+          };
+        };
+      });
+      // 入力されたformデータをformDataに入れる
+      usersVal(formData);
+
+      $.ajax({
+        url: '/users/' + id,
+        datatype: 'json',
+        type: 'patch',
+        data: formData,
+        processData: false,
+        contentType: false,
+      });
     };
 
     // 画像選択時
@@ -79,7 +123,6 @@ $(function(){
       });
       // Cropper.jsが読み込めるようにBase64データとして取得
       reader.readAsDataURL(file);
-      console.log($(this).val())
       //$(this).val(''); //同じファイルを検知するためにvalueを削除
     });
   
@@ -89,11 +132,6 @@ $(function(){
       $('.overlay').fadeOut();
       $('#crop_img').remove();
       $('.cropper-container').remove();
-      let iconData = document.getElementById('img_field').children[0].src
-      console.log(toBlob(iconData))
-      blobToFile(toBlob(iconData), 'aaa.png')
-      console.log(blobToFile(toBlob(iconData)))
-      $(icon).val(blobToFile(toBlob(iconData, 'aaa.png')))
     });
   
     // トリミング画面を閉じる時
@@ -102,29 +140,9 @@ $(function(){
       $('#crop_img').remove();
       $('.cropper-container').remove();
     });
+
+    // コントローラーへ送信
+    $('.submit_btn').on('click', function(){
+      blobing();
+    });
 });
-
-// base64のデータをblobへ変換
-function toBlob(base64) {
-  var bin = atob(base64.replace(/^.*,/, ''));
-  var buffer = new Uint8Array(bin.length);
-  for (var i = 0; i < bin.length; i++) {
-      buffer[i] = bin.charCodeAt(i);
-  }
-  // Blobを作成
-  try{
-      var blob = new Blob([buffer.buffer], {
-          type: 'image/png'
-      });
-  }catch (e){
-      return false;
-  }
-  return blob;
-}
-
-function blobToFile(theBlob, fileName){
-  //A Blob() is almost a File() - it's just missing the two properties below which we will add
-  theBlob.lastModifiedDate = new Date();
-  theBlob.name = fileName;
-  return theBlob;
-}
