@@ -43,16 +43,13 @@ $(function(){
       if (croppedCanvas && croppedCanvas.toBlob){
         //  if ~.toBlob -> HTMLCanvasElement.toBlob() が使用できる場合
         croppedCanvas.toBlob(function(b){
-          blob = b;
-          sending();
+          blob = b;     
         });
       }else if(croppedCanvas && croppedCanvas.msToBlob){
         // msToblob -> IE10以降やEDGEで使えるメソッド
         blob = croppedCanvas.msToBlob();
-        sending();
       }else{
         blob = null;
-        sending();
       }
     };
 
@@ -108,13 +105,12 @@ $(function(){
   
       // 選択されたファイルの確認
       if(!file || file.type.indexOf('image') < 0) return false;
-      
+      // modal表示
+      $('#modal-img').modal();
       // トリミング画面をフェードインさせる
       reader.onload = (function(e){
-        $('.overlay').fadeIn();
         $('.crop_modal').append($('<img>').attr({
           src: e.target.result,
-          height: "100%",
           class: "preview",
           id: "crop_img",
           title: file.name
@@ -123,26 +119,28 @@ $(function(){
       });
       // Cropper.jsが読み込めるようにBase64データとして取得
       reader.readAsDataURL(file);
-      //$(this).val(''); //同じファイルを検知するためにvalueを削除
+      console.log(this)
+      $(this).val(''); //同じファイルを検知するためにvalueを削除
     });
   
     // トリミング決定時
     $('.select_icon_btn').on('click', function(){
       iconCropping();
-      $('.overlay').fadeOut();
+      //$('.overlay').fadeOut();
       $('#crop_img').remove();
       $('.cropper-container').remove();
+      blobing();
     });
   
     // トリミング画面を閉じる時
     $('.close_btn').on('click', function(){
-      $('.overlay').fadeOut();
+      //$('.overlay').fadeOut();
       $('#crop_img').remove();
       $('.cropper-container').remove();
     });
 
     // コントローラーへ送信
     $('.submit_btn').on('click', function(){
-      blobing();
+      sending();
     });
 });

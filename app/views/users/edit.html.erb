@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <%= render 'icon_editter_modal' %>
+            
             
             <%= f.label :name %>
             <%= f.text_field :name, class: 'form-control' %>
@@ -39,5 +39,7 @@
         </div>
     </div></div>
 <% end %>
+
+<%= render 'icon_editter_modal' %>
 
 <%= javascript_include_tag 'cropper.min' %>
