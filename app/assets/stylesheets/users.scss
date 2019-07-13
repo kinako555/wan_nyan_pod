@@ -65,13 +65,18 @@
 }
 
 .modal-content {
-  min-width: 500px;
-  min-height: 605px;
+  width: 500px;
+  height: 605px;
 }
 
-.cropper-container {
-  min-width: 466px;
-  min-height: 500px;
+.cropper-container.cropper-bg {
+  width: 466px;
+  height: 500px;
+}
+
+.crop_view {
+  width: 466px;
+  height: 500px;
 }
 
 .cropper-canvas {

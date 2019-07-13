@@ -1,3 +1,5 @@
+// アイコントリミング
+
 $(function(){
     // cropper（トリミング部）のコーディング（詳しくはGitHub参照
     let cropper;
@@ -109,7 +111,7 @@ $(function(){
       $('#modal-img').modal();
       // トリミング画面をフェードインさせる
       reader.onload = (function(e){
-        $('.crop_modal').append($('<img>').attr({
+        $('.crop_view').append($('<img>').attr({
           src: e.target.result,
           class: "preview",
           id: "crop_img",
@@ -119,7 +121,6 @@ $(function(){
       });
       // Cropper.jsが読み込めるようにBase64データとして取得
       reader.readAsDataURL(file);
-      console.log(this)
       $(this).val(''); //同じファイルを検知するためにvalueを削除
     });
   

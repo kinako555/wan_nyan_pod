@@ -79,6 +79,7 @@ class UsersController < ApplicationController
       flash[:success] = "プロフィールを更新しました"
       redirect_to current_user
     else
+      #TODO: 遷移先画面でメッセージを表示させる
       render 'edit'
     end
   end
