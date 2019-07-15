@@ -30,9 +30,6 @@ gem 'sorcery'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  # add 2019/7/15 Rspec導入
-  gem 'rspec-rails'
-  gem "factory_bot_rails"
 end
 
 group :development do
@@ -45,7 +42,11 @@ group :development do
 end
 
 group :test do
-
+  gem 'rails-controller-testing', '1.0.2'
+  gem 'minitest',                 '5.10.3'
+  gem 'minitest-reporters',       '1.1.14'
+  gem 'guard',                    '2.13.0'
+  gem 'guard-minitest',           '2.4.4'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

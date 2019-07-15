@@ -1,46 +1,46 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 first:
-  name: First Example
-  email: First@example.com
-  salt: <%= salt = "asdasdastr4325234324sdfds" %>
-  password_digest: <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
-  admin: true
+  name:             First Example
+  email:            First@example.com
+  salt:             <%= salt = "asdasdastr4325234324sdfds" %>
+  password_digest:  <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
   activation_state: active
+  admin:            true
 
 second:
-  name: Second Example
-  email: Second@example.com
-  salt: <%= salt = "asdasdastr4325234324sdfds" %>
-  password_digest: <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
+  name:             Second Example
+  email:            Second@example.com
+  salt:             <%= salt = "asdasdastr4325234324sdfds" %>
+  password_digest:  <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
   activation_state: active
 
 archer:
-  name: Archer Example
-  email: Archer@example.com
-  salt: <%= salt = "asdasdastr4325234324sdfds" %>
-  password_digest: <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
+  name:             Archer Example
+  email:            Archer@example.com
+  salt:             <%= salt = "asdasdastr4325234324sdfds" %>
+  password_digest:  <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
   activation_state: active
 
 lana:
-  name: Lana Example
-  email: Lana@example.com
-  salt: <%= salt = "asdasdastr4325234324sdfds" %>
-  password_digest: <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
+  name:             Lana Example
+  email:            Lana@example.com
+  salt:             <%= salt = "asdasdastr4325234324sdfds" %>
+  password_digest:  <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
   activation_state: active
 
 malory:
-  name: Malory Example
-  email: Malory@example.com
-  salt: <%= salt = "asdasdastr4325234324sdfds" %>
-  password_digest: <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
+  name:             Malory Example
+  email:            Malory@example.com
+  salt:             <%= salt = "asdasdastr4325234324sdfds" %>
+  password_digest:  <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
   activation_state: active
 
 <% 30.times do |n| %>
 user_<%= n %>:
-  name:  <%= "User #{n}" %>
-  email: <%= "user-#{n}@example.com" %>
-  salt: <%= salt = "asdasdastr4325234324sdfds" %>
-  password_digest: <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
+  name:             <%= "User #{n}" %>
+  email:            <%= "user-#{n}@example.com" %>
+  salt:             <%= salt = "asdasdastr4325234324sdfds" %>
+  password_digest:  <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
   activation_state: active
 <% end %>

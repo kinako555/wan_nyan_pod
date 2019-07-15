@@ -94,7 +94,4 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 
-  # add 2019/7/16 Sorcery
-  config.include Sorcery::TestHelpers::Rails::Controller, type: :controller
-  config.include Sorcery::TestHelpers::Rails::Integration, type: :feature
 end

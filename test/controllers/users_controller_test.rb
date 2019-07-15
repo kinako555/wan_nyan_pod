@@ -1,10 +1,12 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
+  include Sorcery::TestHelpers::Rails::Integration
+  include Sorcery::TestHelpers::Rails::Controller
 
   def setup
-    @user = users(:michael)
-    @other_user = users(:two)
+    @user = users(:first)
+    @other_user = users(:second)
   end
 
   test "should get new" do
@@ -28,7 +30,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   # ユーザー情報更新の際、パラメーターにadminが含まれていたら
   # 更新を実行しない
   test "should not allow the admin attribute to be edited via the web" do
-    login_user(@other_user)
+    login_user @other_user
     assert_not @other_user.admin?
     patch user_path(@other_user), params: {
                                     user: { password:              "foobar",
@@ -47,8 +49,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should redirect update when logged in as wrong user" do
-    #login_user @other_user
-    p login_url
+    login_user @other_user
     login_user(user = @other_user, route = login_url)
     patch user_path(@user), params: { user: { name: @user.name,
                                               email: @user.email } }
