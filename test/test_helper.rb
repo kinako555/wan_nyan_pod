@@ -13,9 +13,13 @@ class ActiveSupport::TestCase
     !session[:user_id].nil?
   end
 
-  # テストユーザーとしてログインする
-  def log_in_as(user)
-    session[:user_id] = user.id
+  # Sorcery::TestHelperが使用できないので自装
+  def login_user(user, password="password", remember_me=false)
+    user ||= users(:first)
+    post login_path, params: { session: { email:       user.email,
+                                           password:    password,
+                                           remember_me: remember_me }}
+    follow_redirect! # 画面遷移
   end
 end
 

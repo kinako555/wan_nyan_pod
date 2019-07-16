@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :first_user do
+  factory :first do
     name                  { "First Example" }
     email                 { "michael@example.com" }
     password              { "password" }
@@ -7,7 +7,7 @@ FactoryBot.define do
     admin                 { true }
   end
 
-  factory :second_user do
+  factory :second do
     name                  { "Second Example" }
     email                 { "bbb@co.jp" }
     password              { "password" }

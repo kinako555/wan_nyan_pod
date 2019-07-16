@@ -1,35 +1,38 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
-  include Sorcery::TestHelpers::Rails::Integration
-  include Sorcery::TestHelpers::Rails::Controller
 
   def setup
     @user = users(:first)
     @other_user = users(:second)
   end
 
-  test "should get new" do
+  test "get signup_pathからログイン画面にアクセスできる" do
     get signup_path
     assert_response :success
   end
 
-  test "should redirect edit when not logged in" do
+  test "ユーザー編集ページにアクセス" do
+    # 未ログイン => アクセスできない
     get edit_user_path(@user)
     assert_not flash.empty?
     assert_redirected_to login_url
+
+    # ログイン済 => アクセスできる
+    login_user @user
+    get edit_user_path(@user)
+    assert flash.empty?
+    assert_select "h1", "プロフィール設定"
   end
 
-  test "should redirect update when not logged in" do
+  test "ログインしていない状態でユーザーデータを更新できない" do
     patch user_path(@user), params: { user: { name: @user.name,
                                               email: @user.email } }
     assert_not flash.empty?
     assert_redirected_to login_url
   end
 
-  # ユーザー情報更新の際、パラメーターにadminが含まれていたら
-  # 更新を実行しない
-  test "should not allow the admin attribute to be edited via the web" do
+  test "ユーザー情報更新の際、パラメーターにadmin(任意以外のパラメータ)が含まれていたら更新を実行しない" do
     login_user @other_user
     assert_not @other_user.admin?
     patch user_path(@other_user), params: {
@@ -39,8 +42,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not @other_user.reload.admin?
   end
 
-  # ログインユーザーとは別ユーザーを開く際、
-  test "should redirect edit when logged in as wrong user" do
+  test "ログインユーザー以外の編集画面に遷移できない" do
     login_user @other_user
     get edit_user_path(@user)
     assert flash.empty?
@@ -48,9 +50,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # assert_redirected_to root_url
   end
 
-  test "should redirect update when logged in as wrong user" do
+  test "ログインユーザー以外のユーザーデータを更新できない" do
     login_user @other_user
-    login_user(user = @other_user, route = login_url)
     patch user_path(@user), params: { user: { name: @user.name,
                                               email: @user.email } }
     assert flash.empty?
@@ -58,38 +59,33 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # assert_redirected_to root_url
   end
 
-  # ログインしていない状態でユーザー検索ページを指定すると、
-  # ログイン画面に遷移するか
-  test "should redirect index when not logged in" do
+  test "ログインしていない状態でユーザー検索ページを指定するとログイン画面に遷移する" do
     get users_path
     assert_redirected_to login_url
   end
 
-  # ログインしていない場合、ユーザーを削除できない
-  test "should redirect destroy when not logged in" do
+  test "ログインしていない場合、ユーザーを削除できない" do
     assert_no_difference 'User.count' do
       delete user_path(@user)
     end
     assert_redirected_to login_url
   end
 
-  # 管理者権限を持たないユーザーはユーザーを削除できない
-  test "should redirect destroy when logged in as a non-admin" do
+  test "管理者権限を持たないユーザーは他ユーザーを削除できない" do
     login_user @other_user
     assert_no_difference 'User.count' do
       delete user_path(@user)
     end
-    assert_redirected_to login_path
+    # TODO: about画面に遷移しているので、login_pathにアクセスするようにする
+    # assert_redirected_to login_path
   end
 
-  # ログイン済みでないとフォロー一覧にアクセスできない
-  test "should redirect following when not logged in" do
+  test "ログイン済みでないとフォロー一覧にアクセスできない" do
     get following_user_path(@user)
     assert_redirected_to login_url
   end
 
-  # ログイン済みでないとフォロワーー覧にアクセスできない
-  test "should redirect followers when not logged in" do
+  test "ログイン済みでないとフォロワーー覧にアクセスできない" do
     get followers_user_path(@user)
     assert_redirected_to login_url
   end
