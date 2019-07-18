@@ -21,6 +21,12 @@ class ActiveSupport::TestCase
                                            remember_me: remember_me }}
     follow_redirect! # 画面遷移
   end
+
+  # アイコン画像をオブジェクトとして返す
+  def get_icon
+    image_path = File.join(Rails.root, "test/images/icon_test.png")
+    File.new(image_path)
+  end
 end
 
 class ActionDispatch::IntegrationTest

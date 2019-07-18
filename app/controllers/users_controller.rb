@@ -114,7 +114,7 @@ class UsersController < ApplicationController
 
     def user_update_params
       params.permit(:icon, :name, :email, :password,
-                                   :password_confirmation)
+                    :password_confirmation)
     end
 
     # beforeアクション
@@ -124,7 +124,7 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       # TODO: 遷移先を変える (current_userからユーザーを参照する？)
-      redirect_to(about_path) unless current_user?(@user)
+      redirect_to(login_path) unless current_user?(@user)
     end
 
     # 管理者か確認

@@ -5,6 +5,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:first)
     @other_user = users(:second)
+    @icon = get_icon
   end
 
   test "get signup_pathからログイン画面にアクセスできる" do
@@ -12,37 +13,20 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "ユーザー編集ページにアクセス" do
-    # 未ログイン => アクセスできない
-    get edit_user_path(@user)
-    assert_not flash.empty?
-    assert_redirected_to login_url
-
-    # ログイン済 => アクセスできる
+  test "ログイン済ならユーザー編集ページにアクセスできる" do
     login_user @user
     get edit_user_path(@user)
     assert flash.empty?
     assert_select "h1", "プロフィール設定"
   end
 
-  test "ログインしていない状態でユーザーデータを更新できない" do
-    patch user_path(@user), params: { user: { name: @user.name,
-                                              email: @user.email } }
+  test "未ログインならユーザー編集ページにアクセスできない" do
+    get edit_user_path(@user)
     assert_not flash.empty?
     assert_redirected_to login_url
   end
 
-  test "ユーザー情報更新の際、パラメーターにadmin(任意以外のパラメータ)が含まれていたら更新を実行しない" do
-    login_user @other_user
-    assert_not @other_user.admin?
-    patch user_path(@other_user), params: {
-                                    user: { password:              "foobar",
-                                            password_confirmation: "foobar",
-                                            admin: 1 } }
-    assert_not @other_user.reload.admin?
-  end
-
-  test "ログインユーザー以外の編集画面に遷移できない" do
+  test "ログインユーザー以外のユーザー編集ページにアクセスできない" do
     login_user @other_user
     get edit_user_path(@user)
     assert flash.empty?
@@ -50,13 +34,62 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # assert_redirected_to root_url
   end
 
+  test "ログイン済ならユーザーデータを更新できる" do
+    login_user @user
+
+    name = "wanko"
+    email = "aasssa@dsss.jp"
+    patch user_path(@user), params: { icon:                  @icon,
+                                      name:                  name,
+                                      email:                 email, 
+                                      password:              "aaaaaa",
+                                      password_confirmation: "aaaaaa" }
+    assert_redirected_to @user
+    @user.reload
+    assert_equal @user.name, name
+    assert_equal @user.email, email
+  end
+
+  test "未ログインならユーザーデータを更新できない" do
+    patch user_path(@user), params: { icon:                  @icon,
+                                      name:                  "nyanko",
+                                      email:                 "bbb@d.jp", 
+                                      password:              "abcdef",
+                                      password_confirmation: "abcdef"   }
+    assert_redirected_to login_url
+  end
+
   test "ログインユーザー以外のユーザーデータを更新できない" do
+    login_user @user
+
+    befor_name = @other_user.name
+    befor_email = @other_user.email
+
+    name = "wanko"
+    email = "aasssa@dsss.jp"
+    patch user_path(@other_user), params: { icon:                  @icon,
+                                            name:                  name,
+                                            email:                 email, 
+                                            password:              "aaaaaa",
+                                            password_confirmation: "aaaaaa" }
+    assert_redirected_to login_path
+    @other_user.reload
+    assert_equal @other_user.name, befor_name
+    assert_equal @other_user.email, befor_email
+  end
+
+  test "ユーザー情報更新の際、パラメーターにadmin(任意以外のパラメータ)が含まれていたら更新を実行しない" do
     login_user @other_user
-    patch user_path(@user), params: { user: { name: @user.name,
-                                              email: @user.email } }
-    assert flash.empty?
-    # TODO: 遷移先を指定する
-    # assert_redirected_to root_url
+    assert_not @other_user.admin?
+    patch user_path(@other_user), params: { icon:                  @icon,
+                                            name:                  "nyanko",
+                                            email:                 "bbb@d.jp", 
+                                            password:              "abcdef",
+                                            password_confirmation: "abcdef",
+                                            admin: 1                        }
+    # TODO: リダイレクト先を確認する
+    #assert_redirected_to login_url
+    assert_not @other_user.reload.admin?
   end
 
   test "ログインしていない状態でユーザー検索ページを指定するとログイン画面に遷移する" do
