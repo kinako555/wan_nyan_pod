@@ -8,10 +8,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @icon = get_icon
   end
 
+  # ログイン画面にアクセス
+
   test "get signup_pathからログイン画面にアクセスできる" do
     get signup_path
     assert_response :success
   end
+
+  # ユーザー編集ページへのアクセス-----------------------------------------------
 
   test "ログイン済ならユーザー編集ページにアクセスできる" do
     login_user @user
@@ -33,6 +37,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # TODO: 遷移先を指定する
     # assert_redirected_to root_url
   end
+
+  # データ更新-----------------------------------------------------------
 
   test "ログイン済ならユーザーデータを更新できる" do
     login_user @user
@@ -92,10 +98,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not @other_user.reload.admin?
   end
 
+  # ユーザー検索ページに遷移----------------------------------------------------
+
   test "ログインしていない状態でユーザー検索ページを指定するとログイン画面に遷移する" do
     get users_path
     assert_redirected_to login_url
   end
+
+  # ユーザー削除---------------------------------------------------------------
 
   test "ログインしていない場合、ユーザーを削除できない" do
     assert_no_difference 'User.count' do
@@ -112,6 +122,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # TODO: about画面に遷移しているので、login_pathにアクセスするようにする
     # assert_redirected_to login_path
   end
+
+  # フォロワー一覧ページにアクセス-------------------------------------------
 
   test "ログイン済みでないとフォロー一覧にアクセスできない" do
     get following_user_path(@user)

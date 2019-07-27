@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.where(activated: true)
+    @users = User.where(activation_state: "active")
     # ユーザー検索画面に遷移
   end
 
