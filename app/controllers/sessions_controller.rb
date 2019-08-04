@@ -2,8 +2,10 @@ class SessionsController < ApplicationController
 
   skip_before_action :require_login, only: [:new, :create]
 
+  # 未ログインならログイン画面に遷移
+  # ログイン済ならユーザーホーム画面に遷移
   def new
-    # ログイン画面に遷移
+    redirect_home_or_login
   end
 
   def create

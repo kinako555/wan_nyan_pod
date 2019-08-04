@@ -8,7 +8,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @icon = get_icon
   end
 
-  # ログイン画面にアクセス
+  # ログイン画面にアクセス--------------------------------------------------------
 
   test "get signup_pathからログイン画面にアクセスできる" do
     get signup_path
@@ -100,16 +100,31 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   # ユーザー検索ページに遷移----------------------------------------------------
 
-  test "ログインしていない状態でユーザー検索ページを指定するとログイン画面に遷移する" do
+  test "ログイン済ならユーザー検索ページに遷移できる" do
+    login_user @user
+    get users_path
+    # 成功時の処理を書く
+    # assert_redirected_to users_path
+  end
+
+  test "未ログインならユーザー検索ページを指定するとログイン画面に遷移する" do
     get users_path
     assert_redirected_to login_url
   end
 
   # ユーザー削除---------------------------------------------------------------
 
-  test "ログインしていない場合、ユーザーを削除できない" do
+  test "ログイン済ならユーザーを削除できる" do
+    login_user @user
     assert_no_difference 'User.count' do
-      delete user_path(@user)
+      delete user_path(@ther_user)
+    end
+    assert_redirected_to login_url
+  end
+
+  test "未ログインならユーザーを削除できない" do
+    assert_no_difference 'User.count' do
+      delete user_path(@ther_user)
     end
     assert_redirected_to login_url
   end

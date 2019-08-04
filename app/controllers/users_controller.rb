@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       @user = current_user
       # buildでnilデータが作成されているので
       # nilをはじく必要がある
-      @microposts = @user.timeline
+      @microposts = @user.microposts
       @micropost =  current_user.microposts.build
       # ホーム画面に遷移
     else
@@ -23,13 +23,17 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    # 該当なしの場合nilを返したいのでfind_byを使用
+    @user = User.find_by(id: params[:id])
+    # 検索したユーザーが無効であればユーザーホーム画面に遷移
+    redirect_to login_path and return if @user.nil? || !@user.activated?
     # ユーザー本人ならtimelineを表示
-    @micropost = current_user.microposts.build if logged_in?
-    # ユーザー本人ならtimelineを代入する
-    @microposts = @user == current_user ? @user.timeline : @user.microposts
-    # 検索したユーザーが有効であればユーザーホーム画面に遷移
-    redirect_to root_path and return unless @user.activated?
+    if @user == current_user
+      @micropost = current_user.microposts.build
+      @microposts = @user.timeline
+    else
+      @microposts = @user.microposts
+    end
   end
 
   def new
