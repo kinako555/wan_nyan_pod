@@ -2,14 +2,10 @@ class ApplicationController < ActionController::Base
     include SessionsHelper
     before_action :require_login
 
+    # 未ログアウトなら従来の処理
     # ログイン済ならユーザーホーム画面に遷移
-    # 未ログインならログイン画面に遷移
-    def redirect_home_or_login
-      if logged_in?
-        redirect_to root_path
-      else
-        render "sessions/new"
-      end
+    def check_logged_out
+      redirect_to root_path if logged_in?
     end
 
     private
