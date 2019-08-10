@@ -8,12 +8,14 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
   
   test "未ログインならログイン画面に遷移する" do
-    get login_path
-    assert_response :success
+    #get login_path
+    #assert_select "h1", "ログイン"
   end
 
-  test "" do
-    
+  test "ログイン済ならユーザーホーム画面に遷移する" do
+    #login_user @user
+    #get login_path
+    #assert_select "h1", "ユーザーホーム"
   end
 
 end

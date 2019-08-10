@@ -114,17 +114,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   # ユーザー削除---------------------------------------------------------------
 
-  test "ログイン済ならユーザーを削除できる" do
+  test "ログイン済で管理権限持ちならユーザーを削除できる" do
     login_user @user
-    assert_no_difference 'User.count' do
-      delete user_path(@ther_user)
+    assert_difference 'User.count' do
+      delete user_path @other_user 
     end
     assert_redirected_to login_url
   end
 
   test "未ログインならユーザーを削除できない" do
     assert_no_difference 'User.count' do
-      delete user_path(@ther_user)
+      delete user_path @other_user 
     end
     assert_redirected_to login_url
   end
