@@ -8,11 +8,46 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @icon = get_icon
   end
 
-  # ログイン画面にアクセス--------------------------------------------------------
+  # 1 GET root_path: ホーム画面------
 
-  test "get signup_pathからログイン画面にアクセスできる" do
-    get signup_path
+  test "1 ログイン済ならホーム画面に遷移する" do
+    login_user @user
+    get root_path
     assert_response :success
+  end
+
+  test "1 未ログインならログイン画面に遷移する" do
+    get root_path
+    assert_redirected_to login_path
+  end
+
+  # 2 GET users_path: ユーザー検索画面------
+
+  test "2 ログイン済ならユーザー検索ページに遷移できる" do
+    login_user @user
+    get users_path
+    # 成功時の処理を書く
+    # assert_redirected_to users_path
+  end
+
+  test "2 未ログインならユーザー検索ページを指定するとログイン画面に遷移する" do
+    get users_path
+    assert_redirected_to login_path
+  end
+
+  # 3 GET users_path(User.id): タイムライン-----
+
+  test "3 ログイン済ならタイムライン画面に遷移できる"
+    login_user @user
+    get users_path @user
+    assert_response :success
+  do
+    
+  test "3 未ログインならログイン画面に遷移できる"
+    get users_path @user
+    assert_redirected_to login_url
+  do
+
   end
 
   # ユーザー編集ページへのアクセス-----------------------------------------------
@@ -116,10 +151,10 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "ログイン済で管理権限持ちならユーザーを削除できる" do
     login_user @user
-    assert_difference 'User.count' do
+    assert_difference 'User.count', -1 do
       delete user_path @other_user 
     end
-    assert_redirected_to login_url
+    assert_redirected_to users_url
   end
 
   test "未ログインならユーザーを削除できない" do
@@ -132,7 +167,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "管理者権限を持たないユーザーは他ユーザーを削除できない" do
     login_user @other_user
     assert_no_difference 'User.count' do
-      delete user_path(@user)
+      delete user_path @user
     end
     # TODO: about画面に遷移しているので、login_pathにアクセスするようにする
     # assert_redirected_to login_path
@@ -140,13 +175,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   # フォロワー一覧ページにアクセス-------------------------------------------
 
-  test "ログイン済みでないとフォロー一覧にアクセスできない" do
-    get following_user_path(@user)
-    assert_redirected_to login_url
+  test "ログイン済ならフォロワー一覧にアクセスできる" do
+    login_user @user
+    get following_user_path @user
+    assert_response :success
   end
 
-  test "ログイン済みでないとフォロワーー覧にアクセスできない" do
-    get followers_user_path(@user)
+  test "未ログインならフォロワーー覧にアクセスできない" do
+    get followers_user_path @user
     assert_redirected_to login_url
   end
 

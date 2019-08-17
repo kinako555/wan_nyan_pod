@@ -3,8 +3,8 @@ class UsersController < ApplicationController
   before_action      :correct_user,  only: [:edit, :update]
   before_action      :admin_user,    only: :destroy
 
+  # GET root_path
   def home
-    # rootパスとして使用しているため、メッセージは表示しない
     if logged_in? 
       @user = current_user
       # buildでnilデータが作成されているので
@@ -17,11 +17,14 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET users_path
   def index
     @users = User.where(activation_state: "active")
     # ユーザー検索画面に遷移
   end
 
+  # GET users_path(User)
+  # タイムライン
   def show
     # 該当なしの場合nilを返したいのでfind_byを使用
     @user = User.find_by(id: params[:id])
@@ -36,11 +39,13 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET signup_path
   def new
     @user = User.new
     # ユーザー登録画面に遷移
   end
 
+  # POST users_path
   # ユーザー登録処理
   def create
     @user = User.new(user_create_params)
@@ -56,6 +61,8 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET activate_user_url(User.activation_token)
+  # ↑ users/activation_token/activate
   # ユーザー認証メールのリンクをクリック後
   def activate
     p params[:id]
@@ -72,12 +79,15 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET edit_user_path(User)
+  # ↑ users/User.id/edit
   def edit
     @user = User.find(params[:id])
     # プロフィール設定画面に遷移
   end
 
-  # # プロフィール設定画面登録処理
+  # PATCH user_path
+  # プロフィール設定画面登録処理
   def update
     if current_user.update_attributes(user_update_params)
       flash[:success] = "プロフィールを更新しました"
@@ -88,6 +98,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # DELETE users_path(User)
   # ユーザー削除実行
   def destroy
     User.find(params[:id]).destroy
@@ -95,6 +106,7 @@ class UsersController < ApplicationController
     redirect_to users_url # 検索画面に遷移
   end
 
+  # GET following_user_path(User)
   def following
     @title = "Following"
     @user  = User.find(params[:id])
@@ -102,6 +114,7 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+  # GET followers_user_path(User)
   def followers
     @title = "Followers"
     @user  = User.find(params[:id])
