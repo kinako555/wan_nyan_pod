@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   end
 
   # GET users_path(User)
+  # @userでもいける
   # タイムライン
   def show
     # 該当なしの場合nilを返したいのでfind_byを使用
@@ -41,13 +42,22 @@ class UsersController < ApplicationController
 
   # GET signup_path
   def new
-    @user = User.new
-    # ユーザー登録画面に遷移
+    unless logged_in? # 未ログイン時のみ
+      @user = User.new
+      # ユーザー登録画面に遷移
+    else
+      redirect_to root_path
+      # ユーザーホーム画面に遷移
+    end
   end
 
   # POST users_path
   # ユーザー登録処理
   def create
+    if logged_in?
+      edirect_to root_path
+      # ユーザーホーム画面に遷移
+    end
     @user = User.new(user_create_params)
     # save時に
     # メール送信
@@ -65,7 +75,6 @@ class UsersController < ApplicationController
   # ↑ users/activation_token/activate
   # ユーザー認証メールのリンクをクリック後
   def activate
-    p params[:id]
     if (@user = User.load_from_activation_token(params[:id]))
       # 認証完了メール送信
       # activation_tokenをnilに更新
@@ -140,8 +149,7 @@ class UsersController < ApplicationController
     # 正しいユーザーでなければログイン画面に繊維
     def correct_user
       @user = User.find(params[:id])
-      # TODO: 遷移先を変える (current_userからユーザーを参照する？)
-      redirect_to(login_path) unless current_user?(@user)
+      redirect_to(root_path) unless current_user?(@user)
     end
 
     # 管理者か確認

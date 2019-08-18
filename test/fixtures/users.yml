@@ -15,6 +15,13 @@ second:
   password_digest:  <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
   activation_state: active
 
+pending_user:
+  name:             Pending Example
+  email:            Pending@example.com
+  salt:             <%= salt = "asdasdastr4325234324sdfds" %>
+  password_digest:  <%= Sorcery::CryptoProviders::BCrypt.encrypt("password", salt) %>
+  activation_state: pending
+
 archer:
   name:             Archer Example
   email:            Archer@example.com
