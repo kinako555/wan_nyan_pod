@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
+  # TODO: flashメッセージのテストも実装する
 
   def setup
     @user = users(:first)
@@ -9,7 +10,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @icon = get_icon
   end
 
-  # 1 GET root_path: ホーム画面------
+  # 1 GET root_path: ホーム画面--
 
   test "1 ログイン済ならホーム画面に遷移する" do
     login_user @user
@@ -22,13 +23,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_path
   end
 
-  # 2 GET users_path: ユーザー検索画面------
+  # 2 GET users_path: ユーザー検索画面--
 
   test "2 ログイン済ならユーザー検索ページに遷移できる" do
     login_user @user
     get users_path
-    # 成功時の処理を書く
-    # assert_redirected_to users_path
+    assert_response :success
   end
 
   test "2 未ログインならユーザー検索ページを指定するとログイン画面に遷移する" do
@@ -36,7 +36,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_path
   end
 
-  # 3 GET users_path(User): microposts-----
+  # 3 GET users_path(User): microposts--
   # ログインユーザーならタイムライン、その他ユーザーならユーザーのmicropostsのみ
 
   test "3 ログイン済ならタイムライン画面に遷移する" do
@@ -54,7 +54,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
     
   test "3 未ログインならログイン画面に遷移する" do
-    get users_path(@user)
+    get users_path(@user) 
     assert_redirected_to login_path
   end
 
@@ -88,9 +88,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   
   test "7 ログイン済ならプロフィール設定画面に遷移する" do
     login_user @user
-    get edit_user_path @user
+    get edit_user_path(@user)
     assert flash.empty?
-    assert_select "h1", "プロフィール設定"
+    assert_response :success
   end
 
   test "7 未ログインならプロフィール設定画面に遷移する" do
@@ -165,21 +165,21 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not @other_user.reload.admin?
   end
 
-  # 9 DELETE users_path(User): ユーザー削除---------------------------------------------------------------
+  # 9 DELETE users_path(User): ユーザー削除--
 
   test "9 ログイン済で管理権限持ちならユーザーを削除できる" do
     login_user @user
     assert_difference 'User.count', -1 do
       delete user_path @other_user 
     end
-    assert_redirected_to users_url
+    assert_redirected_to users_path
   end
 
   test "9 未ログインならユーザーを削除できない" do
     assert_no_difference 'User.count' do
       delete user_path @other_user 
     end
-    assert_redirected_to login_url
+    assert_redirected_to login_path
   end
 
   test "9 管理者権限を持たないユーザーは他ユーザーを削除できない" do
@@ -191,17 +191,41 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # assert_redirected_to login_path
   end
 
-  # フォロワー一覧ページにアクセス-------------------------------------------
+  
+  # 10 GET following_user_path(User): フォロー一覧ページにアクセス--
 
-  test "ログイン済ならフォロワー一覧にアクセスできる" do
+  test "10 ログイン済ならフォロー一覧にアクセスできる" do
     login_user @user
-    get following_user_path @user
+    get following_user_path(@user)
+    assert_response :success
+    # 他ユーザーにもアクセスできる
+    get following_user_path(@other_user)
     assert_response :success
   end
 
-  test "未ログインならフォロワーー覧にアクセスできない" do
-    get followers_user_path @user
-    assert_redirected_to login_url
+  test "10 未ログインならフォロー一覧にアクセスできない" do
+    get following_user_path(@user)
+    assert_redirected_to login_path
+    get following_user_path(@other_user)
+    assert_redirected_to login_path
+  end
+
+  # 11 GET followers_user_path(User): フォロワー一覧ページにアクセス--
+
+  test "11 ログイン済ならフォロー一覧にアクセスできる" do
+    login_user @user
+    get followers_user_path(@user)
+    assert_response :success
+    # 他ユーザーにもアクセスできる
+    get followers_user_path(@other_user)
+    assert_response :success
+  end
+
+  test "11 未ログインならフォロワーー覧にアクセスできない" do
+    get followers_user_path(@user)
+    assert_redirected_to login_path
+    get followers_user_path(@other_user)
+    assert_redirected_to login_path
   end
 
 end
