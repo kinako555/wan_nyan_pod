@@ -20,32 +20,29 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
-  # 2 POST sessions_path
+  # 2 POST login_path
   # ログイン処理--
 
   test "2 未ログインならログイン状態になり、ユーザーホーム画面に遷移" do
     login_user @user
     assert is_logged_in?
-    # TODO: 確認 何故かredirectではなく<200: OKとなる>
-    # assert_redirected_to root_path
+    assert_template "users/home"
   end
 
   test "2 未ログインならログイン状態になり、遷移を試みた画面に遷移" do
     get users_path # ログイン検索画面
     login_user @user
     assert is_logged_in?
-    # TODO: 確認 何故かredirectではなく<200: OKとなる>
-    # assert_redirected_to users_path
+    assert_template "users/index"
   end
 
   test "2 ログイン済ならユーザーホーム画面に遷移する" do
     login_user @user
     login_user @user
-    # TODO: 確認 何故かredirectではなく<200: OKとなる>
-    #assert_redirected_to root_path
+    assert_template "users/home"
   end
 
-  # 3 POST sessions_path
+  # 3 DELETE logout_path
   # ログイン処理--
 
   test "3 ログイン済ならログアウトし、ログイン画面に遷移する" do

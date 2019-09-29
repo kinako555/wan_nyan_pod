@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     # ログイン画面に遷移
   end
 
-  # POST sessions_path
+  # POST login_path
   # ログイン
   def create
     # ログイン済ならユーザーホーム画面に遷移
@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
     end
   end
 
-  # DELETE sessions_path
+  # DELETE logout_path
   # ログアウト
   def destroy
     # ログイン状態の場合のみログアウトする
