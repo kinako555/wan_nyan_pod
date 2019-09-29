@@ -1,5 +1,7 @@
 class RelationshipsController < ApplicationController
 
+    # POST relationships_path
+    # フォロー
     def create
       @user = User.find(params[:followed_id])
       current_user.follow(@user)
@@ -10,6 +12,8 @@ class RelationshipsController < ApplicationController
       end
     end
   
+    # DELETE relationships_path(Relationship)
+    # フォロー解除
     def destroy
       @user = Relationship.find(params[:id]).followed
       current_user.unfollow(@user)
