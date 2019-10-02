@@ -6,15 +6,16 @@ $(function(){
     let croppable = false;
     function initIconCrop(){
       cropper = new Cropper(crop_img, {
-        dragMode: 'move',
-        aspectRatio: 1,
-        restore: false,
-        guides: false,
-        center: false,
-        highlight: false,
-        cropBoxMovable: false,
-        cropBoxResizable: false,
-        minCropBoxWidth: 200,
+        dragMode:         'move', //ドラッグの際にcanvasを動かす
+        aspectRatio:      1,      //アクセプト比率
+        restore:          false,  //ウィンドウのサイズ変更の際、トリミング領域を戻す
+        guides:           false,  //トリミング領域に破線を表示する
+        highlight:        false,  //トリミングボックスを強調表示する
+        center:           false,  //真ん中に+印を表示する
+        cropBoxMovable:   false,  //ドラッグでCropBoxを動かす
+        cropBoxResizable: false,  //ドラッグでCropBoxのサイズを戻す
+        toggleDragModeOnDblclick: false, //ダブルクリックでドラッグモードの切り替えをする
+        minCropBoxWidth:  200,
         minCropBoxHeight: 200,
         ready: function(){
           croppable = true;
@@ -22,7 +23,8 @@ $(function(){
       });
     }
     
-    // croppedCanvas（トリミング後の画像をプレビューとして表示するための部分）のコーディング
+    // croppedCanvas（トリミング後の画像をプレビューとして表示するための部分）
+    // のコーディング
     let croppedCanvas;
     function iconCropping(){
       if(!croppable){
@@ -76,7 +78,7 @@ $(function(){
       var formData = new FormData();
       const id = $('#idParams').val();
   
-  　　 // CSRF対策（独自のajax処理を行う場合、head内にあるcsrf-tokenを取得して送る必要がある）
+      // CSRF対策（独自のajax処理を行う場合、head内にあるcsrf-tokenを取得して送る必要がある）
       $.ajaxPrefilter(function(options, originalOptions, jqXHR){
         var token;
         if (!options.crossDomain){

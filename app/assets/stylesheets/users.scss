@@ -50,36 +50,10 @@
 
 // トリミング画面
 
-.crop_modal{
-  max-height: 500px;
-  min-width: 70%;
-}
+// icon_editter_modal
 
-.cropper-view-box{
-  border-radius: 50%;
-  outline: none;
-}
 
-.cropper-face {
-    border-radius: 50%;
-}
 
-.modal-content {
-  width: 500px;
-  height: 605px;
-}
+// cropper.js
 
-.cropper-container.cropper-bg {
-  width: 466px;
-  height: 500px;
-}
 
-.crop_view {
-  width: 466px;
-  height: 500px;
-}
-
-.cropper-canvas {
-  width: 100%;
-  height: 100%
-}

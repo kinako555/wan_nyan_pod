@@ -1,0 +1,34 @@
+.crop_modal{
+    max-height: 500px;
+    min-width: 70%;
+  }
+  
+.crop_view {
+    width: 466px;
+    height: 500px;
+  }
+  
+.cropper-face {
+    border-radius: 50%;
+  }
+
+//TODO: 角を丸くする方法を考える
+.cropper-view-box {
+    border-radius: 50%;
+    outline: none;
+  }
+  
+  .modal-content {
+    width: 500px;
+    height: 605px;
+  }
+  
+  .cropper-container.cropper-bg {
+    min-width:   100%;
+    min-height:  100%;
+  }
+
+  .cropper-crop-box {
+    width:  200px!important;
+    height: 200px!important;
+}
