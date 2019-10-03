@@ -10,17 +10,15 @@
                 <i class="far fa-check-square"></i>
                 <div id="img_field" onClick="$('#icon').click()" >
                     <% if @user.icon.url.present? %>
-                    <%= image_tag @user.icon.url %>
+                        <%= image_tag @user.icon.url %>
                     <% else %>
-                    <i class="fas fa-image"></i><i class="fas fa-file-upload add"></i>
+                        <i class="fas fa-image"></i><i class="fas fa-file-upload add"></i>
                     <% end %>
                 </div>
                 <%= f.file_field :icon, class: 'image', style: 'display:none;', id: 'icon'%>
             </div>
         </div>
-        <div class="col-md-6">
-            
-            
+        <div class="col-md-6">   
             <%= f.label :name %>
             <%= f.text_field :name, class: 'form-control' %>
 

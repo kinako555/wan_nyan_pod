@@ -17,4 +17,5 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+//= require cropper.min 
 //= require_tree .

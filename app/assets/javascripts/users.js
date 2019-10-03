@@ -96,8 +96,20 @@ $(window).on('load', function () {
         type:        'patch',
         data:        formData,
         processData: false,
-        contentType: false,
-      });
+        async:       false,
+        contentType: false
+      })
+        .then(
+          data => (function(data) {
+                      if (data['isSuccess']) {
+                        location.reload(); // 成功時(画像が更新されないのでリロードしている)
+                        alert('更新しました');
+                      }else{
+                        alert('入力が正しくありません');
+                      }
+                    }(data)), 
+          error => alert('通信に失敗しました')
+      );  
     };
 
     // 画像選択時
