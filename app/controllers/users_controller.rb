@@ -97,13 +97,11 @@ class UsersController < ApplicationController
 
   # PATCH user_path
   # プロフィール設定画面登録処理
+  # ajax通信処理
   def update
     if current_user.update_attributes(user_update_params)
-      #flash[:success] = "プロフィールを更新しました"
-      #redirect_to current_user
       render json: {isSuccess: true}
     else
-      #TODO: 遷移先画面でメッセージを表示させる
       render json: {isSuccess: false}
     end
   end

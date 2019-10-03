@@ -5,6 +5,14 @@
     </div>
     <!-- ユーザー一覧-->
     <div class="col-4">
+        <input type="text" class="w-75" placeholder="検索ワード">
+        <div class=" btn btn-primary search_btn">検索</div>
+        <ul class="nav nav-tabs">
+            <!--classにactiveを加えてタブのデザインを切り替える -->
+            <li class="nav-item"><div class="btn nav-link search_user">ユーザー</div></li>
+            <li class="nav-item"><div class="btn nav-link search_post">投稿</div></li>
+            <li class="nav-item"><div class="btn nav-link search_recent_post">最近の投稿</div></li>
+        </ul>
         <ul class="users">
         <% @users.each do |user| %>
             <%= render @users %>
@@ -13,10 +21,6 @@
     </div>
     <!-- サイドメニュー-->
     <div class="col-4">
-        <ul class="list-group pt-2">
-            <%= link_to "注目", "#", class: "list-group-item"%>
-            <%= link_to "検索", users_path, class: "list-group-item"%>
-            <%= link_to "通知", "#", class: "list-group-item"%>
-        </ul>
+        <%= render 'shared/menu_bar' %>
     </div>
 </div>
