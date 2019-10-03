@@ -1,6 +1,4 @@
-// アイコントリミング
-
-$(function(){
+$(window).on('load', function () {
     // cropper（トリミング部）のコーディング（詳しくはGitHub参照
     let cropper;
     let croppable = false;
@@ -93,10 +91,10 @@ $(function(){
       usersVal(formData);
 
       $.ajax({
-        url: '/users/' + id,
-        datatype: 'json',
-        type: 'patch',
-        data: formData,
+        url:         '/users/' + id,
+        datatype:    'json',
+        type:        'patch',
+        data:        formData,
         processData: false,
         contentType: false,
       });
@@ -109,8 +107,7 @@ $(function(){
   
       // 選択されたファイルの確認
       if(!file || file.type.indexOf('image') < 0) return false;
-      // modal表示
-      $('#modal-img').modal();
+      $('#modal-img').modal(); // modal表示
       // トリミング画面をフェードインさせる
       reader.onload = (function(e){
         $('.crop_view').append($('<img>').attr({
@@ -142,7 +139,7 @@ $(function(){
       $('.cropper-container').remove();
     });
 
-    // コントローラーへ送信
+    // サーバーへ送信
     $('.submit_btn').on('click', function(){
       sending();
     });

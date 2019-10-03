@@ -1,4 +1,4 @@
 <h1>
-    <%= image_tag 'TentanativeIcon.PNG', :size =>'80x80' %>
+    <%= image_tag @user.icon.url, class: 'user_info_icon' if @user.icon? %>
     <%= @user.name %>
 </h1>

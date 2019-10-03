@@ -17,7 +17,7 @@ module WanNyanPod
     # the framework and any gems in your application.
     # 認証トークンをremoteフォームに埋め込む(Ajax)
     config.action_view.embed_authenticity_token_in_remote_forms = true
-
+    
     # Rspec設定
     # request_spec, model_specのみ作成
     config.generators do |g|

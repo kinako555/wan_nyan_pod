@@ -1,8 +1,8 @@
 <!-- 新規投稿欄を作る際にnilのデータが発生してしまうため、if文ではじく -->
 <% unless micropost.id.nil? %>
   <li id="micropost-<%= micropost.id %>">
-    <%= link_to image_tag micropost.user, target: "blank" do %>
-      <%= image_tag 'TentanativeIcon.PNG', :size =>'50x50' %>
+    <%= link_to micropost.user, target: "blank" do %>
+      <%= image_tag micropost.user.icon.url, class: 'micropost_user_icon' if micropost.user.icon? %>
     <% end %>
     <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
     <span class="content">

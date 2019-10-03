@@ -7,6 +7,8 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.paths << Emoji.images_path
 # Add Yarn node_modules folder to the asset load path.
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
+Rails.application.config.assets.paths << Rails.root.join('vendor', 'stylesheets')
+Rails.application.config.assets.paths << Rails.root.join('vendor', 'javascripts')
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
@@ -15,3 +17,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w( incorporate/cropper.min.css )
 Rails.application.config.assets.precompile += %w( incorporate/custom_cropper.min.css )
 Rails.application.config.assets.precompile += %w( incorporate/cropper.min.js )
+
