@@ -5,18 +5,27 @@
     </div>
     <!-- ユーザー一覧-->
     <div class="col-4">
-        <input type="text" class="w-75" placeholder="検索ワード">
-        <div class=" btn btn-primary search_btn">検索</div>
+        <form id="search_form">
+            <input type="text" class="w-75" id="search_txt" placeholder="検索ワード" />
+            <div class="btn btn-primary search_btn">検索</div>
+        </form>
+        <div id="search_word"></div>
         <ul class="nav nav-tabs">
             <!--classにactiveを加えてタブのデザインを切り替える -->
-            <li class="nav-item"><div class="btn nav-link search_user">ユーザー</div></li>
-            <li class="nav-item"><div class="btn nav-link search_post">投稿</div></li>
-            <li class="nav-item"><div class="btn nav-link search_recent_post">最近の投稿</div></li>
+            <li class="nav-item"><a class="search_users_tb btn nav-link disabled">ユーザー</a></li>
+            <li class="nav-item"><a class="search_microposts_tb btn nav-link disabled">投稿</a></li>
         </ul>
-        <ul class="users">
-        <% @users.each do |user| %>
-            <%= render @users %>
-        <% end %>
+        <!-- ユーザー -->
+        <ul id="result_users" class="users" style="display: none">
+            <% @users.each do |user| %>
+                <%= render @users %>
+            <% end %>
+        </ul>
+        <!-- 投稿 -->
+        <ul id="result_microposts" class="microposts" style="display: none">
+            <% @microposts.each do |micropost| %>
+                <%= render @microposts %>
+            <% end %>
         </ul>
     </div>
     <!-- サイドメニュー-->
@@ -24,3 +33,6 @@
         <%= render 'shared/menu_bar' %>
     </div>
 </div>
+
+<!-- javascript -->
+<%= javascript_include_tag 'users_search' %>

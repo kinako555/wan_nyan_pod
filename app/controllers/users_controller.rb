@@ -20,6 +20,7 @@ class UsersController < ApplicationController
   # GET users_path
   def index
     @users = User.where(activation_state: "active")
+    @microposts = []
     # ユーザー検索画面に遷移
   end
 
@@ -103,6 +104,24 @@ class UsersController < ApplicationController
       render json: {isSuccess: true}
     else
       render json: {isSuccess: false}
+    end
+  end
+
+  # POST search_path
+  def search
+    case params[:search_type]
+    when "users" then
+      @users = User.where("activation_state = ? AND name LIKE ?", 
+                          "active", 
+                          "%#{params[:search_word]}%")
+      @microposts = []
+      render 'search.js.erb'
+    when "microposts" then
+      @microposts = Micropost.where("activation_state = ? AND content LIKE ?", 
+                                    "active", 
+                                    "%#{params[:search_word]}%")
+                                    .order(:updated_at)
+      render 'search.js.erb'
     end
   end
 

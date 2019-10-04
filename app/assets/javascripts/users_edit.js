@@ -73,18 +73,15 @@ $(window).on('load', function () {
 
     // formデータをまとめてajaxでコントローラーに渡すための準備
     function sending(){
-      var formData = new FormData();
+      let formData = new FormData();
       const id = $('#idParams').val();
   
       // CSRF対策（独自のajax処理を行う場合、head内にあるcsrf-tokenを取得して送る必要がある）
       $.ajaxPrefilter(function(options, originalOptions, jqXHR){
-        var token;
+        let token;
         if (!options.crossDomain){
           token = $('meta[name="csrf-token"]').attr('content');
-  
-          if (token){
-            return jqXHR.setRequestHeader('X-CSRF-Token', token);
-          };
+          if (token) return jqXHR.setRequestHeader('X-CSRF-Token', token);
         };
       });
       // 入力されたformデータをformDataに入れる

@@ -14,7 +14,7 @@ Rails.application.config.assets.paths << Rails.root.join('vendor', 'javascripts'
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w( incorporate/cropper.min.css )
-Rails.application.config.assets.precompile += %w( incorporate/custom_cropper.min.css )
-Rails.application.config.assets.precompile += %w( incorporate/cropper.min.js )
+#Rails.application.config.assets.precompile += %w( users_edit.js )
+#Rails.application.config.assets.precompile += %w( users_search.js )
+Rails.application.config.assets.precompile += ['*.js']
 
