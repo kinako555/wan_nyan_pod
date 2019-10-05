@@ -116,13 +116,21 @@ class UsersController < ApplicationController
                           "active", 
                           "%#{params[:search_txt]}%")
       @microposts = []
-      render 'search.js.erb'
+      respond_to do |format|
+        # どちらかを実行
+        format.html { redirect_to users_path }
+        format.js
+      end
     when "microposts" then
       @microposts = Micropost.where("activation_state = ? AND content LIKE ?", 
                                     "active", 
                                     "%#{params[:search_txt]}%")
                                     .order(:updated_at)
-      render json: {isSuccess: false}
+        respond_to do |format|
+          # どちらかを実行
+          format.html { redirect_to users_path }
+          format.js
+        end
     end
   end
 

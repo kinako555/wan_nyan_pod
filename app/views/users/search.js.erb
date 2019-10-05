@@ -1,0 +1,3 @@
+$("#search_form").html("<%= j(render('users/index')) %>");
+$("#result_users").html('<% @users.each do |user| %>');
+$("#result_microposts").html('<% @microposts.each do |micropost| %>');
