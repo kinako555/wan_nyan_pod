@@ -5,28 +5,29 @@
     </div>
     <!-- ユーザー一覧-->
     <div class="col-4">
-        <form id="search_form">
-            <input type="text" class="w-75" id="search_txt" placeholder="検索ワード" />
-            <div class="btn btn-primary search_btn">検索</div>
-        </form>
-        <div id="search_word"></div>
-        <ul class="nav nav-tabs">
-            <!--classにactiveを加えてタブのデザインを切り替える -->
-            <li class="nav-item"><a class="search_users_tb btn nav-link disabled">ユーザー</a></li>
-            <li class="nav-item"><a class="search_microposts_tb btn nav-link disabled">投稿</a></li>
-        </ul>
-        <!-- ユーザー -->
-        <ul id="result_users" class="users" style="display: none">
-            <% @users.each do |user| %>
-                <%= render @users %>
-            <% end %>
-        </ul>
-        <!-- 投稿 -->
-        <ul id="result_microposts" class="microposts" style="display: none">
-            <% @microposts.each do |micropost| %>
-                <%= render @microposts %>
-            <% end %>
-        </ul>
+        <%= form_with url: search_path, id: 'search_form' do |form| %>
+            <%= form.hidden_field :search_type, :value => "users" %>
+            <%= form.text_field :search_txt, class: "w-75", placeholder: "検索ワード" %>
+            <%= form.submit "検索", class: "btn btn-primary search_btn w-auto" %>
+            <div id="search_word"></div>
+            <ul class="nav nav-tabs">
+                <!--classにactiveを加えてタブのデザインを切り替える -->
+                <li class="nav-item"><a class="search_users_tb btn nav-link disabled">ユーザー</a></li>
+                <li class="nav-item"><a class="search_microposts_tb btn nav-link disabled">投稿</a></li>
+            </ul>
+            <!-- ユーザー -->
+            <ul id="result_users" class="users" style="display: none">
+                <% @users.each do |user| %>
+                    <%= render @users %>
+                <% end %>
+            </ul>
+            <!-- 投稿 -->
+            <ul id="result_microposts" class="microposts" style="display: none">
+                <% @microposts.each do |micropost| %>
+                    <%= render @microposts %>
+                <% end %>
+            </ul>
+        <% end %>
     </div>
     <!-- サイドメニュー-->
     <div class="col-4">
