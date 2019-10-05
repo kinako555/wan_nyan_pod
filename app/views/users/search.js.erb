@@ -1,3 +1,1 @@
-$("#search_form").html("<%= j(render('users/index')) %>");
-$("#result_users").html('<% @users.each do |user| %>');
-$("#result_microposts").html('<% @microposts.each do |micropost| %>');
+$("#result_users").html("<%= j(<ul id="result_users" class="users" style="display: inline"><% @users.each do |user| %><%= render @users %><% end %></ul>) %>");
