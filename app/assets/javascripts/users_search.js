@@ -22,8 +22,8 @@ $(function(){
         $('.search_microposts_tb').removeClass('active');
         $('.search_microposts_tb').removeClass('disabled');
         //検索結果
-        $('.users').css('display','inline');
-        $('.microposts').css('display','none');
+        $('#result_users').css('display','inline');
+        $('#result_microposts').css('display','none');
         searchWord = document.forms.search_form.search_txt.value;
         target.innerText = '検索：' + searchWord;
     });
@@ -33,8 +33,8 @@ $(function(){
         $('.search_users_tb').addClass('active');
         $('.search_microposts_tb').removeClass("active");
         //検索結果
-        $('.users').css('display','inline');
-        $('.microposts').css('display','none');
+        $('#result_users').css('display','inline');
+        $('#result_microposts').css('display','none');
     });
     // 投稿タブ
     $('.search_microposts_tb').on('click', function(){
@@ -42,8 +42,8 @@ $(function(){
         $('.search_microposts_tb').addClass("active");
         $('.search_users_tb').removeClass("active");
         //検索結果 
-        $('.microposts').css('display','inline');
-        $('.users').css('display','none');
+        $('#result_microposts').css('display','inline');
+        $('#result_users').css('display','none');
         // 再び検索ボタンをクリックするまでsearch_typeは更新されないので
         // 2回目以降のタブクリックでは行われない
         if (document.forms.search_form.search_type.value == "users"){

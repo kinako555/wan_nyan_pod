@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 
   # GET users_path
   def index
-    @users = User.where(activation_state: "active")
+    @users = []
     @microposts = []
     @isMicropostsSearched = false
     # ユーザー検索画面に遷移
@@ -116,21 +116,22 @@ class UsersController < ApplicationController
                           "active", 
                           "%#{params[:search_txt]}%")
       @microposts = []
+      @searchType = 0 # js.erbが「'」を処理できないので数字にする
       respond_to do |format|
         # どちらかを実行
         format.html { redirect_to users_path }
         format.js
       end
     when "microposts" then
-      @microposts = Micropost.where("activation_state = ? AND content LIKE ?", 
-                                    "active", 
-                                    "%#{params[:search_txt]}%")
-                                    .order(:updated_at)
-        respond_to do |format|
-          # どちらかを実行
-          format.html { redirect_to users_path }
-          format.js
-        end
+      @users = []
+      @microposts = Micropost.where("content LIKE ?", "%#{params[:search_txt]}%")
+                             .order(:updated_at)
+      @searchType = 1
+      respond_to do |format|
+        # どちらかを実行
+        format.html { redirect_to users_path }
+        format.js
+      end
     end
   end
 

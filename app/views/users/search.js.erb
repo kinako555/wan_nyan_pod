@@ -1,1 +1,14 @@
-$("#result_users").html("<%= j(<ul id="result_users" class="users" style="display: inline"><% @users.each do |user| %><%= render @users %><% end %></ul>) %>");
+switch (<%= @searchType %>) {
+    case 0: <!-- ユーザー検索 -->
+        $("#result_users").html("<%= j(render 'result_users') %>");
+        break;
+    case 1: <!-- 投稿検索 -->
+        $("#result_microposts").html("<%= j(render 'result_microposts') %>");
+        break;
+}
+
+
+
+
+
+
