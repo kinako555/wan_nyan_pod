@@ -39,9 +39,14 @@ following = users[2..50]
 followers = users[3..40]
 following.each { |followed| first_user.follow(followed) }
 followers.each { |follower| follower.follow(first_user) }
+
+other_microposts = Micropost.all.where.not(user_id: first_user.id)
+sharering_microposts = other_microposts[1..10]
+sharering_microposts.each { |shared| first_user.share_micropost(shared) }
+
 users.each { |user| user.activate! }
 
-User.create!(name:  "NOtActive User",
+User.create!(name:  "NotActive User",
     email: "aaa@bbb.org",
     password:              "foobar",
     password_confirmation: "foobar",

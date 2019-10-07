@@ -1,5 +1,10 @@
 class Micropost < ApplicationRecord
   belongs_to :user
+  has_many :passive_micropost_share_relationships, class_name:  'MicropostShareRelarionship',
+                                                   foreign_key: "user_id",
+                                                   dependent:   :destroy
+  has_many :shared_users, through: :passive_micropost_share_relationships, source: :user
+
   default_scope -> { order(created_at: :desc) }
   mount_uploader :picture, MicropostPictureUploader
   validates :user_id, presence: true

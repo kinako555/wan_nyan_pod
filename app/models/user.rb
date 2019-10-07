@@ -23,12 +23,11 @@ class User < ApplicationRecord
     # passive_relationshipsのfollower_idにユーザーを紐付ける
     has_many :followers, through: :passive_relationships, source: :follower
     
-    has_many :sharering_relationships, -> { where("function_type = ?", MicropostFunctionRelationship::function_type::SHARE) },
-                                          class_name:  "MicropostFunctionRelationship",
-                                          foreign_key: "checker_id",
-                                          dependent:   :destroy
-    had_many :sharering_microoposts, :sharering_relationships, source: :shared
-
+    has_many :acticve_micropost_share_relationships, class_name: 'MicropostShareRelarionship',
+                                                     foreign_key: "user_id",
+                                                     dependent:   :destroy
+    has_many :sharering_microposts, through: :acticve_micropost_share_relationships, source: :micropost
+    
     attr_accessor :remember_token
 
     before_save :downcase_email
@@ -54,7 +53,16 @@ class User < ApplicationRecord
     # 自分とフォローしているMicropostsを返す
     def timeline
         following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
-        Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+        rtn_timeline = Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+        # フォローしているユーザーがシェアしている投稿を抽出する
+        following.each do |followed|
+            followed.sharering_microposts.each do |micropost|
+                 # micropostの作成日をシェア実行日に更新
+                micropost.update(created_at: sharering_microposts.select(:created_at))
+            end
+            rtn_timeline += followed.sharering_microposts
+        end
+        rtn_timeline.sort{ |mp| mp.created_at } # 作成日時順にソート
     end
 
     # ユーザーをフォローする
@@ -74,23 +82,19 @@ class User < ApplicationRecord
 
     # 投稿をシェアする
     def share_micropost(micropost)
-        # sharering_microoposts << micropost
-        # 上のような方法を取りたいが、
-        # 初期値にfunction_typeが必須なので下の方法をとる
-        sharering_relationships.find_or_create_by(checked: micropost.id,
-                                                  function_type: MicropostFunctionRelationship::function_type::SHARE)
+        sharering_microposts << micropost
     end
-    
-    # 投稿のシェア解除
+    # 投稿のシェアを解除する
     def unshare_micropost(micropost)
-        sharering_relationships.find_by(checked_id: micropost.id).destroy
+        acticve_micropost_share_relationships.find_by(micropost_id: micropost.id).destroy
     end
 
-    # 現在のユーザーがシェアしている投稿ならtrueを返す
+    # 投稿をシェアしていたらtrueを返す
     def sharering_micropost?(micropost)
-        sharering_microoposts.include?(micropost)
+        sharering_microposts.include?(microposts)
     end
 
+    
     private 
 
         # メールアドレスをすべて小文字にする
