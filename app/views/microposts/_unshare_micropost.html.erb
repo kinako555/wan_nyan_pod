@@ -1,3 +1,4 @@
-<div id="unshare_micropost">
-    <%= link_to "シェア", micropost_share_relationships_path(params: {id: @micropost.id}), method: :post %>
-</div>
+<%= form_with url: micropost_share_relationship_path(current_user.acticve_micropost_share_relationships.find_by(micropost_id: micropost.id)), 
+              method: :delete do |form| %>
+    <%= form.submit "シェア解除", class: "btn w-25" %>
+<% end %>

@@ -1,7 +1,7 @@
 <div id="share_micropost_form">
-    <% if current_user.sharering_micropost?(@micropost) %>
-        <%= render 'microposts/share_micropost' %>
-    <% else %>
-        <%= render 'microposts/unshare_micropost' %>
+    <% if current_user.sharering_micropost?(micropost) %>
+        <%= render 'microposts/unshare_micropost', { micropost: micropost } %>
+    <% else %>   
+        <%= render 'microposts/share_micropost', { micropost: micropost } %>
     <% end %>
 </div>

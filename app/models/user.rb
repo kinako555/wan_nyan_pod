@@ -91,7 +91,7 @@ class User < ApplicationRecord
 
     # 投稿をシェアしていたらtrueを返す
     def sharering_micropost?(micropost)
-        sharering_microposts.include?(microposts)
+        sharering_microposts.include?(micropost)
     end
 
     

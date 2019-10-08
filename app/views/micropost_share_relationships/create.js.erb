@@ -1,0 +1,3 @@
+$("<%= "#micropost-#{@micropost.id}" %> > .share_micropost > #share_micropost_form")
+.html("<%= j(render('microposts/unshare_micropost', micropost: @micropost)) %>");
+

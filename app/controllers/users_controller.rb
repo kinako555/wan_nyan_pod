@@ -116,7 +116,7 @@ class UsersController < ApplicationController
                           "active", 
                           "%#{params[:search_txt]}%")
       @microposts = []
-      @searchType = 0 # js.erbが「'」を処理できないので数字にする
+      @searchType = 0 # js.erbが「'」を処理できないので数字にする ← 対応可能なので後に対応
       respond_to do |format|
         # どちらかを実行
         format.html { redirect_to users_path }

@@ -1,3 +1,4 @@
-<div id="share_micropost">
-    <%= link_to "シェア解除", micropost_share_relationships_path(@micropost), method: :delete %>
-</div>
+<%= form_with url: micropost_share_relationships_path do |form| %>
+    <%= form.hidden_field :micropost_id, :value => micropost.id %>
+    <%= form.submit "シェア", class: "btn w-25" %>
+<% end %>

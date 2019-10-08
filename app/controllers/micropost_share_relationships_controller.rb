@@ -1,29 +1,46 @@
 class MicropostShareRelationshipsController < ApplicationController
 
+  # micropostを取得できなかった場合のレンダリング先
+  @@MISSING_RENDER_JS = 'missing_share_favorite'.freeze
+
   # POST micropost_share_relationships_path
   # フォロー
   def create
-    @micropost = Micropost.find(params[:id])
-    #current_user.share_micropost(@micropost)
-    #respond_to do |format|
-      # どちらかを実行
-    #  format.html
-    #  format.js
-    #end
-    redirect_to root_path
+    @micropost = Micropost.find_by(id: params[:micropost_id])
+    current_user.share_micropost(@micropost) if @micropost
+
+    if !@micropost.blank?
+      respond_to do |format|
+        format.html
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.html
+        format.js { render @@MISSING_RENDER_JS }
+      end
+    end
   end
     
   # DELETE micropost_share_relationships_path(micropost)
   # フォロー解除
   def destroy
-    @micropost = Relationship.find(params[:id]).shared
-    current_user.unshare_micropost(@micropost)
-    #respond_to do |format|
-      # どちらかを実行
-    #  format.html
-    # format.js
-    #end
-    redirect_to root_path
+    msr = MicropostShareRelarionship.find_by(id: params[:id])
+    if msr
+      @micropost = msr.micropost
+      current_user.unshare_micropost(@micropost)
+    end
+    if @micropost
+      respond_to do |format|
+        format.html
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.html
+        format.js { render @@MISSING_RENDER_JS }
+      end
+    end
   end
 
 end
