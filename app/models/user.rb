@@ -7,7 +7,7 @@ class User < ApplicationRecord
     # follower_id          : followed_id
     # インスタンスのuser_id : インスタンスがフォローしているuser_id
     # -----------------------------------------------------------
-    has_many :active_relationships, class_name:  "Relationship",
+    has_many :active_relationships, class_name:  Relationship.name,
                                     foreign_key: "follower_id",
                                     dependent:   :destroy
     # active_relationshipsのfollowed_idにユーザーを紐付ける
@@ -16,13 +16,13 @@ class User < ApplicationRecord
     # followed_id          : follower_id
     # インスタンスのuser_id : インスタンスがフォローされているuser_id
     # -------------------------------------------------------------
-    has_many :passive_relationships, class_name:  "Relationship",
+    has_many :passive_relationships, class_name:  Relationship.name,
                                      foreign_key: "followed_id",
                                      dependent:   :destroy   
     # passive_relationshipsのfollower_idにユーザーを紐付ける
     has_many :followers, through: :passive_relationships, source: :follower
     
-    has_many :acticve_micropost_share_relationships, class_name: 'MicropostShareRelationship',
+    has_many :acticve_micropost_share_relationships, class_name: MicropostShareRelationship.name,
                                                      foreign_key: "user_id",
                                                      dependent:   :destroy
     has_many :sharering_microposts, through: :acticve_micropost_share_relationships, source: :micropost

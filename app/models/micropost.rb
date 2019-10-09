@@ -1,11 +1,11 @@
 class Micropost < ApplicationRecord
   belongs_to :user
-  has_many :passive_micropost_share_relationships, class_name:  'MicropostShareRelationship',
+  has_many :passive_micropost_share_relationships, class_name:  MicropostShareRelationship.name,
                                                    foreign_key: "user_id",
                                                    dependent:   :destroy
   has_many :shared_users, through: :passive_micropost_share_relationships, source: :user
 
-  has_many :passive_favorite_relationships, class_name:  'MicropostFavoriteRelationship',
+  has_many :passive_favorite_relationships, class_name:  MicropostFavoriteRelationship.name,
                                             foreign_key: "user_id",
                                             dependent:   :destroy
   has_many :favorited_users, through: :passive_favorite_relationships, source: :user

@@ -18,14 +18,12 @@ gem 'faker',        '~> 1.9.3'
 gem 'carrierwave',  '~> 1.2.2'
 gem 'mini_magick',  '~> 4.7.0'
 
-# 20190525 add
-gem 'jquery-rails', '~> 4.3.0'
-# 20190527 add
-gem 'bootstrap',    '~> 4.1.1'
-# 20190601 add
-gem 'bcrypt',       '~> 3.1.12'
-# 20190629 add
-gem 'sorcery'
+gem 'jquery-rails', '~> 4.3.0'  # 20190525 add
+gem 'bootstrap',    '~> 4.1.1'  # 20190527 add
+gem 'bcrypt',       '~> 3.1.12' # 20190601 add
+gem 'sorcery'                   # 20190629 add
+gem 'font-awesome-sass', '~> 5.11.2' # 20191009 add
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
