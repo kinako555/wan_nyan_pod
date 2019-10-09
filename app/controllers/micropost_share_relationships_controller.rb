@@ -25,7 +25,7 @@ class MicropostShareRelationshipsController < ApplicationController
   # DELETE micropost_share_relationships_path(micropost)
   # フォロー解除
   def destroy
-    msr = MicropostShareRelarionship.find_by(id: params[:id])
+    msr = MicropostShareRelationship.find_by(id: params[:id])
     if msr
       @micropost = msr.micropost
       current_user.unshare_micropost(@micropost)

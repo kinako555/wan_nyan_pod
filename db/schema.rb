@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_07_074104) do
+ActiveRecord::Schema.define(version: 2019_10_09_072907) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
@@ -33,14 +33,24 @@ ActiveRecord::Schema.define(version: 2019_10_07_074104) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "micropost_share_relarionships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+  create_table "micropost_favorite_relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "user_id"
     t.string "micropost_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["micropost_id"], name: "index_micropost_share_relarionships_on_micropost_id"
-    t.index ["user_id", "micropost_id"], name: "index_micropost_share_relarionships_on_user_id_and_micropost_id", unique: true
-    t.index ["user_id"], name: "index_micropost_share_relarionships_on_user_id"
+    t.index ["micropost_id"], name: "index_micropost_favorite_relationships_on_micropost_id"
+    t.index ["user_id", "micropost_id"], name: "index_mp_fav_relationships_on_user_id_and_micropost_id", unique: true
+    t.index ["user_id"], name: "index_micropost_favorite_relationships_on_user_id"
+  end
+
+  create_table "micropost_share_relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.string "user_id"
+    t.string "micropost_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["micropost_id"], name: "index_micropost_share_relationships_on_micropost_id"
+    t.index ["user_id", "micropost_id"], name: "index_micropost_share_relationships_on_user_id_and_micropost_id", unique: true
+    t.index ["user_id"], name: "index_micropost_share_relationships_on_user_id"
   end
 
   create_table "microposts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|

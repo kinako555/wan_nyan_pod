@@ -1,0 +1,4 @@
+<%= form_with url: micropost_favorite_relationships_path do |form| %>
+    <%= form.hidden_field :micropost_id, :value => micropost.id %>
+    <%= form.submit "ファボ", class: "btn w-25" %>
+<% end %>

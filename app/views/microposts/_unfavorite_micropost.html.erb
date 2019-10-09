@@ -1,0 +1,4 @@
+<%= form_with url: micropost_favorite_relationship_path(current_user.acticve_micropost_favorite_relationships.find_by(micropost_id: micropost.id)), 
+              method: :delete do |form| %>
+    <%= form.submit "ファボ解除", class: "btn w-25" %>
+<% end %>

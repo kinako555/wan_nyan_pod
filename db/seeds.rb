@@ -42,7 +42,9 @@ followers.each { |follower| follower.follow(first_user) }
 
 other_microposts = Micropost.all.where.not(user_id: first_user.id)
 sharering_microposts = other_microposts[1..10]
-sharering_microposts.each { |shared| first_user.share_micropost(shared) }
+favoriting_microposts = other_microposts[11..20]
+sharering_microposts.each  { |shared|    first_user.share_micropost(shared) }
+favoriting_microposts.each { |favorited| first_user.favorite_micropost(favorited) }
 
 users.each { |user| user.activate! }
 

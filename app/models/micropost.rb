@@ -1,9 +1,14 @@
 class Micropost < ApplicationRecord
   belongs_to :user
-  has_many :passive_micropost_share_relationships, class_name:  'MicropostShareRelarionship',
+  has_many :passive_micropost_share_relationships, class_name:  'MicropostShareRelationship',
                                                    foreign_key: "user_id",
                                                    dependent:   :destroy
   has_many :shared_users, through: :passive_micropost_share_relationships, source: :user
+
+  has_many :passive_favorite_relationships, class_name:  'MicropostFavoriteRelationship',
+                                            foreign_key: "user_id",
+                                            dependent:   :destroy
+  has_many :favorited_users, through: :passive_favorite_relationships, source: :user
 
   default_scope -> { order(created_at: :desc) }
   mount_uploader :picture, MicropostPictureUploader

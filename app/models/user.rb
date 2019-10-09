@@ -18,16 +18,20 @@ class User < ApplicationRecord
     # -------------------------------------------------------------
     has_many :passive_relationships, class_name:  "Relationship",
                                      foreign_key: "followed_id",
-                                     dependent:   :destroy
-    
+                                     dependent:   :destroy   
     # passive_relationshipsのfollower_idにユーザーを紐付ける
     has_many :followers, through: :passive_relationships, source: :follower
     
-    has_many :acticve_micropost_share_relationships, class_name: 'MicropostShareRelarionship',
+    has_many :acticve_micropost_share_relationships, class_name: 'MicropostShareRelationship',
                                                      foreign_key: "user_id",
                                                      dependent:   :destroy
     has_many :sharering_microposts, through: :acticve_micropost_share_relationships, source: :micropost
-    
+
+    has_many :acticve_micropost_favorite_relationships, class_name:  MicropostFavoriteRelationship.name,
+                                                        foreign_key: "user_id",
+                                                        dependent:   :destroy
+    has_many :favoriting_microposts, through: :acticve_micropost_favorite_relationships, source: :micropost
+
     attr_accessor :remember_token
 
     before_save :downcase_email
@@ -94,6 +98,19 @@ class User < ApplicationRecord
         sharering_microposts.include?(micropost)
     end
 
+    # 投稿をファボする
+    def favorite_micropost(micropost)
+        favoriting_microposts << micropost
+    end
+    # 投稿のファボを解除する
+    def unfavorite_micropost(micropost)
+        acticve_micropost_favorite_relationships.find_by(micropost_id: micropost.id).destroy
+    end
+
+    # 投稿をファボしていたらtrueを返す
+    def favoriting_micropost?(micropost)
+        favoriting_microposts.include?(micropost)
+    end
     
     private 
 

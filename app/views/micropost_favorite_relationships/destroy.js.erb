@@ -1,0 +1,2 @@
+$("<%= "#micropost-#{@micropost.id}" %> > .share_micropost > #favorite_micropost_form")
+.html("<%= j(render('microposts/favorite_micropost', micropost: @micropost)) %>");
