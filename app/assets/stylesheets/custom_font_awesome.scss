@@ -1,0 +1,15 @@
+$unFavorite_hover_color: #f5deb3;
+$unCheched_hover_color: silver;
+$active_size: 1.1em;
+
+.favorite_micropost_icon  { 
+    color: gray ;
+    &:hover  { color:     $unCheched_hover_color; }
+    &:active { font-size: $active_size; }
+}
+
+.unfavorite_micropost_icon {
+    color: #EDBC6C ;
+    &:hover  { color:   #f5deb3; }
+    &:active { font-size: $active_size; }
+}

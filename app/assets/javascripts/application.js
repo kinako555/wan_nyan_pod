@@ -18,4 +18,5 @@
 //= require bootstrap-sprockets
 //= require cable
 //= require cropper.min 
+//= require microposts
 // require_tree .
