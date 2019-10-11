@@ -1,7 +1,7 @@
-<div class="share_micropost_form">
+<span class="share_micropost_form">
     <% if current_user.sharering_micropost?(micropost) %>
         <%= render 'microposts/unshare_micropost', { micropost: micropost } %>
     <% else %>   
         <%= render 'microposts/share_micropost', { micropost: micropost } %>
     <% end %>
-</div>
+</span>

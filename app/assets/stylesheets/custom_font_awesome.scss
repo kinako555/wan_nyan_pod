@@ -1,9 +1,23 @@
+$unCheched_color: gray;
 $unFavorite_hover_color: #f5deb3;
 $unCheched_hover_color: silver;
 $active_size: 1.1em;
 
+.share_micropost_icon  { 
+    color: $unCheched_color;
+    &:hover  { color:     $unCheched_hover_color; }
+    &:active { font-size: $active_size; }
+}
+
+.unshare_micropost_icon {
+    color: limegreen ;
+    &:hover  { color:   palegreen; }
+    &:active { font-size: $active_size; }
+}
+
+
 .favorite_micropost_icon  { 
-    color: gray ;
+    color: $unCheched_color;
     &:hover  { color:     $unCheched_hover_color; }
     &:active { font-size: $active_size; }
 }
@@ -13,3 +27,4 @@ $active_size: 1.1em;
     &:hover  { color:   #f5deb3; }
     &:active { font-size: $active_size; }
 }
+

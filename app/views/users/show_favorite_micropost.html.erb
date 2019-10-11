@@ -1,0 +1,18 @@
+<div class="row">
+  <aside class="col-md-3">
+    <section class="user_info">
+        <%= render 'shared/user_info' %>
+    </section>
+  </aside>
+  <div class="col-md-6">
+    <h3><%= @title %></h3>
+    <% if @microposts.any? %>
+        <ol class="microposts">
+            <%= render @microposts %>
+        </ol>
+    <% end %>
+  </div>
+  <div class="col-3">
+        <%= render 'shared/menu_bar' %>
+    </div>
+</div>

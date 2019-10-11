@@ -1,5 +1,6 @@
 <ul class="list-group pt-2">
     <%= link_to "一覧", current_user, class: "list-group-item"%>
+    <%= link_to "お気に入り", favoriting_microposts_user_path(current_user), class: "list-group-item"%>
     <%= link_to "注目", "#",          class: "list-group-item"%>
     <%= link_to "検索", users_path,   class: "list-group-item"%>
     <%= link_to "通知", "#",          class: "list-group-item"%>

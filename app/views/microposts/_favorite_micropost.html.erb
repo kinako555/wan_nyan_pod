@@ -1,5 +1,5 @@
 <%= form_with url: micropost_favorite_relationships_path do |form| %>
     <%= form.hidden_field :micropost_id, :value => micropost.id %>
-    <%= form.submit "ファヴ", id: "favorite_micropost_submit-#{ micropost.id }"%>
+    <%= form.submit "お気に入り", id: "favorite_micropost_submit-#{ micropost.id }"%>
     <i class="fas fa-paw favorite_micropost_icon btn" value="<%= micropost.id %>" ></i>
 <% end %>

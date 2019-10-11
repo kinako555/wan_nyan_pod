@@ -15,9 +15,9 @@
         <%= link_to "delete", micropost, method: :delete, data: { confirm: "投稿を削除しますか?" } %>
       <% end %>
     </span>
-    <span class="share_micropost">
-      <%= render 'microposts/share_micropost_form', { micropost: micropost } %>
-      <%= render 'microposts/favorite_micropost_form', { micropost: micropost } %>
-    </span>
+      <span class="share_micropost" style="display:inline-flex">
+        <%= render 'microposts/share_micropost_form', { micropost: micropost } %>
+        <%= render 'microposts/favorite_micropost_form', { micropost: micropost } %>
+      </span>
   </li>
 <% end %>

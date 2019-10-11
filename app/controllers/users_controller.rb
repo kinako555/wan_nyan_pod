@@ -159,6 +159,14 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+  # GET favoriting_microposts_user_path(User)
+  def favoriting_microposts
+    @title = "お気に入りリスト"
+    @user = current_user
+    @microposts = @user.favoriting_microposts
+    render 'show_favorite_micropost'
+  end
+
   private
 
     def user_create_params

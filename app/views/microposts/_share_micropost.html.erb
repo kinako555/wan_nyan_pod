@@ -1,4 +1,5 @@
 <%= form_with url: micropost_share_relationships_path do |form| %>
     <%= form.hidden_field :micropost_id, :value => micropost.id %>
-    <%= form.submit "シェア", class: "btn w-25" %>
+    <%= form.submit "シェア", id: "share_micropost_submit-#{ micropost.id }"%>
+    <i class="fas fa-retweet share_micropost_icon btn" value="<%= micropost.id %>" ></i>
 <% end %>

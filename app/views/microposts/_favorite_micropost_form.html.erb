@@ -1,7 +1,7 @@
-<div class="favorite_micropost_form">
+<span class="favorite_micropost_form">
     <% if current_user.favoriting_micropost?(micropost) %>
         <%= render 'microposts/unfavorite_micropost', { micropost: micropost } %>
     <% else %>   
         <%= render 'microposts/favorite_micropost', { micropost: micropost } %>
     <% end %>
-</div>
+</span>
