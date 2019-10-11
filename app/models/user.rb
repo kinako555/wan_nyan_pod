@@ -54,19 +54,29 @@ class User < ApplicationRecord
         activation_state == 'active'
     end
 
+    # ホーム画面で表示するMicroposts
+    # ユーザーの投稿、シェアしたものをひょうじする
+    def home_microposts
+
+    end
+
     # 自分とフォローしているMicropostsを返す
+    # TODO: 処理に時間がかかっているためなんとかしたい
     def timeline
         following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
         rtn_timeline = Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
         # フォローしているユーザーがシェアしている投稿を抽出する
         following.each do |followed|
             followed.sharering_microposts.each do |micropost|
-                 # micropostの作成日をシェア実行日に更新
-                micropost.update(created_at: sharering_microposts.select(:created_at))
+                 # micropostの更新日時をシェア更新日時に更新
+                micropost.attributes = { updated_at: 
+                                         followed.acticve_micropost_share_relationships.select(:updated_at)
+                                                                                       .where('micropost_id = ?', micropost.id) }
             end
             rtn_timeline += followed.sharering_microposts
         end
-        rtn_timeline.sort{ |mp| mp.created_at } # 作成日時順にソート
+        #rtn_timeline.sort{ |mp| mp.updated_at } # 更新日時順にソート
+        rtn_timeline
     end
 
     # ユーザーをフォローする
