@@ -10,6 +10,8 @@ class Micropost < ApplicationRecord
                                             dependent:   :destroy
   has_many :favorited_users, through: :passive_favorite_relationships, source: :user
 
+  attr_accessor :sharer_name
+
   default_scope -> { order(created_at: :desc) }
   mount_uploader :picture, MicropostPictureUploader
   validates :user_id, presence: true

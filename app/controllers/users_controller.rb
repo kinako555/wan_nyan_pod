@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       @user = current_user
       # buildでnilデータが作成されているので
       # nilをはじく必要がある
-      @microposts = @user.microposts
+      @microposts = @user.home_microposts
       @micropost =  current_user.microposts.build
       # ホーム画面に遷移
     else
@@ -163,7 +163,7 @@ class UsersController < ApplicationController
   def favoriting_microposts
     @title = "お気に入りリスト"
     @user = current_user
-    @microposts = @user.favoriting_microposts
+    @microposts = @user.sorted_favoriting_microposts
     render 'show_favorite_micropost'
   end
 

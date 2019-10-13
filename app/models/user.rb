@@ -22,10 +22,10 @@ class User < ApplicationRecord
     # passive_relationshipsのfollower_idにユーザーを紐付ける
     has_many :followers, through: :passive_relationships, source: :follower
     
-    has_many :acticve_micropost_share_relationships, class_name: MicropostShareRelationship.name,
+    has_many :active_micropost_share_relationships, class_name: MicropostShareRelationship.name,
                                                      foreign_key: "user_id",
                                                      dependent:   :destroy
-    has_many :sharering_microposts, through: :acticve_micropost_share_relationships, source: :micropost
+    has_many :sharering_microposts, through: :active_micropost_share_relationships, source: :micropost
 
     has_many :acticve_micropost_favorite_relationships, class_name:  MicropostFavoriteRelationship.name,
                                                         foreign_key: "user_id",
@@ -54,29 +54,39 @@ class User < ApplicationRecord
         activation_state == 'active'
     end
 
-    # ホーム画面で表示するMicroposts
-    # ユーザーの投稿、シェアしたものをひょうじする
+    # ホーム画面で表示する投稿一覧
     def home_microposts
+        rtn_microposts = microposts.to_a
+        sharering_microposts.each do |mp|
+            rtn_microposts.push(format_shared_micropost(active_micropost_share_relationships, mp))
+        end
+        rtn_microposts.sort_by{ |mp| mp.updated_at }.reverse # 更新日時順にソート
+    end
 
+    # お気に入り一覧をシェアした日時に並び替える
+    def sorted_favoriting_microposts
+        favoriting_microposts.each { |mp| mp.updated_at = acticve_micropost_favorite_relationships.select(:updated_at)
+                                                                                                 .where('micropost_id = ?', mp.id)
+                                                                                                 .first.updated_at }
+        favoriting_microposts.sort_by{ |mp| mp.updated_at }.reverse # 更新日時順にソート
     end
 
     # 自分とフォローしているMicropostsを返す
     # TODO: 処理に時間がかかっているためなんとかしたい
     def timeline
         following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
-        rtn_timeline = Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+        rtn_timeline =  Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
         # フォローしているユーザーがシェアしている投稿を抽出する
         following.each do |followed|
-            followed.sharering_microposts.each do |micropost|
-                 # micropostの更新日時をシェア更新日時に更新
-                micropost.attributes = { updated_at: 
-                                         followed.acticve_micropost_share_relationships.select(:updated_at)
-                                                                                       .where('micropost_id = ?', micropost.id) }
+            followed.sharering_microposts.each do |micropost|             
+                next if following?(micropost.user) # シェアした投稿がフォロワーのものであれば表示しない
+                next if rtn_timeline.find_by(id: micropost.id) # 同じ投稿は表示しない
+                format_shared_micropost(followed.active_micropost_share_relationships, 
+                                        micropost)
+                rtn_timeline += micropost
             end
-            rtn_timeline += followed.sharering_microposts
         end
-        #rtn_timeline.sort{ |mp| mp.updated_at } # 更新日時順にソート
-        rtn_timeline
+        rtn_timeline.sort{ |mp| mp.updated_at } # 更新日時順にソート
     end
 
     # ユーザーをフォローする
@@ -100,7 +110,7 @@ class User < ApplicationRecord
     end
     # 投稿のシェアを解除する
     def unshare_micropost(micropost)
-        acticve_micropost_share_relationships.find_by(micropost_id: micropost.id).destroy
+        active_micropost_share_relationships.find_by(micropost_id: micropost.id).destroy
     end
 
     # 投稿をシェアしていたらtrueを返す
@@ -135,4 +145,14 @@ class User < ApplicationRecord
                 errors.add(:picture, "should be less than 5MB")
             end
         end
+
+        # micropostの更新日時をシェア実行時に更新
+        # シェアしたユーザーネームを設定する
+        def format_shared_micropost(active_micropost_share_relationships, micropost)
+            micropost.updated_at = active_micropost_share_relationships.select(:updated_at)
+                                                                        .where('micropost_id = ?', micropost.id)
+                                                                        .first.updated_at
+            micropost
+        end
+
 end
