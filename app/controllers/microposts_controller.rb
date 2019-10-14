@@ -1,6 +1,6 @@
 class MicropostsController < ApplicationController
     
-    before_action :correct_user,   only: :destroy
+    before_action :correct_user, only: :destroy
 
     def create
         @micropost = current_user.microposts.build(micropost_params)
@@ -25,7 +25,7 @@ class MicropostsController < ApplicationController
     private
 
         def micropost_params
-            params.require(:micropost).permit(:content, :picture)
+            params.require(:micropost).permit(:content, pictures: [])
         end
 
         # 画面で選択したMicropostを代入する

@@ -36,12 +36,19 @@ $light-gray: #777;
 
 }
   
-  span.picture {
-    margin-top: 10px;
-    input {
-      border: 0;
-    }
+span.picture {
+  margin-top: 10px;
+  input {
+    border: 0;
   }
+}
+// 投稿画像プレビュー
+.pictures_field {
+  img {
+    max-width:  400px;
+    max-height: 250px;
+  }
+}
 
 [id^="favorite_micropost_submit-"] {
     display: none;
