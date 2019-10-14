@@ -8,10 +8,9 @@ class MicropostShareRelationshipsController < ApplicationController
   def create
     @micropost = Micropost.find_by(id: params[:micropost_id])
     current_user.share_micropost(@micropost) if @micropost
-
     if !@micropost.blank?
       respond_to do |format|
-        format.html
+        #format.html
         format.js
       end
     else

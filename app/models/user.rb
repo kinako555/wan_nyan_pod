@@ -76,17 +76,20 @@ class User < ApplicationRecord
     def timeline
         following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
         rtn_timeline =  Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+        add_microposts = []
         # フォローしているユーザーがシェアしている投稿を抽出する
         following.each do |followed|
             followed.sharering_microposts.each do |micropost|             
                 next if following?(micropost.user) # シェアした投稿がフォロワーのものであれば表示しない
                 next if rtn_timeline.find_by(id: micropost.id) # 同じ投稿は表示しない
-                format_shared_micropost(followed.active_micropost_share_relationships, 
-                                        micropost)
-                rtn_timeline += micropost
+                format_shared_micropost(followed.active_micropost_share_relationships, micropost)
+                micropost.sharer_name = followed.name
+                add_microposts.push(micropost)
             end
         end
-        rtn_timeline.sort{ |mp| mp.updated_at } # 更新日時順にソート
+        rtn_timeline = rtn_timeline.to_a
+        rtn_timeline.push(add_microposts).flatten! # 配列中に含まれる配列を親配列に並べる
+        rtn_timeline.sort_by{ |mp| mp.updated_at }.reverse # 更新日時順にソート
     end
 
     # ユーザーをフォローする

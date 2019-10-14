@@ -2,6 +2,47 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$light-gray: #777;
+
+.microposts {
+    list-style: none;
+    padding:    0;
+    li {
+      padding:    10px 0;
+      border-top: 1px solid #e8e8e8;
+    }
+    .user {
+      margin-top: 5em;
+      padding-top: 0;
+    }
+    .content {
+      display:     block;
+      margin-left: 60px;
+      img {
+        display: block;
+        padding: 5px 0;
+      }
+    }
+    .timestamp {
+      color:       $light-gray;
+      display:     block;
+      margin-left: 60px;
+    }
+    .shared_user {
+        color:       $light-gray;
+        margin-left: 30px;
+        font-size:   12px;
+    }
+
+}
+  
+  span.picture {
+    margin-top: 10px;
+    input {
+      border: 0;
+    }
+  }
+
 [id^="favorite_micropost_submit-"] {
     display: none;
 }

@@ -18,6 +18,14 @@ class Micropost < ApplicationRecord
   validates :content, presence: true, length: { maximum: 140 }
   validate  :picture_size
 
+  def shared?
+    sharer_name ? true : false
+  end
+
+  def shared_message
+    "#{sharer_name}さんがシェアしました。"
+  end
+
   private
 
     # アップロードされた画像のサイズをバリデーションする
