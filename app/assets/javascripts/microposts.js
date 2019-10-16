@@ -6,14 +6,12 @@ $(function() {
     let _selected_pictures = {};
     
     // 新規投稿モーダル表示
-    //$('.open_new_micropost').on('click', function() {
     $(document).on('click', '.open_new_micropost', function() {
         InitializeModal();
         $('#modal_new_micropost').modal(); // modal表示
     });
 
     // 添付ファイル選択
-    //$('#micropost_pictures').on('change',function(e) { 
     $(document).on('change', '#micropost_pictures', function(e) {
         const FILES = e.target.files;
         let def = (new $.Deferred()).resolve();
@@ -36,7 +34,6 @@ $(function() {
     });
 
     // 投稿実行ボタン
-    //$('.send_micropost_btn').on('click', function() {
     $(document).on('click', '.send_micropost_btn', function() {
         if (!isCheckSendValue()) {
             InitializeModal();
