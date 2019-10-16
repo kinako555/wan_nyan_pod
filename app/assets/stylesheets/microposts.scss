@@ -45,9 +45,17 @@ span.picture {
 // 投稿画像プレビュー
 .pictures_field {
   img {
-    max-width:  400px;
-    max-height: 250px;
+    width:  400px;
+    height: 250px;
   }
+}
+.display_picture {
+    width:  400px;
+    height: 250px;
+}
+
+.add_pictures {
+  display: none;
 }
 
 [id^="favorite_micropost_submit-"] {

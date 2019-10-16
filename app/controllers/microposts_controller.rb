@@ -3,7 +3,10 @@ class MicropostsController < ApplicationController
     before_action :correct_user, only: :destroy
 
     def create
-        @micropost = current_user.microposts.build(micropost_params)
+        pictures = format_pictures(params)
+        value = { content: params[:content], pictures: pictures }
+
+        @micropost = current_user.microposts.build(value)
         if @micropost.save
             flash[:success] = "投稿しました"
             redirect_to root_url
@@ -11,7 +14,6 @@ class MicropostsController < ApplicationController
             # TODO: ボタンを非活性にするやり方でやる
             @user = current_user
             @microposts = @user.microposts.where.not(id: nil)
-            
             render 'users/home'
         end
     end
@@ -26,6 +28,20 @@ class MicropostsController < ApplicationController
 
         def micropost_params
             params.require(:micropost).permit(:content, pictures: [])
+            #params.permit(:content, pictures: [])
+        end
+
+        # 個別のパラメータで送られたファイルを配列に入れる
+        def format_pictures(v_params)
+            rtn_pictures = []
+            length = v_params[:pictures_length].to_i
+
+            rtn_pictures.push(v_params[:pictures_0]) if length >= 1
+            rtn_pictures.push(v_params[:pictures_1]) if length >= 2
+            rtn_pictures.push(v_params[:pictures_2]) if length >= 3
+            rtn_pictures.push(v_params[:pictures_3]) if length >= 4
+            
+            return rtn_pictures
         end
 
         # 画面で選択したMicropostを代入する

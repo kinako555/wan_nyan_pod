@@ -1,10 +1,9 @@
 <%= form_for(@micropost) do |form| %>
   <%= render 'shared/error_messages', object: form.object %>
   <div class="field">
-    <%= form.text_area :content, rows: 12, placeholder: "ぷりーず" %>
-    <%= form.label :pictures %>
-    <label class="pictures_field"></label>
-    <%= form.file_field :pictures, multiple: true, class: "file-input" %>
+    <%= form.text_area :content, rows: 12, maxlength: 140, placeholder: "ぷりーず" %>
+    <ul class="pictures_field pl-0"></ul>
+    <%= form.file_field :pictures, multiple: true, class: "file-input add_pictures" %>
+    <label class="btn far fa-images add_pictures_icon" for="micropost_pictures"></label>
   </div>
-  <%= form.submit "投稿", class: "btn btn-primary" %>
 <% end %>

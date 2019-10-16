@@ -57,16 +57,16 @@ $(window).on('load', function () {
 
     // 入力されたformデータ（textやradioなど）を取得する関数作成
     function usersVal(formData){
-      name = $('#user_name').val();
-      email = $('#user_email').val();
-      password = $('#user_password').val();
-      password_confirmation = $('#user_password_confirmation').val();
+      const NAME = $('#user_name').val();
+      const EMAIL = $('#user_email').val();
+      const PASSWORD = $('#user_password').val();
+      const PASSWORD_CONFIRMATION = $('#user_password_confirmation').val();
   
       if (blob != null) formData.append('icon', blob);
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('password', password);
-      formData.append('password_confirmation', password_confirmation);
+      formData.append('name', NAME);
+      formData.append('email', EMAIL);
+      formData.append('password', PASSWORD);
+      formData.append('password_confirmation', PASSWORD_CONFIRMATION);
 
       return formData
     }
