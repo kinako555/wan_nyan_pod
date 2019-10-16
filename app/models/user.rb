@@ -36,7 +36,7 @@ class User < ApplicationRecord
 
     before_save :downcase_email
 
-    mount_uploader :icon, UserIconUploader
+    has_one_attached :icon # Active Storage
 
     validates :name,     presence: true, 
                          length: { maximum: 50}
@@ -46,12 +46,16 @@ class User < ApplicationRecord
                          format: { with: VALID_EMAIL_REGEX },
                          uniqueness: { case_sensitive: false }
     validates :password, presence: true, length: { minimum: 6 }
-    validate  :picture_size
+    #validate  :validate_icon
 
-    # sorceryから提供されていないか確認
+    module ActivationState
+        ACTIVE =  'active'.freeze
+        PENDING = 'pending'.freeze
+    end
+
     # ユーザーが有効か
     def activated?
-        activation_state == 'active'
+        activation_state == ActivationState::ACTIVE
     end
 
     # ホーム画面で表示する投稿一覧
@@ -143,7 +147,7 @@ class User < ApplicationRecord
         end
 
         # アップロードされた画像のサイズをバリデーションする
-        def picture_size
+        def validate_icon
             if icon.size > 5.megabytes
                 errors.add(:picture, "should be less than 5MB")
             end

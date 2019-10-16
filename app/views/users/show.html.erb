@@ -8,7 +8,7 @@
         </section>
         <% if current_user?(@user) %>
             <section class="micropost_form">
-                <%= render 'shared/micropost_form' %>
+                <span class="btn btn-primary open_new_micropost">投稿する</span>
             </section>
         <% end %>
     </aside>
@@ -20,3 +20,4 @@
         <%= render 'shared/menu_bar' %>
     </div>
 </div>
+<%= render 'new_micropost_modal' %>

@@ -1,4 +1,3 @@
-let a;
 $(function() {
 
     // 新規作成
@@ -9,6 +8,7 @@ $(function() {
     // 新規投稿モーダル表示
     //$('.open_new_micropost').on('click', function() {
     $(document).on('click', '.open_new_micropost', function() {
+        InitializeModal();
         $('#modal_new_micropost').modal(); // modal表示
     });
 
@@ -25,7 +25,6 @@ $(function() {
         });
         _selected_pictures_length += FILES.length;
         formatModalSize();
-        a = _selected_pictures;
     })
 
     $(document).on('click', '.delete_picture', function() {

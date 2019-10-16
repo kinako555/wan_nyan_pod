@@ -2,7 +2,7 @@
 <% unless micropost.id.nil? %>
   <li id="micropost-<%= micropost.id %>">
     <%= link_to micropost.user, target: "blank" do %>
-      <%= image_tag micropost.user.icon.url, class: 'micropost_user_icon' if micropost.user.icon? %>
+      <%= image_tag micropost.user.icon, class: 'micropost_user_icon' if micropost.user.icon.attached? %>
     <% end %>
     <span class="micropost_user_info" style="display:inline-flex">
       <span class="user mt-0"><%= link_to micropost.user.name, micropost.user %></span>
@@ -12,13 +12,12 @@
     </span>
     <span class="content">
       <%= micropost.content %>
-      <%= image_tag micropost.picture.url if micropost.picture? %>
+      <ul>
+        <% micropost.pictures.each do |picture| %>
+              <%= image_tag picture ,class: "display_picture" %>
+        <% end %>
+      </ul>
     </span>
-    <ul>
-      <% micropost.pictures.each do |picture| %>
-            <%= image_tag picture ,class: "display_picture" %>
-      <% end %>
-    </ul>
     <span class="timestamp">
       Posted <%= time_ago_in_words(micropost.created_at) %> ago.
       <% if current_user?(micropost.user) %>

@@ -110,7 +110,7 @@ $(window).on('load', function () {
     };
 
     // 画像選択時
-    $('#icon').on('change', function(e){
+    $(document).on('change', '#icon', function(e) {
       file = e.target.files[0];
       reader = new FileReader();
   
@@ -133,7 +133,7 @@ $(window).on('load', function () {
     });
   
     // トリミング決定時
-    $('.select_icon_btn').on('click', function(){
+    $(document).on('click', '.select_icon_btn', function() {
       iconCropping();
       //$('.overlay').fadeOut();
       $('#crop_img').remove();
@@ -142,14 +142,14 @@ $(window).on('load', function () {
     });
   
     // トリミング画面を閉じる時
-    $('.close_btn').on('click', function(){
+    $(document).on('click', '.close_btn', function() {
       //$('.overlay').fadeOut();
       $('#crop_img').remove();
       $('.cropper-container').remove();
     });
 
     // サーバーへ送信
-    $('.submit_btn').on('click', function(){
+    $(document).on('click', '.submit_btn', function() {
       sending();
     });
 });

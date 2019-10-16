@@ -1,5 +1,5 @@
 <li>
-    <%= image_tag user.icon.url, class: 'index_user_icon' if user.icon? %>
+    <%= image_tag user.icon, class: 'index_user_icon' if user.icon.attached? %>
     <%= link_to user.name, user %>
     <% if current_user.admin? && !current_user?(user) %>
     | <%= link_to "delete", user, method: :delete,
