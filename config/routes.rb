@@ -17,6 +17,12 @@ Rails.application.routes.draw do
       get :activate, :following, :followers, :favoriting_microposts
     end
   end
+  resources :microposts do
+    # 例: users/1/following
+    member do
+      post :favorited_users
+    end
+  end
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
   resources :microposts,          only: [:create, :destroy]

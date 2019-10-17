@@ -24,6 +24,37 @@ class MicropostsController < ApplicationController
         redirect_back(fallback_location: root_url) # 削除実行したページに戻る
     end
 
+    def favorited_users
+        micropost = Micropost.find_by(id: params[:id])
+        if micropost
+            @users = micropost.favorited_users
+            respond_to do |format|
+                format.js
+            end
+        else
+            respond_to do |format|
+                format.html
+                format.js
+            end
+        end
+    end
+
+    def shared_users
+        micropost = Micropost.find_by(id: params[:id])
+        if micropost
+            @users = micropost.shared_users
+            respond_to do |format|
+                format.html
+                format.js
+            end
+        else
+            respond_to do |format|
+                format.html
+                format.js
+            end
+        end
+    end
+
     private
 
         def micropost_params

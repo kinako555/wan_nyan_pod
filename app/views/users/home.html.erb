@@ -14,9 +14,7 @@
         <h1>ユーザーホーム</h1>
         <% if @microposts.any? %>
             <h3>Microposts (<%= @microposts.count %>)</h3>
-            <ol class="microposts">
-                <%= render @microposts %>
-            </ol>
+            <%= render 'shared/microposts' %>
         <% end %>
     </div>
     <div class="col-3">

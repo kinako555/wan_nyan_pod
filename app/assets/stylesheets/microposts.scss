@@ -54,8 +54,12 @@ span.picture {
     height: 250px;
 }
 
-.add_pictures {
+.add_pictures, .submit_favorited_users{
   display: none;
+}
+
+.form_micropost {
+  display: inline;
 }
 
 [id^="favorite_micropost_submit-"] {
@@ -65,3 +69,5 @@ span.picture {
 [id^="share_micropost_submit-"] {
     display: none;
 }
+
+
