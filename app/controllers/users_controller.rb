@@ -11,6 +11,7 @@ class UsersController < ApplicationController
       # nilをはじく必要がある
       @microposts = @user.home_microposts
       @micropost =  current_user.microposts.build
+      @sharering_or_favoriting_users = []
       # ホーム画面に遷移
     else
       redirect_to login_path
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
   def index
     @users = []
     @microposts = []
-    @isMicropostsSearched = false
+    @sharering_or_favoriting_users = []
     # ユーザー検索画面に遷移
   end
 
@@ -40,6 +41,7 @@ class UsersController < ApplicationController
     else
       @microposts = @user.microposts
     end
+    @sharering_or_favoriting_users = []
   end
 
   # GET signup_path
@@ -117,6 +119,7 @@ class UsersController < ApplicationController
                           "%#{params[:search_txt]}%")
       @microposts = []
       @searchType = 0 # js.erbが「'」を処理できないので数字にする ← 対応可能なので後に対応
+      @sharering_or_favoriting_users = []
       respond_to do |format|
         # どちらかを実行
         format.html { redirect_to users_path }
@@ -127,6 +130,7 @@ class UsersController < ApplicationController
       @microposts = Micropost.where("content LIKE ?", "%#{params[:search_txt]}%")
                              .order(:updated_at)
       @searchType = 1
+      @sharering_or_favoriting_users = []
       respond_to do |format|
         # どちらかを実行
         format.html { redirect_to users_path }
@@ -164,6 +168,7 @@ class UsersController < ApplicationController
     @title = "お気に入りリスト"
     @user = current_user
     @microposts = @user.sorted_favoriting_microposts
+    @sharering_or_favoriting_users = []
     render 'show_favorite_micropost'
   end
 

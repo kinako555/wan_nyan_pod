@@ -14,6 +14,7 @@ class MicropostsController < ApplicationController
             # TODO: ボタンを非活性にするやり方でやる
             @user = current_user
             @microposts = @user.microposts.where.not(id: nil)
+            @sharering_or_favoriting_users
             render 'users/home'
         end
     end
@@ -27,7 +28,7 @@ class MicropostsController < ApplicationController
     def favorited_users
         micropost = Micropost.find_by(id: params[:id])
         if micropost
-            @users = micropost.favorited_users
+            @sharering_or_favoriting_users = micropost.favorited_users
             respond_to do |format|
                 format.js
             end
@@ -42,7 +43,7 @@ class MicropostsController < ApplicationController
     def shared_users
         micropost = Micropost.find_by(id: params[:id])
         if micropost
-            @users = micropost.shared_users
+            @sharering_or_favoriting_users = micropost.shared_users
             respond_to do |format|
                 format.html
                 format.js
