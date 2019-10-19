@@ -1,41 +1,19 @@
-<%= hidden_field_tag "idParams", @user.id %>
-
+<input type="hidden" name="default_edit_type" value="<%= @default_edit_type %>">
 <h1>プロフィール設定</h1>
-<%= form_for(@user) do |f| %>
-    <%= hidden_field_tag "idParams", @user.id %>
-    <%= render 'shared/error_messages', object: f.object %>
-    <div class="form-group"><div class="row">
-        <div class="col-md-3">       
-            <div class="field image">
-                <i class="far fa-check-square"></i>
-                <div id="img_field" onClick="$('#icon').click()" >
-                    <% if @user.icon.attached? %>
-                        <%= image_tag @user.icon %>
-                    <% else %>
-                        <i class="fas fa-image"></i><i class="fas fa-file-upload add"></i>
-                    <% end %>
-                </div>
-                <%= f.file_field :icon, class: 'image', style: 'display:none;', id: 'icon'%>
-            </div>
-        </div>
-        <div class="col-md-6">   
-            <%= f.label :name %>
-            <%= f.text_field :name, class: 'form-control' %>
+<div class="row justify-content-center">
+    <div class="col-6">
+        <ul class="nav nav-tabs mb-5">
+            <!--classにactiveを加えてタブのデザインを切り替える -->
+            <li class="nav-item w-50"><a class="edit_profile_tb  btn nav-link active">プロフィール</a></li>
+            <li class="nav-item w-50"><a class="edit_password_tb btn nav-link">パスワード</a></li>
+        </ul>
+    </div>
+</div>
+<%= render 'edit_profile' %>
+<%= render 'edit_password' %>
 
-            <%= f.label :email %>
-            <%= f.email_field :email, class: 'form-control' %>
-
-            <%= f.label :password %>
-            <%= f.password_field :password, class: 'form-control' %>
-
-            <%= f.label :password_confirmation, "Confirmation" %>
-            <%= f.password_field :password_confirmation, class: 'form-control' %>
-
-            <div class=" btn btn-primary submit_btn">更新</div>
-        </div>
-    </div></div>
-<% end %>
 <%= render 'icon_editter_modal' %>
 
 <!-- javascript -->
 <%= javascript_include_tag 'users_edit' %>
+<%= javascript_include_tag 'initialize_users_edit' %>

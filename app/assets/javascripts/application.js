@@ -19,4 +19,5 @@
 //= require cable
 //= require cropper.min 
 //= require microposts
+//= require users
 // require_tree .

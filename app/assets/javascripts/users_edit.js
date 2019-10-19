@@ -59,14 +59,10 @@ $(window).on('load', function () {
     function usersVal(formData){
       const NAME = $('#user_name').val();
       const EMAIL = $('#user_email').val();
-      const PASSWORD = $('#user_password').val();
-      const PASSWORD_CONFIRMATION = $('#user_password_confirmation').val();
   
       if (blob != null) formData.append('icon', blob);
       formData.append('name', NAME);
       formData.append('email', EMAIL);
-      formData.append('password', PASSWORD);
-      formData.append('password_confirmation', PASSWORD_CONFIRMATION);
 
       return formData
     }

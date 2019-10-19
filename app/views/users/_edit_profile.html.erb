@@ -1,0 +1,31 @@
+<%= form_with model: @user, class: "form_edit_profile", method: :patch do |form| %>
+    <%= form.hidden_field :idParams, :value => @user.id %>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-3">       
+                <div class="field image">
+                    <div id="img_field" onClick="$('#icon').click()">
+                        <% if @user.icon.attached? %>
+                            <%= image_tag @user.icon %>
+                        <% else %>
+                            <i class="fas fa-image"></i><i class="fas fa-file-upload add"></i>
+                        <% end %>
+                    </div>
+                    <%= form.file_field :icon, class: 'image', style: 'display:none;', id: 'icon'%>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group form_group_profile">
+                <%= render 'shared/error_messages', class: "aaaassssss", object: form.object %>
+                <%= form.label :name %>
+                <%= form.text_field :name, class: 'form-control' %>
+
+                <%= form.label :email %>
+                <%= form.email_field :email, class: 'form-control' %>
+
+                <div class=" btn btn-primary submit_btn w-100">更新</div>
+            </div>
+        </div>
+    </div>
+<% end %>

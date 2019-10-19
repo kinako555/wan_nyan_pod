@@ -14,7 +14,10 @@ Rails.application.routes.draw do
   resources :users do
     # 例: users/1/following
     member do
-      get :activate, :following, :followers, :favoriting_microposts
+      get :activate, 
+          :following, 
+          :followers, 
+          :favoriting_microposts
     end
   end
   resources :microposts do

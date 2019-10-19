@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include UsersHelper
+
   skip_before_action :require_login, only: [:home, :show, :new, :create, :activate]
   before_action      :correct_user,  only: [:edit, :update]
   before_action      :admin_user,    only: :destroy
@@ -96,6 +98,7 @@ class UsersController < ApplicationController
   # ↑ users/User.id/edit
   def edit
     @user = User.find(params[:id])
+    @default_edit_type = EditType::PROFILE
     # プロフィール設定画面に遷移
   end
 
@@ -103,11 +106,28 @@ class UsersController < ApplicationController
   # プロフィール設定画面登録処理
   # ajax通信処理
   def update
-    if current_user.update_attributes(user_update_params)
-      render json: {isSuccess: true}
-    else
-      render json: {isSuccess: false}
+    @user = current_user
+    case params[:user][:edit_type]
+    when EditType::PROFILE then
+    when EditType::PASSWORD then
+      password = params[:user][:password]
+      password_confirmation = params[:user][:password_confirmation]
+
+      if @user.update_attributes({ password: password, 
+                                          password_confirmation: password_confirmation })
+          redirect_to root_path
+      else
+        @default_edit_type = EditType::PASSWORD
+        render 'edit'
+      end
+      
+                            
     end
+    #if current_user.update_attributes(user_update_params)
+    #  render json: {isSuccess: true}
+    #else
+    #  render json: {isSuccess: false}
+    #end
   end
 
   # POST search_path
