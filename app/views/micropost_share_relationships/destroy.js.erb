@@ -1,2 +1,2 @@
-$("<%= "#micropost-#{@micropost.id}" %> > .share_micropost > .share_micropost_form")
-.html("<%= j(render('microposts/share_micropost', micropost: @micropost)) %>");
+$("<%= "#micropost-#{@micropost.id}" %> > .micropost_functions > .share_micropost_form")
+.html("<%= j(render('micropost_share_relationships/share_micropost', micropost: @micropost)) %>");

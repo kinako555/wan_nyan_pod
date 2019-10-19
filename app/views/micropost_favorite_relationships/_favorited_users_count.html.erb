@@ -1,8 +1,3 @@
-<%= form_with url: micropost_favorite_relationships_path, class: 'form_micropost' do |form| %>
-    <%= form.hidden_field :micropost_id, :value => micropost.id %>
-    <%= form.submit "お気に入り", id: "favorite_micropost_submit-#{ micropost.id }"%>
-    <i class="fas fa-paw favorite_micropost_icon btn pr-0" value="<%= micropost.id %>" ></i>
-<% end %>
 <% if micropost.favorited_users.count >= 1 %>
     <%= form_with url: favorited_users_micropost_path(micropost), class: 'form_micropost' do |form| %>
         <strong class="stat favorited_users_count btn pl-0" value="<%= micropost.id %>" >
@@ -11,4 +6,3 @@
         <%= form.submit "シェアユーザー一覧", class: 'submit_favorited_users', id: "favorited_users_submit_#{ micropost.id }" %>
     <% end %>
 <% end %>
-

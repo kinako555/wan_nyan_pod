@@ -1,0 +1,7 @@
+<%= form_with url: micropost_favorite_relationships_path, class: 'form_micropost' do |form| %>
+    <%= form.hidden_field :micropost_id, :value => micropost.id %>
+    <%= form.submit "お気に入り", id: "favorite_micropost_submit-#{ micropost.id }"%>
+    <i class="fas fa-paw favorite_micropost_icon btn" value="<%= micropost.id %>" ></i>
+<% end %>
+<%= render 'micropost_favorite_relationships/favorited_users_count', { micropost: micropost } %>
+

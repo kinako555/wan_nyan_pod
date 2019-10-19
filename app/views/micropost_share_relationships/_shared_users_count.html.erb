@@ -1,0 +1,10 @@
+<% if micropost.shared_users.count >= 1 %>
+    <%= form_with url: shared_users_micropost_path(micropost), class: 'form_micropost' do |form| %>
+        <strong class="stat shared_users_count btn pl-0" value="<%= micropost.id %>" >
+            <%= micropost.shared_users.count %>
+        </strong>
+        <%= form.submit "シェアユーザー一覧", class: 'submit_shared_users', id: "shared_users_submit_#{ micropost.id }" %>
+    <% end %>
+<% else %>
+    <span class="notdisplay_count"></span>
+<% end %>

@@ -3,3 +3,4 @@
     <%= form.submit "シェア", id: "share_micropost_submit-#{ micropost.id }"%>
     <i class="fas fa-retweet share_micropost_icon btn" value="<%= micropost.id %>" ></i>
 <% end %>
+<%= render 'micropost_share_relationships/shared_users_count', { micropost: micropost } %>

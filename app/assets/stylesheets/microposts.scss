@@ -54,12 +54,32 @@ span.picture {
     height: 250px;
 }
 
-.add_pictures, .submit_favorited_users{
+.add_pictures, 
+.submit_favorited_users, 
+.submit_shared_users{
   display: none;
 }
 
-.form_micropost {
-  display: inline;
+.micropost_functions {
+  margin-left: 70%;
+}
+
+.form_micropost, 
+.share_micropost_form, 
+.favorite_micropost_form  {
+  display: inline-flex;
+}
+
+.share_micropost_icon,
+.unshare_micropost_icon, 
+.favorite_micropost_icon,
+.unfavorite_micropost_icon {
+  padding-right: 8px;
+}
+
+.notdisplay_count {
+  display:       inline-flex; 
+  padding-right: 27px;
 }
 
 [id^="favorite_micropost_submit-"] {

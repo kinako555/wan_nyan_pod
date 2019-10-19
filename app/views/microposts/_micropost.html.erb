@@ -21,12 +21,12 @@
     <span class="timestamp">
       Posted <%= time_ago_in_words(micropost.created_at) %> ago.
       <% if current_user?(micropost.user) %>
-        <%= link_to "delete", micropost, method: :delete, data: { confirm: "投稿を削除しますか?" } %>
+        <%= link_to "削除", micropost, method: :delete, data: { confirm: "投稿を削除しますか?" } %>
       <% end %>
     </span>
-      <span class="share_micropost" style="display:inline-flex">
-        <%= render 'microposts/share_micropost_form', { micropost: micropost } %>
-        <%= render 'microposts/favorite_micropost_form', { micropost: micropost } %>
+      <span class="micropost_functions" style="display:inline-flex">
+        <%= render 'micropost_share_relationships/share_micropost_form',       { micropost: micropost } %>
+        <%= render 'micropost_favorite_relationships/favorite_micropost_form', { micropost: micropost } %>
       </span>
   </li>
 <% end %>

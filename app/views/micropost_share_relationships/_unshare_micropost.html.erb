@@ -1,5 +1,6 @@
 <%= form_with url: micropost_share_relationship_path(current_user.active_micropost_share_relationships.find_by(micropost_id: micropost.id)), 
-              method: :delete do |form| %>
+              method: :delete, class: 'form_micropost' do |form| %>
     <%= form.submit "解除", id: "share_micropost_submit-#{ micropost.id }"%>
     <i class="fas fa-retweet unshare_micropost_icon btn" value="<%= micropost.id %>" ></i>
 <% end %>
+<%= render 'micropost_share_relationships/shared_users_count', { micropost: micropost } %>

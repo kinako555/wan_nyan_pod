@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :microposts do
     # 例: users/1/following
     member do
-      post :favorited_users
+      post :favorited_users, :shared_users
     end
   end
   resources :account_activations, only: [:edit]
