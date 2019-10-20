@@ -6,11 +6,7 @@
   </aside>
   <div class="col-md-6">
     <h3><%= @title %></h3>
-    <% if @microposts.any? %>
-        <ol class="microposts">
-            <%= render @microposts %>
-        </ol>
-    <% end %>
+    <%= render 'shared/microposts' %>
   </div>
   <div class="col-3">
         <%= render 'shared/menu_bar' %>

@@ -109,25 +109,32 @@ class UsersController < ApplicationController
     @user = current_user
     case params[:user][:edit_type]
     when EditType::PROFILE then
+      name = params[:user][:name]
+      email = params[:user][:email]
+      values = { name: name, email: email }
+      values["icon"] = params[:user][:icon] if params[:user][:icon]
+
+      if  @user.update_attributes(values)
+        flash[:success] = "更新しました。"
+        redirect_to root_path
+      else
+        @default_edit_type = EditType::PROFILE
+        flash[:danger] = "入力が正しくありません。"
+        render 'edit'
+      end
     when EditType::PASSWORD then
       password = params[:user][:password]
       password_confirmation = params[:user][:password_confirmation]
+      values = { password: password, password_confirmation: password_confirmation }
 
-      if @user.update_attributes({ password: password, 
-                                          password_confirmation: password_confirmation })
+      if @user.update_attributes(values)
+          flash[:success] = "更新しました。"
           redirect_to root_path
       else
         @default_edit_type = EditType::PASSWORD
         render 'edit'
-      end
-      
-                            
+      end                         
     end
-    #if current_user.update_attributes(user_update_params)
-    #  render json: {isSuccess: true}
-    #else
-    #  render json: {isSuccess: false}
-    #end
   end
 
   # POST search_path
@@ -135,7 +142,7 @@ class UsersController < ApplicationController
     case params[:search_type]
     when "users" then
       @users = User.where("activation_state = ? AND name LIKE ?", 
-                          "active", 
+                          User::ActivationState::ACTIVE, 
                           "%#{params[:search_txt]}%")
       @microposts = []
       @searchType = 0 # js.erbが「'」を処理できないので数字にする ← 対応可能なので後に対応

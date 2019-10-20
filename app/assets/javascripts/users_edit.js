@@ -1,4 +1,4 @@
-$(window).on('load', function () {
+$(function() {
     // cropper（トリミング部）のコーディング（詳しくはGitHub参照
     let cropper;
     let croppable = false;
@@ -45,7 +45,7 @@ $(window).on('load', function () {
       if (croppedCanvas && croppedCanvas.toBlob){
         //  if ~.toBlob -> HTMLCanvasElement.toBlob() が使用できる場合
         croppedCanvas.toBlob(function(b){
-          blob = b;     
+          blob = b;
         });
       }else if(croppedCanvas && croppedCanvas.msToBlob){
         // msToblob -> IE10以降やEDGEで使えるメソッド
@@ -56,21 +56,24 @@ $(window).on('load', function () {
     };
 
     // 入力されたformデータ（textやradioなど）を取得する関数作成
-    function usersVal(formData){
+    function usersVal(formData, id){
       const NAME = $('#user_name').val();
       const EMAIL = $('#user_email').val();
-  
-      if (blob != null) formData.append('icon', blob);
-      formData.append('name', NAME);
-      formData.append('email', EMAIL);
+      const EDIT_TYPE = $('#edit_type').val();
 
+      if (blob != null) formData.append('user[icon]', blob);
+
+      formData.append('id', id);
+      formData.append('user[edit_type]', EDIT_TYPE)
+      formData.append('user[name]', NAME);
+      formData.append('user[email]', EMAIL);
       return formData
     }
 
     // formデータをまとめてajaxでコントローラーに渡すための準備
     function sending(){
       let formData = new FormData();
-      const id = $('#idParams').val();
+      const id = $('#user_id').val();
   
       // CSRF対策（独自のajax処理を行う場合、head内にあるcsrf-tokenを取得して送る必要がある）
       $.ajaxPrefilter(function(options, originalOptions, jqXHR){
@@ -81,7 +84,7 @@ $(window).on('load', function () {
         };
       });
       // 入力されたformデータをformDataに入れる
-      usersVal(formData);
+      usersVal(formData, id);
 
       $.ajax({
         url:         '/users/' + id,
@@ -92,21 +95,10 @@ $(window).on('load', function () {
         async:       false,
         contentType: false
       })
-        .then(
-          data => (function(data) {
-                      if (data['isSuccess']) {
-                        location.reload(); // 成功時(画像が更新されないのでリロードしている)
-                        alert('更新しました');
-                      }else{
-                        alert('入力が正しくありません');
-                      }
-                    }(data)), 
-          error => alert('通信に失敗しました')
-      );  
     };
 
     // 画像選択時
-    $(document).on('change', '#icon', function(e) {
+    $('#icon').on('change', function(e) {
       file = e.target.files[0];
       reader = new FileReader();
   
@@ -129,23 +121,23 @@ $(window).on('load', function () {
     });
   
     // トリミング決定時
-    $(document).on('click', '.select_icon_btn', function() {
+    $('.select_icon_btn').on('click', function() {
       iconCropping();
       //$('.overlay').fadeOut();
       $('#crop_img').remove();
       $('.cropper-container').remove();
-      blobing();
+      blobing();    
     });
   
     // トリミング画面を閉じる時
-    $(document).on('click', '.close_btn', function() {
+    $('.close_btn').on('click', function() {
       //$('.overlay').fadeOut();
       $('#crop_img').remove();
       $('.cropper-container').remove();
     });
 
     // サーバーへ送信
-    $(document).on('click', '.submit_btn', function() {
+    $('.submit_btn').on('click', function() {
       sending();
     });
 });
