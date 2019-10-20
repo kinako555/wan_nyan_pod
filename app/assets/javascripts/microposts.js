@@ -194,4 +194,32 @@ $(function() {
         $(SHARED_MICROPOST_SUBMIT_ID_FIRST + $(this).attr('value')).click();
     });
 
+    $(document).on('click', '.display_picture', function() {
+        let value =  $(this).attr('value');
+        sendImgValue(JSON.parse(value)); // 文字列を連想配列に変換
+    });
+    function sendImgValue(value) {
+        const ID =  value['id'];
+        const NUM = value['num'];
+        let formData = new FormData();
+        // CSRF対策（独自のajax処理を行う場合、head内にあるcsrf-tokenを取得して送る必要がある）
+        $.ajaxPrefilter(function(options, originalOptions, jqXHR){
+            let token;
+            if (!options.crossDomain){
+                token = $('meta[name="csrf-token"]').attr('content');
+                if (token) return jqXHR.setRequestHeader('X-CSRF-Token', token);
+            };
+        });
+        formData.append('num', NUM);
+        $.ajax({
+            url:         '/microposts/' + ID + '/show_picture',
+            datatype:    'json',
+            type:        'post',
+            data:        formData,
+            processData: false,
+            async:       false,
+            contentType: false
+        })
+    }
+
 });

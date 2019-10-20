@@ -1,4 +1,3 @@
-<!-- 新規投稿欄を作る際にnilのデータが発生してしまうため、if文ではじく -->
 <% unless micropost.id.nil? %>
   <li id="micropost-<%= micropost.id %>">
     <%= link_to micropost.user, target: "blank" do %>
@@ -13,8 +12,8 @@
     <span class="content">
       <%= micropost.content %>
       <ul>
-        <% micropost.pictures.each do |picture| %>
-              <%= image_tag picture ,class: "display_picture" %>
+        <% micropost.pictures.each_with_index  do |picture, i| %>
+              <%= image_tag picture ,class: "display_picture", value: "{ \"id\": #{micropost.id}, \"num\": #{i} }" %>
         <% end %>
       </ul>
     </span>

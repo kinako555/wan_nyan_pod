@@ -56,6 +56,23 @@ class MicropostsController < ApplicationController
         end
     end
 
+    def show_picture
+        micropost = Micropost.find_by(id: params[:id])
+        num =  params[:num]
+        if micropost
+            @picture = micropost.pictures[num.to_i]
+            p @picture
+            respond_to do |format|
+                format.js
+            end
+        else
+            respond_to do |format|
+                format.html
+                format.js
+            end
+        end
+    end
+
     private
 
         def micropost_params
