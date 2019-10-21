@@ -1,8 +1,14 @@
 class ApplicationController < ActionController::Base
     include SessionsHelper
     before_action :require_login
-    rescue_from ActiveRecord::RecordNotFound, with: :error_404
     rescue_from Exception,                    with: :error_500
+    rescue_from ActiveRecord::RecordNotFound, with: :error_404
+
+    # ActiveRecord::RecordNotFound発生時のレンダリング先
+    ERROR_404_RENDER_JS = 'shared/error_404'.freeze
+    # Exception発生時のレンダリング先
+    ERROR_500_RENDER_JS = 'shared/error_500'.freeze
+    
 
     # 未ログアウトなら従来の処理
     # ログイン済ならユーザーホーム画面に遷移
@@ -11,11 +17,18 @@ class ApplicationController < ActionController::Base
     end
 
     def error_500(e)
-      #TODO: 処理を書く
+      p e
+      logger.error e
+      respond_to do |format|
+        format.js { render ERROR_500_RENDER_JS }
+      end
     end
 
-    def error_500(e)
-      logger.error e
+    def error_404(e)
+      p e
+      respond_to do |format|
+        format.js { render ERROR_404_RENDER_JS }
+      end
     end
 
     private
