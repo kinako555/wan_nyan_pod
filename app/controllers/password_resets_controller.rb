@@ -5,7 +5,7 @@ class PasswordResetsController < ApplicationController
   def new
   end
 
-  #　メール送信
+  # メール送信
   def create
     @user = User.find_by(email: params[:password_reset][:email].downcase)
 

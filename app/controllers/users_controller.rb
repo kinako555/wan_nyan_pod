@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   # @userでもいける
   # タイムライン
   def show
-    # 該当なしの場合nilを返したいのでfind_byを使用
+    # 該当なしの場合nilを返したいのでfind_byを使用(例外処理をしない)
     @user = User.find_by(id: params[:id])
     # 検索したユーザーが無効であればユーザーホーム画面に遷移
     redirect_to login_path and return if @user.nil? || !@user.activated?

@@ -26,50 +26,31 @@ class MicropostsController < ApplicationController
     end
 
     def favorited_users
-        micropost = Micropost.find_by(id: params[:id])
-        if micropost
-            @sharering_or_favoriting_users = micropost.favorited_users
-            respond_to do |format|
-                format.js
-            end
-        else
-            respond_to do |format|
-                format.html
-                format.js
-            end
+        micropost = Micropost.find(params[:id])
+        @sharering_or_favoriting_users = micropost.favorited_users
+
+        respond_to do |format|
+            format.js
         end
     end
 
     def shared_users
-        micropost = Micropost.find_by(id: params[:id])
-        if micropost
-            @sharering_or_favoriting_users = micropost.shared_users
-            respond_to do |format|
-                format.html
-                format.js
-            end
-        else
-            respond_to do |format|
-                format.html
-                format.js
-            end
+        micropost = Micropost.find(params[:id])
+        @sharering_or_favoriting_users = micropost.shared_users
+        
+        respond_to do |format|
+            format.html
+            format.js
         end
     end
 
     def show_picture
-        micropost = Micropost.find_by(id: params[:id])
+        micropost = Micropost.find(params[:id])
         num =  params[:num]
-        if micropost
-            @picture = micropost.pictures[num.to_i]
-            p @picture
-            respond_to do |format|
-                format.js
-            end
-        else
-            respond_to do |format|
-                format.html
-                format.js
-            end
+        @picture = micropost.pictures[num.to_i]
+        
+        respond_to do |format|
+            format.js
         end
     end
 
