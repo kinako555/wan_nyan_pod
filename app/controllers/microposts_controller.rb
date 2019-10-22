@@ -62,7 +62,7 @@ class MicropostsController < ApplicationController
     def trend
         @microposts = Micropost.trends
         @sharering_or_favoriting_users = [] #TODO: 消す
-        
+
         respond_to do |format|
             format.js
         end

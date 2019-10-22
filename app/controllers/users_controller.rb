@@ -97,7 +97,7 @@ class UsersController < ApplicationController
   # GET edit_user_path(User)
   # ↑ users/User.id/edit
   def edit
-    @user = User.find(params[:id])
+    @user = current_user
     @default_edit_type = EditType::PROFILE
     # プロフィール設定画面に遷移
   end
@@ -172,6 +172,10 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = "ユーザーを削除しました"
     redirect_to users_url # 検索画面に遷移
+
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path
+    flash[:danger] = ERROR_404_MESSAGE
   end
 
   # GET following_user_path(User)
@@ -180,6 +184,10 @@ class UsersController < ApplicationController
     @user  = User.find(params[:id])
     @users = @user.following
     render 'show_follow'
+
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path
+    flash[:danger] = ERROR_404_MESSAGE
   end
 
   # GET followers_user_path(User)
@@ -188,6 +196,10 @@ class UsersController < ApplicationController
     @user  = User.find(params[:id])
     @users = @user.followers
     render 'show_follow'
+
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path
+    flash[:danger] = ERROR_404_MESSAGE
   end
 
   # GET favoriting_microposts_user_path(User)
@@ -218,6 +230,10 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_path) unless current_user?(@user)
+
+    rescue ActiveRecord::RecordNotFound
+      redirect_to root_path
+      flash[:danger] = ERROR_404_MESSAGE
     end
 
     # 管理者か確認
