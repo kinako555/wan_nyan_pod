@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get    '/login',  to: 'sessions#new'
   post   '/login',  to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+  get    '/top',    to: 'microposts#top'
+  post   '/trend',  to: 'microposts#trend'
   get    'password_resets/new'
   get    'password_resets/edit'
   resources :users do

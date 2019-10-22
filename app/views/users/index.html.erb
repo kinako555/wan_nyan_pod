@@ -1,10 +1,8 @@
 <h1>検索画面</h1>
 <div class="row">
-    <div class="col-md-4">
-    <!-- ログインユーザー-->
-    </div>
+    <div class="col-md-3"></div>
     <!-- ユーザー一覧-->
-    <div class="col-4">
+    <div class="col-6">
         <%= form_with url: search_path, id: 'search_form' do |form| %>
             <%= form.hidden_field :search_type, :value => "users" %>
             <%= form.text_field :search_txt, class: "w-75", placeholder: "検索ワード" %>
@@ -13,8 +11,8 @@
         <% end %>
         <ul class="nav nav-tabs">
             <!--classにactiveを加えてタブのデザインを切り替える -->
-            <li class="nav-item"><a class="search_users_tb btn nav-link disabled">ユーザー</a></li>
-            <li class="nav-item"><a class="search_microposts_tb btn nav-link disabled">投稿</a></li>
+            <li class="nav-item w-50"><a class="search_users_tb btn nav-link disabled">ユーザー</a></li>
+            <li class="nav-item w-50"><a class="search_microposts_tb btn nav-link disabled">投稿</a></li>
         </ul>
         <!-- ユーザー -->
         <div id="result_users" style="display: none">
@@ -26,7 +24,7 @@
         </div>             
     </div>
     <!-- サイドメニュー-->
-    <div class="col-4">
+    <div class="col-3">
         <%= render 'shared/menu_bar' %>
     </div>
 </div>

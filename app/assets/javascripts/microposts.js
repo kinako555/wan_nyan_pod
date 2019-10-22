@@ -222,4 +222,25 @@ $(function() {
         })
     }
 
+    // 注目画面
+
+    $(document).on('click', '#top_microposts_tb', function() {
+        $('#top_microposts_tb').addClass("active");
+        $('#trend_microposts_tb').removeClass("active");
+
+        $('#top_microposts').css("display", "inline");
+        $('#trend_microposts').css("display", "none");
+    });
+
+    $(document).on('click', '#trend_microposts_tb', function() {
+        $('#trend_microposts_tb').addClass("active");
+        $('#top_microposts_tb').removeClass("active");
+
+        $('#trend_microposts').css("display", "inline");
+        $('#top_microposts').css("display", "none");
+
+        // サーバーには一度しか問い合わせない
+        if($('#trend_microposts_form').length) $('#trend_microposts_submit').click();
+    });
+
 });

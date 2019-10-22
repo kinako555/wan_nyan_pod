@@ -1,0 +1,26 @@
+<h1>注目</h1>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-6">
+        <ul class="nav nav-tabs">
+            <!--classにactiveを加えてタブのデザインを切り替える -->
+            <li class="nav-item w-50"><a id="top_microposts_tb"  class="btn nav-link active" >トップ</a></li>
+            <li class="nav-item w-50"><a id="trend_microposts_tb"class="btn nav-link" >トレンド</a></li>
+        </ul>
+        <%= form_with url: trend_path, id: "trend_microposts_form" do |form| %>
+            <%= form.submit "trend", id: "trend_microposts_submit" %>
+        <% end %>
+        <!-- トップ -->
+        <div id="top_microposts">
+            <%= render 'shared/microposts' %>
+        </div>
+        <!-- トレンド -->
+        <div id="trend_microposts" style="display: none"></div>
+        <div class="users_modal_Storage"></div>
+        <div class="picture_modal_Storage"></div>    
+    </div>
+    <!-- サイドメニュー-->
+    <div class="col-3">
+        <%= render 'shared/menu_bar' %>
+    </div>
+</div>

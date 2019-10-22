@@ -1,0 +1,8 @@
+$('#trend_microposts').html("<%= j(render 'shared/microposts') %>");
+$('#trend_microposts_form').remove();
+$('#top_microposts > #modal_show_users').remove();
+$('#top_microposts > #modal_show_picture').remove();
+$('#trend_microposts > #modal_show_users').remove();
+$('#trend_microposts > #modal_show_picture').remove();
+$('.users_modal_Storage').html("<%= j(render 'microposts/show_users_modal') %>");
+$('.picture_modal_Storage').html("<%= j(render 'microposts/show_picture_modal') %>");

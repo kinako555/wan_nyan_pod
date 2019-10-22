@@ -54,11 +54,24 @@ class MicropostsController < ApplicationController
         end
     end
 
+    def top
+        @microposts = Micropost.tops
+        @sharering_or_favoriting_users = [] #TODO: 消す
+    end
+
+    def trend
+        @microposts = Micropost.trends
+        @sharering_or_favoriting_users = [] #TODO: 消す
+        
+        respond_to do |format|
+            format.js
+        end
+    end
+
     private
 
         def micropost_params
             params.require(:micropost).permit(:content, pictures: [])
-            #params.permit(:content, pictures: [])
         end
 
         # 個別のパラメータで送られたファイルを配列に入れる
