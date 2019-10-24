@@ -10,7 +10,6 @@ class MicropostFavoriteRelationshipsController < ApplicationController
       current_user.favorite_micropost(@micropost)
 
       respond_to do |format|
-        format.html
         format.js
       end
     end
@@ -23,7 +22,6 @@ class MicropostFavoriteRelationshipsController < ApplicationController
       current_user.unfavorite_micropost(@micropost)
 
       respond_to do |format|
-        format.html
         format.js
       end
     end

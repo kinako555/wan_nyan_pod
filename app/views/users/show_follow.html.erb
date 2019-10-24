@@ -1,7 +1,7 @@
 <div class="row">
   <aside class="col-md-3">
     <section class="user_info">
-      <%= image_tag 'TentanativeIcon.PNG', :size =>'50x50' %>
+      <%= image_tag @user.icon, class: 'user_info_icon' if @user.icon.attached? %>
       <h1><%= @user.name %></h1>
       <span><b>Microposts:</b> <%= @user.microposts.count %></span>
     </section>

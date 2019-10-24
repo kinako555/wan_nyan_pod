@@ -10,7 +10,6 @@ class MicropostShareRelationshipsController < ApplicationController
     current_user.share_micropost(@micropost)
 
     respond_to do |format|
-      #format.html
       format.js
     end
   end
@@ -23,7 +22,6 @@ class MicropostShareRelationshipsController < ApplicationController
     current_user.unshare_micropost(@micropost)
     
     respond_to do |format|
-        format.html
         format.js
     end
   end

@@ -186,8 +186,7 @@ class UsersController < ApplicationController
     render 'show_follow'
 
   rescue ActiveRecord::RecordNotFound
-    redirect_to root_path
-    flash[:danger] = ERROR_404_MESSAGE
+    error_404_redirect
   end
 
   # GET followers_user_path(User)
@@ -232,8 +231,7 @@ class UsersController < ApplicationController
       redirect_to(root_path) unless current_user?(@user)
 
     rescue ActiveRecord::RecordNotFound
-      redirect_to root_path
-      flash[:danger] = ERROR_404_MESSAGE
+      error_404_redirect
     end
 
     # 管理者か確認

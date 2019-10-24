@@ -39,7 +39,6 @@ class MicropostsController < ApplicationController
         @sharering_or_favoriting_users = micropost.shared_users
         
         respond_to do |format|
-            format.html
             format.js
         end
     end
@@ -87,8 +86,9 @@ class MicropostsController < ApplicationController
             return rtn_pictures
         end
 
-        # 画面で選択したMicropostを代入する
+        # ログインユーザーの投稿か確認する
         def correct_user
+            # 画面で選択したMicropostを代入する
             @micropost = current_user.microposts.find_by(id: params[:id])
             redirect_to root_url if @micropost.nil?
         end

@@ -113,7 +113,9 @@ $(function() {
           id: "crop_img",
           title: file.name
         }));
+        $('.cropper-canvas').css("transform", "translateY(118.938px)");
         initIconCrop();
+        
       });
       // Cropper.jsが読み込めるようにBase64データとして取得
       reader.readAsDataURL(file);

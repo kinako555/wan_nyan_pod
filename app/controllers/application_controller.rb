@@ -31,6 +31,12 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    # redirect先を指定する場合の404エラー
+    def error_404_redirect
+      redirect_to root_path
+      flash[:danger] = ERROR_404_MESSAGE
+    end
+
     private
 
       # ログイン済か確認
