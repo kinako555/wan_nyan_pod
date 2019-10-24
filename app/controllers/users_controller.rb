@@ -217,6 +217,14 @@ class UsersController < ApplicationController
                                    :password_confirmation)
     end
 
+    def a(v_params)
+      name = v_params[:user][:name]
+      email = v_params[:user][:email]
+      password = v_params[:user][:password]
+      password_confirmation = v_params[:user][:password_confirmation]
+      icon = ""
+    end
+
     def user_update_params
       params.permit(:icon, :name, :email, :password,
                     :password_confirmation)

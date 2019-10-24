@@ -24,7 +24,7 @@ class ActiveSupport::TestCase
 
   # アイコン画像をオブジェクトとして返す
   def get_icon
-    image_path = File.join(Rails.root, "test/images/icon_test.png")
+    image_path = File.join(Rails.root, "test/images/TentanativeIcon.PNG")
     File.new(image_path)
   end
 end
