@@ -1,24 +1,42 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 作成者プロフィール
+男 24歳 無職    
+文系４年生大学卒業後、プログラミング未経験でIT企業に就職    
+2019年10月に退職。  
+    
+趣味：筋トレ    
+    
+自分の考えたWEBアプリケーションを多くの方に利用してもらうのが目標です。   
+一度自分ひとりチャレンジしてみましたが失敗し、自分の技術不足を実感しました。    
+それから、知識や技術の習得したいという思いが強くなり別の職場を探す選択に至りました。    
 
-Things you may want to cover:
+## このアプリについて
+転職の際にポートフォリオが必要かと考え、このアプリを作成しました。
+Twitterによく似た作りとなっていますが、当アプリは動物の写真を投稿したり、
+投稿された動物をみたりすることが目的であり、    
+投稿する側は「飼っているペットを自慢する。」    
+閲覧する側は「アプリを開けばかわいい動物が見ることができる」    
+をコンセプトとして作成しました。    
+    
+Ruby On Rails チュートリアルで作成したアプリを元に作成しました。    
+元アプリとの主な相違点は,
 
-* Ruby version
+#### ユーザー視点
+- 投稿フォームの改良
+- ユーザーアイコン画像の管理方法変更(当アプリで管理する方式に変更 active storage)
+- ユーザーアイコンの選択を画像トリミングで行えるよう実装(不具合があり、まだ未完成))
+- 投稿のシェア機能実装
+- 投稿のお気に入り機能実装
+- 投稿画像のプレビュー表示実装
+- 検索機能実装
+- シェア、お気に入りしたユーザーの一覧表示機能実装
+- 投稿お気に入りランキング、トレンド一覧機能の実装
 
-* System dependencies
+#### ベンダー視点
+- ユーザー認証機能をsorceryにて実装
+    
+リファクタリング、修正、テストコードなど必要な部分が多々あります。  
+今後、修正していきます。
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## アドレス
