@@ -7,7 +7,7 @@ User.create!(name:  "Example User",
     activation_token_expires_at: Time.zone.now)
 
 User.create!(name:  "わんにゃんぽっど太郎",
-    email: ENV['YAHOO_ADDRESS'],
+    email: Rails.application.credentials.yahoo[:address],
     password:              "foobar",
     password_confirmation: "foobar",
     activation_state: 'active',

@@ -58,7 +58,6 @@ ActiveRecord::Schema.define(version: 2019_10_09_072907) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "picture"
     t.index ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_microposts_on_user_id"
   end
@@ -81,7 +80,6 @@ ActiveRecord::Schema.define(version: 2019_10_09_072907) do
     t.string "password_digest"
     t.string "salt"
     t.boolean "admin", default: false
-    t.string "icon"
     t.string "remember_me_token"
     t.datetime "remember_me_token_expires_at"
     t.string "activation_state"

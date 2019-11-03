@@ -8,9 +8,9 @@ default: &default
   timeout: 5000
 
 local: &local
-  username: <%= ENV['DB_USER'] %>
-  password: <%= ENV['DB_PASS'] %>
-  host: localhost
+  username: <%= Rails.application.credentials.db[:dev_user] %>
+  password: <%= Rails.application.credentials.db[:dev_password] %>
+  host: <%= ENV.fetch('DATABASE_HOST') { 'db' } %>
 
 development:
   <<: *default
