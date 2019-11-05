@@ -22,6 +22,7 @@ gem 'bootstrap',    '~> 4.1.1'  # 20190527 add
 gem 'bcrypt',       '~> 3.1.12' # 20190601 add
 gem 'sorcery'                   # 20190629 add
 gem 'font-awesome-sass', '~> 5.11.2' # 20191009 add
+gem 'aws-sdk-s3', require: false
 
 
 group :development, :test do
