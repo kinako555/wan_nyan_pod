@@ -6,10 +6,11 @@ default: &default
   collation: utf8mb4_general_ci
   encoding: utf8mb4
   timeout: 5000
+  username: <%= Rails.application.credentials.db[:user] %>
+  password: <%= Rails.application.credentials.db[:password] %>
+  
 
 local: &local
-  username: <%= Rails.application.credentials.db[:dev_user] %>
-  password: <%= Rails.application.credentials.db[:dev_password] %>
   host: <%= ENV.fetch('DATABASE_HOST') { 'db' } %>
 
 development:
@@ -27,7 +28,5 @@ test:
 
 production:
   <<: *default
-  host: <%= Rails.application.credentials.rds[:host] %>
-  database: <%= Rails.application.credentials.rds[:database] %>
-  username: <%= Rails.application.credentials.rds[:username] %>
-  password: <%= Rails.application.credentials.rds[:password] %>
+  host: <%= Rails.application.credentials.db[:host] %>
+  database: <%= Rails.application.credentials.db[:database] %>

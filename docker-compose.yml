@@ -5,7 +5,7 @@ services:
     build: .
     ports:
       - "3000:3000"
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: ${WEB_COMMAND}
     volumes:
       - .:/wan_nyan_pod
       - bundle:/usr/local/bundle
@@ -14,8 +14,8 @@ services:
   db:
     image: mysql:5.7
     environment:
-      MYSQL_USER: ENV['DB_USER']
-      MYSQL_ROOT_PASSWORD: ENV['DB_PASSWORD']
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
       DATABASE_HOST: db
     ports:
       - '3306:3306'
