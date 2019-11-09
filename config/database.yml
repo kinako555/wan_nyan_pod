@@ -28,5 +28,5 @@ test:
 
 production:
   <<: *default
-  host: <%= Rails.application.credentials.db[:host] %>
+  host: <%= ENV.fetch('DATABASE_HOST') { 'db' } %>
   database: <%= Rails.application.credentials.db[:database] %>
