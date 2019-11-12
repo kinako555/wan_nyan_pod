@@ -25,6 +25,7 @@ services:
     # Where our data will be persisted
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./docker/db/my.cnf:/etc/mysql/my.cnf
 volumes:
   bundle:
   mysql_data:
