@@ -7,12 +7,6 @@ RUN apt-get update -qq && apt-get install -y \
     nodejs \
  && rm -rf /var/lib/apt/lists/*
 
-RUN wget https://nginx.org/keys/nginx_signing.key -O /nginx_signing.key
-RUN apt-key add /nginx_signing.key
-RUN apt-get update
-RUN apt-get install nginx -y
-ADD docker/web/wan_nyan_pod.conf /etc/nginx/conf.d/wan_nyan_pod.conf
-
 RUN gem install bundler
 
 WORKDIR /tmp
@@ -24,3 +18,6 @@ ENV APP_HOME /wan_nyan_pod
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 ADD . $APP_HOME
+
+# puma.sockを配置するディレクトリを作成
+RUN mkdir -p tmp/sockets

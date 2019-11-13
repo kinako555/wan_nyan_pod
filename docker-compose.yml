@@ -1,31 +1,39 @@
 version: '3'
-
 services:
-  web:
-    build: .
-    ports:
-      - "3000:3000"
-    command: ${WEB_COMMAND}
+  app:
+    build:
+      context: .
+    env_file:
+      - ./environments/db.env
+    command: bundle exec puma -C config/puma.rb
     volumes:
       - .:/wan_nyan_pod
-      - bundle:/usr/local/bundle
+      - public-data:/wan_nyan_pod/public
+      - tmp-data:/wan_nyan_pod/tmp
+      - log-data:/wan_nyan_pod/log
     depends_on:
       - db
   db:
     image: mysql:5.7
-    environment:
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      DATABASE_HOST: db
-    ports:
-      - '3306:3306'
-    expose:
-    # Opens port 3306 on the container
-      - '3306'
+    env_file:
+      - ./environments/db.env
     # Where our data will be persisted
     volumes:
       - mysql_data:/var/lib/mysql
       - ./docker/db/my.cnf:/etc/mysql/my.cnf
+  web:
+    build: 
+      context: containers/nginx
+    volumes:
+      - public-data:/wan_nyan_pod/public
+      - tmp-data:/wan_nyan_pod/tmp
+      - .:/wan_nyan_pod
+    ports:
+      - 80:80
+    depends_on:
+      - app
 volumes:
-  bundle:
+  public-data:
+  tmp-data:
+  log-data:
   mysql_data:
