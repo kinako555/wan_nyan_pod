@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
 
     def error_500(e)
       p e
+      logger.error e.backtrace
       logger.error e
       flash[:danger] = "処理に失敗しました。"
       redirect_to root_path
