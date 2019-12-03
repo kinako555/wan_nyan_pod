@@ -30,18 +30,18 @@ class Micropost < ApplicationRecord
   # お気に入り数トップの投稿50件
   def self.tops
     micropost_ids = "SELECT * FROM (SELECT micropost_id FROM micropost_favorite_relationships 
-                        GROUP BY micropost_id LIMIT 50) AS ids"
+                                      GROUP BY micropost_id 
+                                        ORDER BY COUNT(*) DESC LIMIT 50) AS ids"
     microposts = Micropost.where("id IN (#{micropost_ids})")
     microposts.sort_by{ |mp| mp.favorited_users.count }.reverse
   end
 
   # 一週間でお気に入りされた数が多い投稿100件
   def self.trends
-    micropost_ids = "SELECT * FROM (SELECT micropost_id FROM micropost_favorite_relationships 
-                                      WHERE created_at BETWEEN (NOW() - INTERVAL 1 WEEK) AND NOW() 
-                                        GROUP BY micropost_id LIMIT 100) AS ids"
-    microposts = Micropost.where("id IN (#{micropost_ids})")
-    microposts.sort_by{ |mp| mp.favorited_users.count }.reverse
+    micropost_ids = "SELECT * FROM (SELECT micropost_id FROM micropost_favorite_relationships  
+                                      GROUP BY micropost_id) AS ids"
+    microposts = Micropost.where("id IN (#{micropost_ids}) AND created_at BETWEEN (NOW() - INTERVAL 1 WEEK) AND NOW()")
+    microposts.sort_by{ |mp| mp.favorited_users.count }.reverse.take(100)
   end
 
   private
