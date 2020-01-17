@@ -15,7 +15,7 @@ gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
 gem 'bootsnap',     '>= 1.1.0', require: false
 gem 'faker',        '~> 1.9.3'
-gem 'mini_magick',  '~> 4.7.0'
+gem 'mini_magick',  '~> 4.9.4'
 
 gem 'jquery-rails', '~> 4.3.0'  # 20190525 add
 gem 'bootstrap',    '~> 4.1.1'  # 20190527 add
